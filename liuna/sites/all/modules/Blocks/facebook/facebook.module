@@ -3,9 +3,8 @@
  * @file
  * Lets user create pages in the about section of the site.
  *
- * Displays a link that lets authenticated users create about section pages.
- * All these pages are viewable by default to all the sites visitors.
- * Pages do not need to be approved. Default is to display the page.
+ * Displays a Facebook Like Box in a region of the template and lets user
+ * manage its details.
  */
 
 /**
