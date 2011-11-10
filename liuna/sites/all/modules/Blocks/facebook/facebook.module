@@ -1,0 +1,81 @@
+<?php
+/**
+ * @file
+ * Lets user create pages in the about section of the site.
+ *
+ * Displays a link that lets authenticated users create about section pages.
+ * All these pages are viewable by default to all the sites visitors.
+ * Pages do not need to be approved. Default is to display the page.
+ */
+
+/**
+ * Implementation of hook_block_info()
+ */
+function facebook_block_info() {
+	$blocks['facebook'] = array(
+		'info' => t('Display Facebook Like Box'),
+		'status' => TRUE,
+		'region' => 'sidebar_first',
+		'weight' => 0,
+		'visibility' => 1,
+	);
+	return $blocks;
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+
+function facebook_menu() {
+	$items['admin/config/facebook']=array(
+		'title'			=> 'Facebook',
+		'description'		=> 'Display Facebook status and followers',
+		'position'		=> 'right',
+		'weight'		=> '-5',
+		'page callback'		=> 'system_admin_menu_block_page',
+		'access arguments'	=> array('administer site configuration'),
+		'file'			=> 'system.admin.inc',
+		'file path'		=> drupal_get_path('module','system'),
+	);
+
+	$items['admin/config/facebook/settings']=array(
+		'title'			=> 'Facebook Account Settings',
+		'desciption'		=> 'Facebook widget settings',
+		'page callback'		=> 'drupal_get_form',
+		'page arguments'	=> array('facebook_admin_settings'),
+		'access arguments'	=> array('administer site configuration'),
+		'type'			=> MENU_NORMAL_ITEM,
+		'file'			=> 'facebook.admin.inc',
+	);
+
+return $items;
+};
+
+/**
+ * Implementation of hook_block_view()
+ */
+function facebook_block_view($delta = '') {
+	switch ($delta) {
+		case 'facebook':
+			$block['content'] = facebook_block_contents($delta);
+			return $block;
+			break;
+	}
+}
+
+/**
+ * Implementation of hook_block_contents()
+ */
+function facebook_block_contents($delta) {
+	switch ($delta) {
+		case 'facebook':
+			$fb_url = variable_get('fb_url', 'http://www.facebook.com/pages/LiUNA-Eastern-Region/224388557595313');
+			$fb_show_face = variable_get('fb_show_face', array('True' => 'yes'));
+			return array('#markup' => theme('facebook', array('fb_url' => $fb_url, 'fb_show_face' => $fb_show_face)));
+			break;
+	}
+}
+ 
+
+/* vim: set filetype=php : */
+?>

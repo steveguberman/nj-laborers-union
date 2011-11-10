@@ -1,0 +1,10 @@
+name = Facebook
+description = "Facebook block to display status and followers"
+package = 'Liuna Blocks'
+core= 7.x
+files[] = facebook.module
+files[] = facebook.admin.inc
+files[] = facebook.install
+files[] = facebook.uninstall
+
+configure=admin/config/facebook/settings

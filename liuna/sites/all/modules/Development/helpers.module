@@ -1,0 +1,20 @@
+<?php
+/**
+ * @file
+ * Set of development functions.
+ *
+ * Functions to help with the debuging and creation of modules
+ */
+
+/**
+ * Pretty prints variables wrapped in <pre>
+ */
+
+
+function pretty_r($data){
+	drupal_set_message('<pre>'. print_r($data, true) .'</pre>pre>');
+}
+
+
+/* vim: set filetype=php : */
+?>

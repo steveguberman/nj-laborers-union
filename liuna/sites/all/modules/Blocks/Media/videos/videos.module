@@ -1,0 +1,42 @@
+<?php
+/**
+ * @file
+ * Lets user create pages in the about section of the site.
+ *
+ * Displays a link that lets authenticated users create about section pages.
+ * All these pages are viewable by default to all the sites visitors.
+ * Pages do not need to be approved. Default is to display the page.
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+
+/*
+function @_menu() {
+	$items['admin/config/@']=array(
+		'title'			=> '',
+		'desciption'		=> '',
+		'position'		=> '',
+		'weight'		=> '',
+		'page callback'		=> '',
+		'access arguments'	=> '',
+		'file'			=> '',
+		'file path'		=> '',
+	);
+
+	$items['admin/config/@/settings']=array(
+		'title'			=> '',
+		'desciption'		=> '',
+		'page callback'		=> '',
+		'page arguments'	=> '',
+		'access arguments'	=> '',
+		'page callback'		=> '',
+		'type'			=> '',
+		'file'			=> '',
+	);
+};
+ */
+
+/* vim: set filetype=php : */
+?>

@@ -1,0 +1,9 @@
+name		= 'About'
+description	= 'About pages for NJ laborers'
+package		= 'Liuna Nodes'
+core		= 7.x
+files[]		= 'about.module'
+files[]		= 'about.admin.inc'
+files[]		= 'about.install'
+files[]		= 'about.uninstall'
+configure	= 'admin/config/about/settings'

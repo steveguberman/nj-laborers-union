@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * Implements hook_install().
+ */
+
+
+/* vim: set filetype=php : */
+?>

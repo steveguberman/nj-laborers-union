@@ -1,0 +1,13 @@
+<?php
+/**
+ * Implements hook_uninstall();
+ */
+
+function facebook_uninstall(){
+	watchdog("Facebook Module",'Uninstalling Facebook module');
+	variable_del('fb_url');
+}
+
+
+/* vim: set filetype=php : */
+?>
