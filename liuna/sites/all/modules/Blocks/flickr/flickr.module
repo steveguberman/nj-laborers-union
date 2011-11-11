@@ -65,12 +65,15 @@ function flickr_block_view($delta = '') {
 function flickr_block_contents($delta) {
 	switch ($delta) {
 	case 'flickr':
-		$feed_url = variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?id=njlaborers&format=php');
+		$feed_url = variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?nsid=62751423@N00&lang=en-us&format=php_serial');
 		$num_photos = variable_get('flickr_num_photos', 16);
 		$flickr_feed = file_get_contents($feed_url);
 
 		if ($items = unserialize($flickr_feed)) {
-			return array('#markup' => theme('flickr', array('items' => $items)));
+			//xdebug_break();
+			$content = theme('flickr', array('items' => $items));
+			//return $content;
+			return array('#markup' => $content);
 		}
 
 		break;

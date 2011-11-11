@@ -16,7 +16,7 @@ function flickr_admin_settings() {
 		'#type' => 'textfield',
 		'#description' => 'Enter URL to Flickr feed you want to display.',
 		'#required' => true
-		'#default_value' => variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?id=njlaborers&format=php'),
+		'#default_value' => variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?nsid=62751423@N00&lang=en-us&format=php_serial'),
 	);
 
 	$form['flickr_block_settings']['flickr_num_photos'] = array(
