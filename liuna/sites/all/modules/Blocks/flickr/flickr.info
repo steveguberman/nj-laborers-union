@@ -1,0 +1,10 @@
+name = Flickr
+description = "Displays a grid of Flickr thumbnails from a feed"
+package = "Liuna Blocks"
+core = 7.x
+files[] = flickr.module
+files[] = flickr.admin.inc
+files[] = flickr.install
+files[] = flickr.uninstall
+
+configure=admin/config/flickr/settings
