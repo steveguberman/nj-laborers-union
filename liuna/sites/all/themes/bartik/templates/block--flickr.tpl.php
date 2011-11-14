@@ -6,5 +6,4 @@
  */
 ?>
 <h1>I'm a Flickr</h1>
-<?php pretty_r($variables); ?>
 <?php echo $variables['elements']['#markup']; ?>
