@@ -48,6 +48,17 @@ function flickr_menu() {
 }
 
 /**
+ * Implementation of hook_theme()
+ */
+function flickr_theme() {
+	return array(
+		'flickr_thumbnail_grid' => array(
+			'variables' => array('items' => NULL)
+		),
+	);
+}
+
+/**
  * Implementation of hook_block_view()
  */
 function flickr_block_view($delta = '') {
@@ -71,7 +82,7 @@ function flickr_block_contents($delta) {
 
 		if ($items = unserialize($flickr_feed)) {
 			//xdebug_break();
-			$content = theme('flickr', array('items' => $items));
+			$content = theme('flickr_thumbnail_grid', array('items' => $items));
 			//return $content;
 			return array('#markup' => $content);
 		}
