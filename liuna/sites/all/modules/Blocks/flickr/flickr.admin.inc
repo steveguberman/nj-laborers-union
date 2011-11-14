@@ -15,7 +15,7 @@ function flickr_admin_settings() {
 		'#title' => 'Flickr Feed URL',
 		'#type' => 'textfield',
 		'#description' => 'Enter URL to Flickr feed you want to display.',
-		'#required' => true
+		'#required' => true,
 		'#default_value' => variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?nsid=62751423@N00&lang=en-us&format=php_serial'),
 	);
 

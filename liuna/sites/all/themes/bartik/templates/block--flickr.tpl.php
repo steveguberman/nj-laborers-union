@@ -4,9 +4,7 @@
  *
  * Renders a Flickr feed (as serialized PHP) into a grid of thumbnails with links to the original image.
  */
-if (isset($items)) {
-	pretty_r($items);
-} else {
-	pretty_r("No items var");
-}
 ?>
+<h1>I'm a Flickr</h1>
+<?php pretty_r($variables); ?>
+<?php echo $variables['elements']['#markup']; ?>

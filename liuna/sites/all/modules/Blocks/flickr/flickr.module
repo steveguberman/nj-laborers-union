@@ -53,9 +53,20 @@ function flickr_menu() {
 function flickr_theme() {
 	return array(
 		'flickr_thumbnail_grid' => array(
-			'variables' => array('items' => NULL)
+			'arguments' => array('items' => NULL),
 		),
 	);
+}
+
+function theme_flickr_thumbnail_grid($items) {
+	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
+	foreach($items['items'] as $item) {
+		$output .= "<li class='flickr-thumb'>\n";
+		$output .= "\t{$item['description']}\n";
+		$output .= "</li>\n";
+	}
+	$output .= "</ul>";
+	return $output;
 }
 
 /**
@@ -64,6 +75,7 @@ function flickr_theme() {
 function flickr_block_view($delta = '') {
 	switch ($delta) {
 		case 'flickr':
+			$block['subject'] = t('Flickr Block');
 			$block['content'] = flickr_block_contents($delta);
 			return $block;
 			break;
@@ -77,12 +89,12 @@ function flickr_block_contents($delta) {
 	switch ($delta) {
 	case 'flickr':
 		$feed_url = variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?nsid=62751423@N00&lang=en-us&format=php_serial');
-		$num_photos = variable_get('flickr_num_photos', 16);
+		$photo_count = variable_get('flickr_num_photos', 16);
 		$flickr_feed = file_get_contents($feed_url);
 
-		if ($items = unserialize($flickr_feed)) {
-			//xdebug_break();
-			$content = theme('flickr_thumbnail_grid', array('items' => $items));
+		if ($feed = unserialize($flickr_feed)) {
+			xdebug_break();
+			$content = theme('flickr_thumbnail_grid', array('items' => $feed['items']));
 			//return $content;
 			return array('#markup' => $content);
 		}
