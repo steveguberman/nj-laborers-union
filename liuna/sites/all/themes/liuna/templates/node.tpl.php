@@ -79,6 +79,7 @@
  */
 ?>
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+  <h1>liuna/templates/node.tpl.php</h1>
   <?php print $user_picture; ?>
 
   <?php print render($title_prefix); ?>
