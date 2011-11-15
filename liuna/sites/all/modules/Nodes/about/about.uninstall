@@ -39,6 +39,12 @@ node_delete_multiple($nids);
 // Delete our content type
 node_type_delete('about');
 
+	// Load the dependent Taxonomy module, in case it has been disabled.
+	drupal_load('module', 'taxonomy');
+	variable_del('about_nav_vocabulary');
+	field_delete_field('taxonomy_about')
+
+
 // Purge all field information
 field_purge_batch(1000);
 

@@ -40,6 +40,37 @@ function about_install()
 	}
 }
 
+//as per ~/projects/nj-laborers-union/liuna/modules/forum/forum.install
+
+  // If we enable forum at the same time as taxonomy we need to call
+  // field_associate_fields() as otherwise the field won't be enabled until
+  // hook modules_enabled is called which takes place after hook_enable events.
+
+/**
+ * Implements hook_enable()
+ */
+
+function about_enable(){
+  field_associate_fields('taxonomy');
+
+$vocabulary = taxonomy_vocabulary_load(variable_get('about_nav_vocabulary', 0));
+	if (!$vocabulary) {
+		$edit = array(
+		'name' => About,
+		'machine_name' => 'about',
+		'description' => 'Sub pages for the about navigation section',
+		'hierarchy' => 1,
+		'module' => 'about',
+		'weight' => 0,
+		);
+			$vocabulary = (object) $edit;
+		
+		taxonomy_vocabulary_save($vocabulary);
+		} // this may be in the wrong place!
+		variable_set('about_nav_vocabulary', $vocabulary->vid);
+}
+
+
 function  _about_installed_fields(){
 	return array(
 		'title'=> array(
