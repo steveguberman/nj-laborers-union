@@ -55,3 +55,21 @@ body.two-sidebars #sidebar-first {
 .section {
   margin: 10px;
 }
+
+/**
+ * Flickr Thumbnail Grid Styles
+ */
+#flickr-thumbnail-grid a {
+	border: none;
+	width: 120px;
+	height: 120px;
+	float: left;
+}
+
+#flickr-thumbnail-grid a.landscape {
+	padding-top: 22px;
+}
+
+#flickr-thumbnail-grid a.portrait {
+	padding-left: 32px;
+}

@@ -66,7 +66,7 @@ function theme_flickr_thumbnail_grid($items) {
 	foreach($photos as $photo) {
 		$output .= <<<END_LIST_ITEM
 <li class="flickr-thumb">
-	<a href="{$photo['url']}" class="photo-wrap">
+	<a href="{$photo['url']}" class="photo-wrap {$photo['class']}">
 		<img src="{$photo['src']}" width="{$photo['width']}" height="{$photo['height']}" alt="{$photo['alt']}" />
 	</a>
 </li>
@@ -85,6 +85,8 @@ function flickr_assemble_photo_array($items, $limit) {
 	$output = array();
 	$count  = 0;
 	foreach ($items as $item) {
+		if ($count++ > $limit) break;
+
 		// Parse Flickr's pre-built HTML string for image data
 		$dom = new DOMDocument;
 		$dom->loadHTML($item['description']);
@@ -100,9 +102,10 @@ function flickr_assemble_photo_array($items, $limit) {
 			'raw_html' => $item['description'],
 		);
 
+		$photo_data['class'] = ($photo_data['width'] > $photo_data['height']) ? 'landscape' : 'portrait';
+
 		// skip portrait images
-		if ($photo_data['height'] > $photo_data['width']) continue;
-		if ($count++ > $limit) break;
+		//if ($photo_data['height'] > $photo_data['width']) continue;
 
 		// otherwise, append photo to output array
 		$output[] = $photo_data;
