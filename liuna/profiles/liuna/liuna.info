@@ -2,8 +2,26 @@ name = Liuna
 description = Liuna development/deploy build =/
 version = VERSION
 core = 7.x
-dependencies[] = block
-dependencies[] = dblog
+
+; DrupalModules
+dependencies[] = devel
+dependencies[] = examples
+dependencies[] = google_analytics
+dependencies[] = libraries
+dependencies[] = superfish
+
+; Development modules
+dependencies[] = spohelpers.info
+
+; Blocks
+dependencies[] = facebook
+dependencies[] = flickr
+dependencies[] = slider
+
+; Blocks Media
+dependencies[] = events
+dependencies[] = videos
+
 files[] = liuna.profile
 
 ; Information added by drupal.org packaging script on 2011-10-26
