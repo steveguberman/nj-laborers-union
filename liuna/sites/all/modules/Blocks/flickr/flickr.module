@@ -60,13 +60,13 @@ function flickr_theme() {
 
 function theme_flickr_thumbnail_grid($items) {
 	$limit  = $items['photo_count'];
-	$photos = assemble_photo_array($items['items'], $limit);
+	$photos = flickr_assemble_photo_array($items['items'], $limit);
 
 	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
 	foreach($photos as $photo) {
 		$output .= <<<END_LIST_ITEM
 <li class="flickr-thumb">
-	<a href="{$photo['url']}">
+	<a href="{$photo['url']}" class="photo-wrap">
 		<img src="{$photo['src']}" width="{$photo['width']}" height="{$photo['height']}" alt="{$photo['alt']}" />
 	</a>
 </li>
@@ -81,31 +81,36 @@ END_LIST_ITEM;
  *
  * Assembles an array of landscape photos for use in the Flickr thumbnail grid
  */
-function assemble_photo_array($items, $limit) {
+function flickr_assemble_photo_array($items, $limit) {
 	$output = array();
-	foreach ($items as $idx => $item) {
-		if ($idx > $limit) break;
-
+	$count  = 0;
+	foreach ($items as $item) {
 		// Parse Flickr's pre-built HTML string for image data
 		$dom = new DOMDocument;
 		$dom->loadHTML($item['description']);
-		$img = $dom->get_elements_by_tagname('img');
+		$img = $dom->getElementsByTagName('img')->item(0);
 
 		// grab image attributes
 		$photo_data = array(
-			'width'    => $img->get_attribute('width'),
-			'height'   => $img->get_attribute('height'),
-			'src'      => $img->get_attribute('src'),
-			'alt'      => $img->get_attribute('alt'),
+			'width'    => (int)$img->getAttribute('width') / 2,
+			'height'   => (int)$img->getAttribute('height') / 2,
+			'src'      => $img->getAttribute('src'),
+			'alt'      => $img->getAttribute('alt'),
 			'url'      => $item['url'],
 			'raw_html' => $item['description'],
 		);
 
 		// skip portrait images
 		if ($photo_data['height'] > $photo_data['width']) continue;
+		if ($count++ > $limit) break;
 
 		// otherwise, append photo to output array
 		$output[] = $photo_data;
+	}
+
+	$remainder = count($output) % 6;
+	if ($remainder) {
+		$output = array_slice($output, 0, count($output) - $remainder);
 	}
 
 	return $output;
