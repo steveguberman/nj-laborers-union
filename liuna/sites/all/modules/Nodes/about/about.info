@@ -2,6 +2,7 @@ name		= 'About'
 description	= 'About pages for NJ laborers'
 package		= 'Liuna Nodes'
 core		= 7.x
+dependencies[]  = taxonomy
 files[]		= 'about.module'
 files[]		= 'about.admin.inc'
 files[]		= 'about.install'

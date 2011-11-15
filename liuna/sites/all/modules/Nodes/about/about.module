@@ -59,6 +59,79 @@ function about_node_info(){
 	);
 };
 
+/**
+ * Implement hook_form() with the standard default form.
+ */
+function about_form($node,$form_state){
+	return node_content_form($node,$form_state);
+}
+
+
+/**
+ * Implements hook_node_access()
+ */
+
+/*
+function about_node_access($node,$op,$account){
+$is_author = $account->uid == $node->uid;
+
+xdebug_break();
+
+switch($op){
+		//Allow if user's role has 'create about' permission.
+		case 'create':
+		if(user_access('create about',$account)){
+			return NODE_ACCES_ALLOW;
+		}
+		//Allow if user's role has 'edit about' permission.
+		case 'update':
+		if( user_access('edit own about',$account) && $is_author ||
+		    user_access('edit any about',$account) ){
+			return NODE_ACCES_ALLOW;
+		}
+		//Allow if user's role has 'delete about permission'
+		case 'delete':
+		if( user_access('delete own about',$account) && $is_author ||
+		    user_access('delete any about',$account) ){
+			return NODE_ACCES_ALLOW;
+		}
+	}
+
+}
+*/
+
+function about_node_access($node, $op, $account) {
+ 
+xdebug_break();
+
+	 $type = is_string($node) ? $node : $node->type;
+
+	$q=user_access('create ' . $type . ' content', $account);
+	$qq=user_role_permissions(array('admin'));
+	$qqq='create ' . $type . ' content';
+
+  if (in_array($type, node_permissions_get_configured_types())) {
+    if ($op == 'create' && user_access('create ' . $type . ' content', $account)) {
+      return NODE_ACCESS_ALLOW;
+    }
+
+    if ($op == 'update') {
+      if (user_access('edit any ' . $type . ' content', $account) || (user_access('edit own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+
+    if ($op == 'delete') {
+      if (user_access('delete any ' . $type . ' content', $account) || (user_access('delete own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+  }
+
+  // Returning nothing from this function would have the same effect.
+  return NODE_ACCESS_IGNORE;
+}
+
 
 /* vim: set filetype=php : */
 ?>
