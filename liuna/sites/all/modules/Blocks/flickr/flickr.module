@@ -53,19 +53,61 @@ function flickr_menu() {
 function flickr_theme() {
 	return array(
 		'flickr_thumbnail_grid' => array(
-			'arguments' => array('items' => NULL),
+			'arguments' => array('items' => NULL, 'photo_count' => 15),
 		),
 	);
 }
 
 function theme_flickr_thumbnail_grid($items) {
+	$limit  = $items['photo_count'];
+	$photos = assemble_photo_array($items['items'], $limit);
+
 	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
-	foreach($items['items'] as $item) {
-		$output .= "<li class='flickr-thumb'>\n";
-		$output .= "\t{$item['description']}\n";
-		$output .= "</li>\n";
+	foreach($photos as $photo) {
+		$output .= <<<END_LIST_ITEM
+<li class="flickr-thumb">
+	<a href="{$photo['url']}">
+		<img src="{$photo['src']}" width="{$photo['width']}" height="{$photo['height']}" alt="{$photo['alt']}" />
+	</a>
+</li>
+END_LIST_ITEM;
 	}
 	$output .= "</ul>";
+	return $output;
+}
+
+/**
+ * Helper: assemble_photo_array($items, $limit)
+ *
+ * Assembles an array of landscape photos for use in the Flickr thumbnail grid
+ */
+function assemble_photo_array($items, $limit) {
+	$output = array();
+	foreach ($items as $idx => $item) {
+		if ($idx > $limit) break;
+
+		// Parse Flickr's pre-built HTML string for image data
+		$dom = new DOMDocument;
+		$dom->loadHTML($item['description']);
+		$img = $dom->get_elements_by_tagname('img');
+
+		// grab image attributes
+		$photo_data = array(
+			'width'    => $img->get_attribute('width'),
+			'height'   => $img->get_attribute('height'),
+			'src'      => $img->get_attribute('src'),
+			'alt'      => $img->get_attribute('alt'),
+			'url'      => $item['url'],
+			'raw_html' => $item['description'],
+		);
+
+		// skip portrait images
+		if ($photo_data['height'] > $photo_data['width']) continue;
+
+		// otherwise, append photo to output array
+		$output[] = $photo_data;
+	}
+
 	return $output;
 }
 
@@ -94,7 +136,7 @@ function flickr_block_contents($delta) {
 
 		if ($feed = unserialize($flickr_feed)) {
 			xdebug_break();
-			$content = theme('flickr_thumbnail_grid', array('items' => $feed['items']));
+			$content = theme('flickr_thumbnail_grid', array('items' => $feed['items'], 'photo_count' => $photo_count));
 			//return $content;
 			return array('#markup' => $content);
 		}
