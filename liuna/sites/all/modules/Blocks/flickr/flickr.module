@@ -49,28 +49,15 @@ function flickr_menu() {
 
 /**
  * Implementation of hook_theme()
+ */
 function flickr_theme() {
 	return array(
 		'flickr_thumbnail_grid' => array(
 			'arguments' => array('items' => NULL),
 		),
-		'flickr_photo_thumbnail' => array(
-			'arguments' => array('item' => NULL),
-		),
-	);
-}
- */
-function flickr_theme() {
-	return array(
-		'flickr_thumbnail_grid' => array(
-			'variables' => array('photos' => NULL, 'num_photos' => 16),
-			'template' => 'flickr-thumbnail-grid',
-		),
 	);
 }
 
-/**
- * Custom theme functions for rendering parts of the block
 function theme_flickr_thumbnail_grid($items) {
 	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
 	foreach($items['items'] as $item) {
@@ -81,17 +68,6 @@ function theme_flickr_thumbnail_grid($items) {
 	$output .= "</ul>";
 	return $output;
 }
-*/
-/*
-function theme_flickr_photo_thumbnail($item) {
-	$output = '<li class="flickr-thumb">' . "\n";
-	$output .= <<<END_HTML
-
-END_HTML;
-	$output .= '</li>';
-	return $output;
-}
- */
 
 /**
  * Implementation of hook_block_view()
@@ -118,7 +94,8 @@ function flickr_block_contents($delta) {
 
 		if ($feed = unserialize($flickr_feed)) {
 			xdebug_break();
-			$content = theme('flickr_thumbnail_grid', array('photos' => $feed['items'], 'num_photos' => $photo_count));
+			$content = theme('flickr_thumbnail_grid', array('items' => $feed['items']));
+			//return $content;
 			return array('#markup' => $content);
 		}
 
