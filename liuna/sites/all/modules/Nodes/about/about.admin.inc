@@ -31,6 +31,5 @@ function facebook_admin_settings_submit($form,$form_state){
 	variable_set('fb_url',$form_state['values']['about_test']);
 }
 
-
 /* vim: set filetype=php : */
 ?>

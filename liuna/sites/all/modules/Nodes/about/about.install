@@ -14,6 +14,44 @@
 
 function about_install()
 {
+	
+	field_associate_fields('taxonomy');
+
+	$vocabulary = taxonomy_vocabulary_load(variable_get('about_nav_vocabulary', 0));
+	if (!$vocabulary) {
+		$nav_tags = array(
+		'name' => 'about_vocabulary',
+		'machine_name' => 'about',
+		'description' => 'Sub pages for the about navigation section',
+		'hierarchy' => 1,
+		'module' => 'about',
+		'weight' => 0,
+		);
+		
+		$vocabulary = (object) $nav_tags;
+		taxonomy_vocabulary_save($vocabulary);
+	} // this may be in the wrong place!
+	
+
+		$vocabulary_nav_field = array(
+					'field_name'	=> 'about_vocabulary',
+					'type'		=> 'taxonomy_term_reference',
+					'settings'	=> array(
+								'allowed_values' => array(
+											array(
+											'vocabulary' => 'about_vocabulary',
+											'parent' => '0',
+											),
+										),
+							),
+					);
+
+	field_create_field($vocabulary_nav_field);
+	variable_set('about_vocabulary', $vocabulary->vid);
+
+	
+
+
 	node_types_rebuild();
 	$types = node_type_get_types();
 
@@ -40,66 +78,31 @@ function about_install()
 	}
 }
 
-//as per ~/projects/nj-laborers-union/liuna/modules/forum/forum.install
-
-  // If we enable forum at the same time as taxonomy we need to call
-  // field_associate_fields() as otherwise the field won't be enabled until
-  // hook modules_enabled is called which takes place after hook_enable events.
-
 /**
  * Implements hook_enable()
- */
 
 function about_enable(){
-  field_associate_fields('taxonomy');
 
-$vocabulary = taxonomy_vocabulary_load(variable_get('about_nav_vocabulary', 0));
-	if (!$vocabulary) {
-		$edit = array(
-		'name' => About,
-		'machine_name' => 'about',
-		'description' => 'Sub pages for the about navigation section',
-		'hierarchy' => 1,
-		'module' => 'about',
-		'weight' => 0,
-		);
-			$vocabulary = (object) $edit;
-		
-		taxonomy_vocabulary_save($vocabulary);
-		} // this may be in the wrong place!
-		variable_set('about_nav_vocabulary', $vocabulary->vid);
 }
 
+*/
 
 function  _about_installed_fields(){
 	return array(
-		'title'=> array(
-			'field_name'	=> 'about_title',
-			'label'		=> 'Name of the page',
-			'type'		=> 'text',
+		'about_tags'=> array(
+			'field_name'	=> 'about_tags',
+			'label'		=> 'tagging system for navigation',
+			'type'		=> 'taxonomy_term_reference',
+			'settings'	=> array(
+					
+					)
 			),
 		);
 }
 
 function _about_installed_instances(){
-	return array(
-		'title'	=> array(
-			'field_name'	=> 'about_title',
-			'type'		=> 'text',
-			'label'		=> 'Name of the page',
-			'widget'	=> array(
-					'type'	=> 'text_field',
-					),
-			'display'	=> array(
-					'Pages List'	=> array(
-							'label'	=> 'Name of the Page',
-							'type'	=> 'text',
-							),
-					),
-			),
-		);
-}
 
+}
 
 
 /* vim: set filetype=php : */
