@@ -14,102 +14,343 @@ function liuna_install() {
  */
 
 $values = array(
-    array(
-      'module' => 'system',
-      'delta' => 'main',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'content',
-      'pages' => '',
-      'cache' => -1,
-    ),
 
-    array(
-      'module' => 'user',
-      'delta' => 'login',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'sidebar_first',
-      'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'system',
-      'delta' => 'navigation',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'sidebar_first',
-      'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'system',
-      'delta' => 'management',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => 1,
-      'region' => 'sidebar_first',
-      'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'system',
-      'delta' => 'help',
-      'theme' => $default_theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'help',
-      'pages' => '',
-      'cache' => -1,
-    ),
-/* END minimal install */
+    
+        array(
+            'bid' => 1,
+            'module' => system,
+            'delta' => main,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => 0,
+            'region' => content,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
 
-	array(
-	'module' => 'superfish',
-	'delta' => 'main',
-	'theme' => $default_theme,
-	'status' => 1,
-	'weight' => 0,
-	'region' => 'header',
-	'pages' => '',
-	'cache' => -1,
-	),
+ 
+        array(
+            'bid' => 2,
+            'module' => user,
+            'delta' => login,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => -10,
+            'region' => header,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
 
-	array(
-	'module' => 'devel',
-	'delta' => 'main',
-	'theme' => $default_theme,
-	'status' => 1,
-	'weight' => 0,
-	'region' => 'sidebar_second',
-	'pages' => '',
-	'cache' => -1,
-	),
+    
+        array(
+            'bid' => 3,
+            'module' => system,
+            'delta' => navigation,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => -9,
+            'region' => sidebar_first,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
 
-	array(
-	'module' => 'devel',
-	'delta' => 'main',
-	'theme' => $default_theme,
-	'status' => 1,
-	'weight' => 20,
-	'region' => 'footer',
-	'pages' => '',
-	'cache' => -1,
-	),
-	
-	array(
-	'module' => 'devel',
-	'delta' => 'main',
-	'theme' => $default_theme,
-	'status' => 1,
-	'weight' => 20,
-	'region' => 'footer',
-	'pages' => '',
-	'cache' => -1,
-	),
+    
+        array(
+            'bid' => 4,
+            'module' => system,
+            'delta' => management,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => -8,
+            'region' => sidebar_first,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 5,
+            'module' => system,
+            'delta' => help,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => 0,
+            'region' => help,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 14,
+            'module' => devel,
+            'delta' => switch_user,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => -11,
+            'region' => header,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 15,
+            'module' => devel_node_access,
+            'delta' => dna_node,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => -9,
+            'region' => footer,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 16,
+            'module' => devel_node_access,
+            'delta' => dna_user,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => 0,
+            'region' => footer,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 17,
+            'module' => menu,
+            'delta' => devel,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => -7,
+            'region' => sidebar_first,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 18,
+            'module' => superfish,
+            'delta' => 1,
+            'theme' => bartik,
+            'status' => 1,
+            'weight' => -9,
+            'region' => header,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 22,
+            'module' => devel,
+            'delta' => execute_php,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -9,
+            'region' => footer,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 23,
+            'module' => devel,
+            'delta' => switch_user,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -11,
+            'region' => header,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 24,
+            'module' => devel_node_access,
+            'delta' => dna_node,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -11,
+            'region' => footer,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 25,
+            'module' => devel_node_access,
+            'delta' => dna_user,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -10,
+            'region' => footer,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 26,
+            'module' => menu,
+            'delta' => devel,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -7,
+            'region' => sidebar_first,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 29,
+            'module' => superfish,
+            'delta' => 1,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -9,
+            'region' => header,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 33,
+            'module' => system,
+            'delta' => help,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => 0,
+            'region' => help,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 34,
+            'module' => system,
+            'delta' => main,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => 0,
+            'region' => content,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 36,
+            'module' => system,
+            'delta' => management,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -8,
+            'region' => sidebar_first,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 37,
+            'module' => system,
+            'delta' => navigation,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -9,
+            'region' => sidebar_first,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
+    
+        array(
+            'bid' => 40,
+            'module' => user,
+            'delta' => login,
+            'theme' => liuna,
+            'status' => 1,
+            'weight' => -10,
+            'region' => header,
+            'custom' => 0,
+            'visibility' => 0,
+            'pages' => '' ,
+            'title' => '' ,
+            'cache' => -1,
+        ),
+
 );
 
   $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
@@ -121,9 +362,25 @@ $values = array(
   // Allow visitor account creation, but with administrative approval.
   variable_set('user_register', USER_REGISTER_VISITORS_ADMINISTRATIVE_APPROVAL);
 
+
+	// Variables for Devel
+	variable_set('devel_error_handler',2);
+	variable_set('devel_execution',5);
+	variable_set('devel_node_access_debug_mode',5);
+	variable_set('devel_query_display',1);
+  
   // Enable default permissions for system roles.
   user_role_grant_permissions(DRUPAL_ANONYMOUS_RID, array('access content'));
   user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array('access content'));
+
+  db_update('system')
+	->fields(array('status'=>1))
+	->condition('type','theme')
+	->condition('name','liuna')
+	->execute();
+
+		variable_set('admin_theme','liuna');
+		variable_set('theme_default','liuna');
 
 /*  vim: set filetype=php : */
 }

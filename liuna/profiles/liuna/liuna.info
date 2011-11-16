@@ -2,30 +2,15 @@ name = Liuna
 description = Liuna development/deploy build =/
 version = VERSION
 core = 7.x
-
-; DrupalModules
+dependencies[] = block
+dependencies[] = menu
 dependencies[] = devel
+dependencies[] = devel_node_access
 dependencies[] = examples
-dependencies[] = google_analytics
+dependencies[] = googleanalytics
 dependencies[] = libraries
-dependencies[] = superfish
+dependencies[] = spohelpers
 
-; Development modules
-dependencies[] = spohelpers.info
+files[]=liuna.profile
 
-; Blocks
-dependencies[] = facebook
-dependencies[] = flickr
-dependencies[] = slider
-
-; Blocks Media
-dependencies[] = events
-dependencies[] = videos
-
-files[] = liuna.profile
-
-; Information added by drupal.org packaging script on 2011-10-26
-version = "7.9"
-project = "drupal"
-datestamp = "1319660730"
-
+theme = liuna
