@@ -11,6 +11,11 @@
 
 function about_uninstall()
 {
+
+
+xdebug_break();
+exit();
+
 // Gather all the example content that might have been created while this
 // module enabled.
 $sql	= 'Select nid FROM {node} n WHERE n.type = :type';
@@ -36,14 +41,15 @@ node_delete_multiple($nids);
 		field_delete_instance($instance);
 	}
 
-// Delete our content type
-node_type_delete('about');
 
-	// Load the dependent Taxonomy module, in case it has been disabled.
+	node_type_delete('about');
+
 	drupal_load('module', 'taxonomy');
-	variable_del('about_nav_vocabulary');
-	field_delete_field('taxonomy_about')
+	
+	taxonomy_vocabulary_delete(variable_get('about_vocabulary'));
+	field_delete_field('about_vocabulary');
 
+	variable_del('about_vocabulary');
 
 // Purge all field information
 field_purge_batch(1000);

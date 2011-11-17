@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Install file for About pages node.
@@ -14,24 +13,23 @@
 
 function about_install()
 {
-	
-	field_associate_fields('taxonomy');
+	xdebug_break();
 
-	$vocabulary = taxonomy_vocabulary_load(variable_get('about_nav_vocabulary', 0));
-	if (!$vocabulary) {
-		$nav_tags = array(
-		'name' => 'about_vocabulary',
-		'machine_name' => 'about',
-		'description' => 'Sub pages for the about navigation section',
-		'hierarchy' => 1,
-		'module' => 'about',
-		'weight' => 0,
-		);
+	// If modules where loaded during this run of hook install make sure previous modules have had
+	// database entries and node types have been updated
+	field_associate_fields('taxonomy');
+	node_types_rebuild();
+
+		$nav_tags = new stdClass;
+			$nav_tags->name		= 'about_vocabulary';
+			$nav_tags->machine_name = 'about_vocabulary';
+			$nav_tags->description	= 'Sub pages for the about navigation section';
+			$nav_tags->hierarchy	=  1;
+			$nav_tags->module	= 'about';
+			$nav_tags->weight	=  0;
 		
-		$vocabulary = (object) $nav_tags;
-		taxonomy_vocabulary_save($vocabulary);
-	} // this may be in the wrong place!
-	
+		taxonomy_vocabulary_save($nav_tags);
+		variable_set( 'about_vocabulary' ,  $nav_tags->vid );
 
 		$vocabulary_nav_field = array(
 					'field_name'	=> 'about_vocabulary',
@@ -46,13 +44,9 @@ function about_install()
 							),
 					);
 
-	field_create_field($vocabulary_nav_field);
-	variable_set('about_vocabulary', $vocabulary->vid);
+		field_create_field($vocabulary_nav_field);
+		
 
-	
-
-
-	node_types_rebuild();
 	$types = node_type_get_types();
 
 	// Add the nodes body field
@@ -65,6 +59,23 @@ function about_install()
 	// Save the changes to the body field instance.
 	field_update_instance($body_instance);
 
+	$vocabulary_nav_field_instance = array(
+				'field_name' => 'about_vocabulary',
+				'entity_type' => 'node',
+				'bundle' => 'about',
+				'widget' => array(
+						'type' => 'options_select',
+						),
+				'display' => array(
+						'full' => array(
+							  'type' => 'taxonomy_term_reference_link',
+							),
+					),
+				);
+	
+	xdebug_break();
+	field_create_instance($vocabulary_nav_field_instance);
+/*
 	// Create all the fields we are adding to out content type.
 	foreach ( _about_installed_fields() as $field){
 		#field_create_field($field);
@@ -76,31 +87,67 @@ function about_install()
 		#$instance['bundle']	= 'about';
 		#field_create_instance($instance);
 	}
+*/
 }
 
 /**
- * Implements hook_enable()
-
-function about_enable(){
-
-}
-
-*/
-
+ * Implements hook_enable() function about_enable(){}
+ */
+/*
 function  _about_installed_fields(){
-	return array(
-		'about_tags'=> array(
-			'field_name'	=> 'about_tags',
-			'label'		=> 'tagging system for navigation',
-			'type'		=> 'taxonomy_term_reference',
-			'settings'	=> array(
-					
-					)
-			),
-		);
+	return $fields
 }
 
 function _about_installed_instances(){
+	return $fields
+}
+*/
+
+
+function about_uninstall()
+{
+
+
+xdebug_break();
+
+// Gather all the example content that might have been created while this
+// module enabled.
+$sql	= 'Select nid FROM {node} n WHERE n.type = :type';
+$result	= db_query($sql, array(':type' => 'about'));
+$nids	= array();
+
+	foreach($result as $row){
+	$nids[]= $row->nid;
+	}
+
+node_delete_multiple($nids);
+
+/*
+// Loop over each of the fields defined by this module and delete
+// all instances of the field, their data, and the field itself.
+	foreach(array_keys(_about_installed_fields()) as $field){
+	field_delete_field($field);
+	}
+
+// Loop over any remaining field instances attached to the job_post
+// content type ( such as the body field) and delete them individually.
+	$instances = field_info_instances('node','about');
+	foreach( $instances as $instance_name => $instance ){
+		field_delete_instance($instance);
+	}
+*/
+
+	node_type_delete('about');
+
+	drupal_load('module', 'taxonomy');
+	xdebug_break();
+	taxonomy_vocabulary_delete(variable_get('about_vocabulary'));
+	field_delete_field('about_vocabulary');
+
+	variable_del('about_vocabulary');
+
+// Purge all field information
+field_purge_batch(1000);
 
 }
 
