@@ -3,11 +3,14 @@ description = Liuna development/deploy build =/
 version = VERSION
 core = 7.x
 dependencies[] = block
-dependencies[] = dblog
-files[] = liuna.profile
+dependencies[] = menu
+dependencies[] = devel
+dependencies[] = devel_node_access
+dependencies[] = examples
+dependencies[] = googleanalytics
+dependencies[] = libraries
+dependencies[] = spohelpers
 
-; Information added by drupal.org packaging script on 2011-10-26
-version = "7.9"
-project = "drupal"
-datestamp = "1319660730"
+files[]=liuna.profile
 
+theme = liuna

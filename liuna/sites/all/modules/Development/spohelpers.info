@@ -1,0 +1,5 @@
+name		= 'My Helpers'
+description	= 'Development helper functions'
+package		= 'Liuna Development'
+core		= 7.x
+files[]		= 'spohelpers.module'
