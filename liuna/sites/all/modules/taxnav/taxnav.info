@@ -1,0 +1,8 @@
+name		= 'Taxnav'
+description	= 'Navigation menu system based on tags'
+package		= 'Liuna Nodes'
+core		=  7.x
+dependencies[]  =  taxonomy
+files[]		= 'taxnav.module'
+files[]		= 'taxnav.admin.inc'
+files[]		= 'taxnav.install'

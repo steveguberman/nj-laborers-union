@@ -1,0 +1,48 @@
+<?php
+
+function taxnav_install()
+{
+	field_associate_fields('taxonomy');
+
+	$new_menu = array();
+		$new_menu['menu_name']		= 'taxnav_menu';
+		$new_menu['title']		= 'Taxnav menu';
+		$new_menu['description']	= 'Menu based on taxnav module taxonomy tagging system';
+	
+		menu_save($new_menu);
+		variable_set('taxnav_menu',$new_menu['menu_name']);
+
+	$nav_tags = new stdClass;
+		$nav_tags->name		= 'taxnav_vocabulary';
+		$nav_tags->machine_name = 'taxnav_vocabulary';
+		$nav_tags->description	= 'Taxonomy for Taxnav modules Navigation tree generator';
+		$nav_tags->hierarchy	=  1;
+		$nav_tags->module	= 'taxnav';
+		$nav_tags->weight	=  100;
+
+		taxonomy_vocabulary_save($nav_tags);
+		variable_set( 'taxnav_vocabulary' ,  $nav_tags->vid );
+
+	$vocabulary_nav_field = array();
+		$vocabulary_nav_field['field_name']	= 'about_vocabulary';
+		$vocabulary_nav_field['type']		= 'taxonomy_term_reference';
+		$vocabulary_nav_field['settings'] 	=  array();
+		$vocabulary_nav_field['settings']['allowed_values'] = array();
+		$vocabulary_nav_field['settings']['allowed_values']['vocabulary']	= 'about_vocabulary';
+		$vocabulary_nav_field['settings']['allowed_values']['parent']		= '0';
+
+		field_create_field($vocabulary_nav_field);	
+}
+
+function taxnav_uninstall()
+{
+	drupal_load('module', 'taxonomy');
+	taxonomy_vocabulary_delete(variable_get('taxnav_menu'));
+	field_delete_field('taxnav_vocabulary');
+	variable_del('taxnav_vocabulary');
+	field_purge_batch(1000);
+}
+
+
+/* vim: set filetype=php : */
+?>

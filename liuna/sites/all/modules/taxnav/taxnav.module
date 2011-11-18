@@ -1,0 +1,25 @@
+<?php
+
+function taxnav_menu() {
+
+$path ='admin/taxnav/rebuild';
+	$items[$path]=array();
+		$items[$path]['title'] 			= 'Tax Nav Build';
+		$items[$path]['desciption'] 		= 'Collect all node that are assigned the tax nav vocabulary and build their tree';
+		$items[$path]['position'] 		= 'right';
+		$items[$path]['weight'] 		= '-100';
+		#$items[$path]['type'] 			=  MENU_CALLBACK;
+		$items[$path]['access arguments'] 	=  array('administer site configuration');
+		$items[$path]['file'] 			= 'build.taxnav.inc';
+		$items[$path]['file path'] 		=  drupal_get_path('module','taxnav');
+	
+	return $items;
+};
+
+
+function taxnav_taxonomy_vocabulary_update($vocabulary){
+
+}
+
+/* vim: set filetype=php : */
+?>
