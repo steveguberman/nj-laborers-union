@@ -1,0 +1,122 @@
+<?php
+/**
+ * @file slider.module
+ * 
+ * Displays a JavaScript powered slider block w/ customizable slides
+ */
+
+/**
+ * Implements hook_block_info()
+ */
+function slider_block_info() {
+	$blocks['slider'] = array(
+		'info' => t('Display Slider w/ customizable slides'),
+		'status' => TRUE,
+		'region' => 'footer',
+		'weight' => 1,
+		'visibility' => 1,
+	);
+	return $blocks;
+}
+
+/**
+ * Implements hook_menu()
+ */
+function slider_menu() {
+	$items['admin/config/slider'] = array(
+		'title' => 'Slider',
+		'description' => 'Display a JavaScript slider w/ customizable slides',
+		'position' => 'right',
+		'weight' => -5,
+		'page callback' => 'system_admin_menu_block_page',
+		'access arguments' => array('administer site configuration'),
+		'file' => 'system.admin.inc',
+		'file path' => drupal_get_path('module', 'system'),
+	);
+
+	$items['admin/config/slider/settings'] = array(
+		'title' => 'Slider Block Settings',
+		'description' => 'Slider Widget Settings',
+		'page arguments' => array('slider_admin_settings'),
+		'access arguments' => array('administer site configuration'),
+		'type' => MENU_NORMAL_ITEM,
+		'file' => 'slider.admin.inc',
+	);
+
+	return $items;
+}
+
+/**
+ * Implements hook_theme()
+ */
+function slider_theme() {
+	return array(
+		'slider_block_item' => array(
+			'arguments' => array('item' => NULL),
+		),
+		'slider_block_widget' => array(
+			'arguments' => array('items' => NULL),
+		),
+	);
+}
+
+/**
+ * THEME HELPER FUNCTIONS
+ */
+function theme_slider_block_item($item) {
+	$output = "<div class='slider-item'>\n";
+	$output .= "</div>";
+	return $output;
+}
+
+function theme_slider_block_widget($items) {
+	$output = "<div id='liuna-slider'>\n";
+
+	foreach ($items['items'] as $slide) {
+		$output .= theme('slider_block_item', array('item' => $slide));
+	}
+
+	$output .= "</div>\n";
+	return $output;
+}
+
+/**
+ * Implements hook_block_view()
+ */
+function slider_block_view($delta = '') {
+	switch ($delta) {
+		case 'slider':
+			$block['subject'] = t('Slider');
+			$block['content'] = slider_block_contents($delta);
+			break;
+	}
+}
+
+/**
+ * Provides content for block_view function above
+ */
+function slider_block_contents() {
+	// hard-coded slider items for development
+	$slides = array(
+		array(
+			'title' => 'Outer Space',
+			'caption' => 'Lorem ipsum dollar',
+			'src' => 'http://flickholdr.com/900/290/astronomy',
+		),
+		array(
+			'title' => 'Inner Space',
+			'caption' => 'Journey to the center of the mind',
+			'src' => 'http://flickholdr.com/900/290/mind',
+		),
+		array(
+			'title' => 'Landscape',
+			'caption' => 'Landscapes are pretty',
+			'src' => 'http://flickholdr.com/900/290/landscape'
+		),
+	);
+	$slider_html = theme('slider_block_widget', array('items' => $slides));
+	return array('#markup' => $slider_html);
+}
+
+// vim: set ft=php :
+?>

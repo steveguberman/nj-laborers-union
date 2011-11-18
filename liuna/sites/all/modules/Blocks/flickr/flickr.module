@@ -132,9 +132,7 @@ function flickr_block_view($delta = '') {
 	}
 }
 
-/**
- * Implementation of hook_block_contents()
- */
+// provides content for block_view function above
 function flickr_block_contents($delta) {
 	switch ($delta) {
 	case 'flickr':
