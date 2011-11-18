@@ -133,5 +133,16 @@ xdebug_break();
 }
 
 
+
+function about_node_insert($node){
+	
+}
+
+function about_taxonomy_vocabulary_update($vocabulary){
+
+}
+
+
+
 /* vim: set filetype=php : */
 ?>
