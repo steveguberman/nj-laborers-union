@@ -18,7 +18,7 @@ function about_install()
 
 
 	$vocabulary_nav_field_instance = array();
-	$vocabulary_nav_field_instance['field_name']	= 'about_vocabulary';
+	$vocabulary_nav_field_instance['field_name']	= 'taxnav_vocabulary';
 	$vocabulary_nav_field_instance['entity_type']	= 'node';
  	$vocabulary_nav_field_instance['bundle'] 	= 'about';
 	 	$vocabulary_nav_field_instance['widget'] 	= array();
