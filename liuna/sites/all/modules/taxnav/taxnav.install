@@ -24,7 +24,7 @@ function taxnav_install()
 		variable_set( 'taxnav_vocabulary' ,  $nav_tags->vid );
 
 	$vocabulary_nav_field = array();
-		$vocabulary_nav_field['field_name']	= 'about_vocabulary';
+		$vocabulary_nav_field['field_name']	= 'taxnav_vocabulary';
 		$vocabulary_nav_field['type']		= 'taxonomy_term_reference';
 		$vocabulary_nav_field['settings'] 	=  array();
 		$vocabulary_nav_field['settings']['allowed_values'] = array();
@@ -37,11 +37,15 @@ function taxnav_install()
 function taxnav_uninstall()
 {
 	drupal_load('module', 'taxonomy');
-	taxonomy_vocabulary_delete(variable_get('taxnav_menu'));
+	taxonomy_vocabulary_delete(variable_get('taxnav_vocabulary'));
 	field_delete_field('taxnav_vocabulary');
+	$result = db_query("SELECT * FROM menu_custom WHERE menu_name=:menu_name", array( 'menu_name'=> variable_get('taxnav_menu') ) );
+	menu_delete($result->fetchAssoc());
 	variable_del('taxnav_vocabulary');
+	variable_del('taxnav_menu');
 	field_purge_batch(1000);
 }
+
 
 
 /* vim: set filetype=php : */

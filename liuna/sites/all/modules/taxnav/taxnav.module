@@ -9,6 +9,7 @@ $path ='admin/taxnav/rebuild';
 		$items[$path]['position'] 		= 'right';
 		$items[$path]['weight'] 		= '-100';
 		#$items[$path]['type'] 			=  MENU_CALLBACK;
+		$items[$path]['page callback'] 		= 'build';
 		$items[$path]['access arguments'] 	=  array('administer site configuration');
 		$items[$path]['file'] 			= 'build.taxnav.inc';
 		$items[$path]['file path'] 		=  drupal_get_path('module','taxnav');
@@ -16,10 +17,16 @@ $path ='admin/taxnav/rebuild';
 	return $items;
 };
 
+function taxnav_taxonomy_vocabulary_delete($vocabulary){ _taxnav_taxonomy_change(); }
+function taxnav_taxonomy_vocabulary_insert($vocabulary){ _taxnav_taxonomy_change(); }
+function taxnav_taxonomy_vocabulary_update($vocabulary){ _taxnav_taxonomy_change(); }
 
-function taxnav_taxonomy_vocabulary_update($vocabulary){
-
+function _taxnav_taxonomy_change(){
+	xdebug_break();
+	#include_once('./build.taxnav.inc');
+	#build();
 }
+
 
 /* vim: set filetype=php : */
 ?>

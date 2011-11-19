@@ -1,7 +1,7 @@
 <?php
 
 // function that builds a navigation based on a taxonomy vocabulary instance
-function build_menu(){
+function build(){
 echo('hello callback');
 }
 
