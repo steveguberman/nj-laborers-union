@@ -2,7 +2,9 @@
 
 // function that builds a navigation based on a taxonomy vocabulary instance
 function build(){
-echo('hello callback');
+	drupal_set_message('Building TaxNav Menu');
+
+
 }
 
 

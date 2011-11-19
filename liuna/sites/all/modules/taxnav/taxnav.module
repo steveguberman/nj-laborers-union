@@ -17,14 +17,15 @@ $path ='admin/taxnav/rebuild';
 	return $items;
 };
 
-function taxnav_taxonomy_vocabulary_delete($vocabulary){ _taxnav_taxonomy_change(); }
-function taxnav_taxonomy_vocabulary_insert($vocabulary){ _taxnav_taxonomy_change(); }
-function taxnav_taxonomy_vocabulary_update($vocabulary){ _taxnav_taxonomy_change(); }
+function taxnav_taxonomy_term_delete($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
+function taxnav_taxonomy_term_insert($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
+function taxnav_taxonomy_term_update($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
 
-function _taxnav_taxonomy_change(){
-	xdebug_break();
-	#include_once('./build.taxnav.inc');
-	#build();
+function _taxnav_taxonomy_change($vocabulary){
+	if($vocabulary->vid== variable_get('taxnav_vocabulary')){
+	include_once(drupal_get_path('module','taxnav').'/build.taxnav.inc');
+	build();
+	}
 }
 
 
