@@ -113,9 +113,10 @@ function theme_slider_block_item($item) {
 
 function theme_slider_block_widget($items) {
 	$output = "<div id='liuna-slider'>\n";
-	pretty_r($output);
 	foreach ($items['items'] as $slide) {
-		$output .= theme('slider_block_item', array('item' => $slide));
+		$output .= '<div class="slide">'."\n";
+		$output .= "<h2>{$slide['title']}</h2>\n";
+		$output .= "</div>\n";
 	}
 
 	$output .= "</div>\n";
