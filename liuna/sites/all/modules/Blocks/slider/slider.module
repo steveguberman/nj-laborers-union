@@ -92,7 +92,6 @@ function slider_menu() {
  * Implements hook_theme()
  */
 function slider_theme() {
-	pretty_r('slider_theme called');
 	return array(
 		'slider_block_item' => array(
 			'variables' => array('item' => NULL),
@@ -139,7 +138,7 @@ function slider_block_view($delta = '') {
 /**
  * Provides content for block_view function above
  */
-function slider_block_contents() {
+function slider_block_contents($delta) {
 	// hard-coded slider items for development
 	$slides = array(
 		array(
