@@ -10,7 +10,7 @@
  */
 function slider_block_info() {
 	$blocks['slider'] = array(
-		'info' => t('Display Slider w/ customizable slides'),
+		'info' => t('Slider w/ customizable slides'),
 		'status' => TRUE,
 		'region' => 'footer',
 		'weight' => 1,
@@ -53,10 +53,11 @@ END_JS;
 		foreach ($js_libs as $lib) {
 			drupal_add_js($lib, 'file');
 		}
-		drupal_add_js($custom_js);
+		drupal_add_js($custom_js, 'inline');
 		foreach ($css_files as $css) {
 			drupal_add_css($css, 'file');
 		}
+		pretty_r('Init complete');
 	}
 }
 
@@ -66,7 +67,7 @@ END_JS;
 function slider_menu() {
 	$items['admin/config/slider'] = array(
 		'title' => 'Slider',
-		'description' => 'Display a JavaScript slider w/ customizable slides',
+		'description' => 'JS Slider w/ customizable slides',
 		'position' => 'right',
 		'weight' => -5,
 		'page callback' => 'system_admin_menu_block_page',
@@ -91,12 +92,13 @@ function slider_menu() {
  * Implements hook_theme()
  */
 function slider_theme() {
+	pretty_r('slider_theme called');
 	return array(
 		'slider_block_item' => array(
-			'arguments' => array('item' => NULL),
+			'variables' => array('item' => NULL),
 		),
 		'slider_block_widget' => array(
-			'arguments' => array('items' => NULL),
+			'variables' => array('items' => NULL),
 		),
 	);
 }
@@ -112,7 +114,7 @@ function theme_slider_block_item($item) {
 
 function theme_slider_block_widget($items) {
 	$output = "<div id='liuna-slider'>\n";
-
+	pretty_r($output);
 	foreach ($items['items'] as $slide) {
 		$output .= theme('slider_block_item', array('item' => $slide));
 	}
@@ -129,6 +131,7 @@ function slider_block_view($delta = '') {
 		case 'slider':
 			$block['subject'] = t('Slider');
 			$block['content'] = slider_block_contents($delta);
+			pretty_r($block['content']);
 			break;
 	}
 }
