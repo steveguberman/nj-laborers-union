@@ -24,8 +24,25 @@ function slider_block_info() {
  * Implements hook_init()
  */
 function slider_init() {
+	// Load AnythingSlider jQuery library, dependencies, and base CSS
 	if (module_exists('libraries')) {
-
+		$slider_lib = libraries_get_path('anythingslider');
+		$js_libs = array(
+			$slider_lib . '/js/jquery.easing.1.2.js',
+			$slider_lib . '/js/swfobject.js',
+			$slider_lib . '/js/jquery.anythingslider.js',
+			$slider_lib . '/js/jquery.anythingslider.video.js',
+		);
+		$css_files = array(
+			$slider_lib . '/css/anythingslider.css',
+			$slider_lib . '/css/theme-metallic.css',
+		);
+		foreach ($js_libs as $lib) {
+			drupal_add_js($lib, 'file');
+		}
+		foreach ($css_files as $css) {
+			drupal_add_css($css, 'file');
+		}
 	}
 }
 
