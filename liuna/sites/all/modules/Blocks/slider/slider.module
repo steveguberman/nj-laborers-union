@@ -20,6 +20,16 @@ function slider_block_info() {
 }
 
 /**
+ * Slider module initialization
+ * Implements hook_init()
+ */
+function slider_init() {
+	if (module_exists('libraries')) {
+
+	}
+}
+
+/**
  * Implements hook_menu()
  */
 function slider_menu() {

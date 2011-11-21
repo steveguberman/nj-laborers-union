@@ -2,6 +2,7 @@ name = Slider
 description = "Displays a JavaScript slider with customizable slides"
 package = "Liuna Blocks"
 core = 7.x
+dependencies[] = libraries
 files[] = slider.module
 files[] = slider.admin.inc
 files[] = slider.install
