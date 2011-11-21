@@ -132,6 +132,7 @@ function slider_block_view($delta = '') {
 			$block['subject'] = t('Slider');
 			$block['content'] = slider_block_contents($delta);
 			pretty_r($block['content']);
+			return $block;
 			break;
 	}
 }
