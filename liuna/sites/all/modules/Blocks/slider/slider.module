@@ -113,7 +113,6 @@ function theme_slider_block_item($item) {
 
 function theme_slider_block_widget($items) {
 	$output = "<div id='liuna-slider'>\n";
-	pretty_r($output);
 	foreach ($items['items'] as $slide) {
 		$output .= theme('slider_block_item', array('item' => $slide));
 	}
@@ -131,6 +130,7 @@ function slider_block_view($delta = '') {
 			$block['subject'] = t('Slider');
 			$block['content'] = slider_block_contents($delta);
 			pretty_r($block['content']);
+			return $block;
 			break;
 	}
 }
