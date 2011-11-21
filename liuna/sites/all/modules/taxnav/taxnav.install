@@ -27,10 +27,11 @@ function taxnav_install()
 		$vocabulary_nav_field['field_name']	= 'taxnav_vocabulary';
 		$vocabulary_nav_field['type']		= 'taxonomy_term_reference';
 		$vocabulary_nav_field['settings'] 	=  array();
-			$vocabulary_nav_field['settings']['allowed_values'] = array();				
-				$vocabulary_nav_field['settings']['allowed_values']['vocabulary']	= 'taxnav_vocabulary';
-				$vocabulary_nav_field['settings']['allowed_values']['parent']		= '0';
-		xdebug_break();
+			$vocabulary_nav_field['settings']['allowed_values'] = array();
+				$vocabulary_nav_field['settings']['allowed_values'][0]=array();
+					$vocabulary_nav_field['settings']['allowed_values'][0]['vocabulary']	= 'taxnav_vocabulary';
+					$vocabulary_nav_field['settings']['allowed_values'][0]['parent']	= '0';
+					
 		field_create_field($vocabulary_nav_field);	
 }
 
