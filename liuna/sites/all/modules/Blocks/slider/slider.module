@@ -37,9 +37,23 @@ function slider_init() {
 			$slider_lib . '/css/anythingslider.css',
 			$slider_lib . '/css/theme-metallic.css',
 		);
+		$custom_js = <<<END_JS
+(function($){
+	$(document).ready(function() {
+		$('#slider').anythingSlider({
+			theme: 'metallic',
+			easing: 'easeInQuad',
+			onSlideComplete: function(slider) {
+				console.log('slide transition');
+			}
+		});
+	});
+})(jQuery);
+END_JS;
 		foreach ($js_libs as $lib) {
 			drupal_add_js($lib, 'file');
 		}
+		drupal_add_js($custom_js);
 		foreach ($css_files as $css) {
 			drupal_add_css($css, 'file');
 		}
