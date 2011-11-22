@@ -29,5 +29,63 @@ function _taxnav_taxonomy_change($vocabulary){
 }
 
 
+function taxnav_node_info(){
+	return array(
+		'taxnav'=> array(
+			'name' 		=> 'Taxnav Place Holder Pages',
+			'base' 		=> 'taxnav',
+			'description'	=> 'These pages are created for each taxonomy term created if no page exists for a term it will not be clickable',
+			'has_title'	=> 'TRUE',
+			'title_label'	=> 'Page Name',
+			'help'		=> 'Page will be displayed in menu in lui of taxonomy placeholders'
+		)
+	);
+};
+
+
+function taxnav_form($node,$form_state){
+	return node_content_form($node,$form_state);
+}
+
+function taxnav_validate($node,$form,$form_state){
+	dpm($form,'Form Values');
+}
+
+
+function taxnav_node_access($node, $op, $account) {
+
+	$type = is_string($node) ? $node : $node->type;
+
+	$q=user_access('create ' . $type . ' content', $account);
+	$qq=user_role_permissions(array('admin'));
+	$qqq='create ' . $type . ' content';
+
+  if (in_array($type, node_permissions_get_configured_types())) {
+    if ($op == 'create' && user_access('create ' . $type . ' content', $account)) {
+      return NODE_ACCESS_ALLOW;
+    }
+
+    if ($op == 'update') {
+      if (user_access('edit any ' . $type . ' content', $account) || (user_access('edit own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+
+    if ($op == 'delete') {
+      if (user_access('delete any ' . $type . ' content', $account) || (user_access('delete own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+  }
+
+  // Returning nothing from this function would have the same effect.
+  return NODE_ACCESS_IGNORE;
+}
+
+
+
+
+
+
 /* vim: set filetype=php : */
 ?>

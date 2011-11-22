@@ -3,6 +3,7 @@
 function taxnav_install()
 {
 	field_associate_fields('taxonomy');
+	node_types_rebuild();
 
 	$new_menu = array();
 		$new_menu['menu_name']		= 'taxnav_menu';
@@ -33,6 +34,14 @@ function taxnav_install()
 					$vocabulary_nav_field['settings']['allowed_values'][0]['parent']	= '0';
 					
 		field_create_field($vocabulary_nav_field);	
+
+
+	$types = node_type_get_types();
+	node_add_body_field($types['taxnav']);
+	$body_instance = field_info_instance('node','body','taxnav');
+		$body_instance['type'] = 'text_summary_or_trimmed';
+		field_update_instance($body_instance);
+
 }
 
 function taxnav_uninstall()
@@ -44,6 +53,15 @@ function taxnav_uninstall()
 	menu_delete($result->fetchAssoc());
 	variable_del('taxnav_vocabulary');
 	variable_del('taxnav_menu');
+	field_purge_batch(1000);
+
+	$sql	= 'Select nid FROM {node} n WHERE n.type = :type';
+	$result	= db_query($sql, array(':type' => 'taxnav'));
+	$nids	= array();
+		foreach($result as $row){ $nids[]= $row->nid; }
+	node_delete_multiple($nids);
+
+	node_type_delete('taxnav');
 	field_purge_batch(1000);
 }
 
