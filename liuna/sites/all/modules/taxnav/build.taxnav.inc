@@ -51,7 +51,6 @@ $processing=array();
 
 	drupal_set_message('Populating Menu Tree');
 
-	xdebug_break();
 
 	$plid=0;
 
@@ -84,6 +83,8 @@ $processing=array();
 		}
 	}
 	drupal_set_message('TaxNav Menu Built');
+	
+	
 }
 
 /*vim : set filetype=php : */

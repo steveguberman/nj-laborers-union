@@ -17,6 +17,9 @@ $path ='admin/taxnav/rebuild';
 	return $items;
 };
 
+function taxnav_permission(){
+}
+
 function taxnav_taxonomy_term_delete($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
 function taxnav_taxonomy_term_insert($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
 function taxnav_taxonomy_term_update($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
@@ -27,6 +30,8 @@ function _taxnav_taxonomy_change($vocabulary){
 	build();
 	}
 }
+
+
 
 
 function taxnav_node_info(){
@@ -43,14 +48,26 @@ function taxnav_node_info(){
 };
 
 
+
+
 function taxnav_form($node,$form_state){
 	return node_content_form($node,$form_state);
 }
 
-function taxnav_validate($node,$form,$form_state){
-	dpm($form,'Form Values');
+/* universal form override
+function taxnav_form_alter(&$form,&$form_state,$form_id){
+}
+*/
+
+function taxnav_form_taxnav_node_form_alter(&$form,&$form_state,$form_id){
+	$form['options']['#access']=user_access('edit any taxnav content');
+	xdebug_break();
 }
 
+/* custom validation
+function taxnav_validate($node,$form,$form_state){
+}
+*/
 
 function taxnav_node_access($node, $op, $account) {
 
@@ -81,11 +98,6 @@ function taxnav_node_access($node, $op, $account) {
   // Returning nothing from this function would have the same effect.
   return NODE_ACCESS_IGNORE;
 }
-
-
-
-
-
 
 /* vim: set filetype=php : */
 ?>
