@@ -33,7 +33,7 @@ function taxnav_install()
 					$vocabulary_nav_field['settings']['allowed_values'][0]['vocabulary']	= 'taxnav_vocabulary';
 					$vocabulary_nav_field['settings']['allowed_values'][0]['parent']	= '0';
 					
-		field_create_field($vocabulary_nav_field);	
+		field_create_field($vocabulary_nav_field);
 
 
 	$types = node_type_get_types();
@@ -42,13 +42,29 @@ function taxnav_install()
 		$body_instance['type'] = 'text_summary_or_trimmed';
 		field_update_instance($body_instance);
 
+	$tid_to_node	= array();
+		$tid_to_node['field_name'] 	= 'tid_to_node';
+		$tid_to_node['type'] 		= 'number_integer';
+
+		field_create_field($tid_to_node);
+
+	$instance_tid_to_node	= array();
+		$instance_tid_to_node['field_name']	= 'tid_to_node';
+		$instance_tid_to_node['entity_type']	= 'tid_to_node';
+		$instance_tid_to_node['bundle']		= 'taxnav';
+		$instance_tid_to_node['required']	=  TRUE;
+		
+		field_create_instance($instance_tid_to_node);
 }
 
 function taxnav_uninstall()
 {
 	drupal_load('module', 'taxonomy');
 	taxonomy_vocabulary_delete(variable_get('taxnav_vocabulary'));
+	
 	field_delete_field('taxnav_vocabulary');
+	field_delete_field('tid_to_node');
+	
 	$result = db_query("SELECT * FROM menu_custom WHERE menu_name=:menu_name", array( 'menu_name'=> variable_get('taxnav_menu') ) );
 	menu_delete($result->fetchAssoc());
 	variable_del('taxnav_vocabulary');

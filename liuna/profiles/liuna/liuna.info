@@ -4,6 +4,7 @@ version = VERSION
 core = 7.x
 dependencies[] = block
 dependencies[] = menu
+dependencies[] = numbers
 dependencies[] = devel
 dependencies[] = devel_node_access
 dependencies[] = examples
