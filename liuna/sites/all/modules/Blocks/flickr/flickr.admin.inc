@@ -19,6 +19,22 @@ function flickr_admin_settings() {
 		'#default_value' => variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?nsid=62751423@N00&lang=en-us&format=php_serial'),
 	);
 
+	$form['flickr_block_settings']['flickr_api_key'] = array(
+		'#title' => 'Flickr API Key',
+		'#type' => 'textfield',
+		'#description' => 'Enter your Flickr API key',
+		'#required' => true,
+		'#default_value' => variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428'),
+	);
+
+	$form['flickr_block_settings']['flickr_profile_url'] = array(
+		'#title' => 'Flickr Profile URL',
+		'#type' => 'textfield',
+		'#description' => 'Enter the full URL to your Flickr profile page',
+		'#required' => true,
+		'#default_value' => variable_get('flickr_profile_url', 'http://www.flickr.com/photos/njlaborers/'),
+	);
+
 	$form['flickr_block_settings']['flickr_num_photos'] = array(
 		'#title' => 'Number of Photos',
 		'#type' => 'textfield',
@@ -29,13 +45,23 @@ function flickr_admin_settings() {
 
 	$form['#submit'][] = 'flickr_admin_settings_submit';
 
-	pretty_r($form);
 	return system_settings_form($form);
 }
 
 function flickr_admin_settings_submit($form, $form_state) {
+	$profile_url = urlencode($form_state['values']['flickr_profile_url']);
+	$api_key     = urlencode($form_state['values']['flickr_api_key']);
+
 	variable_set('flickr_feed_url', $form_state['values']['flickr_feed_url']);
 	variable_set('flickr_num_photos', $form_state['values']['flickr_num_photos']);
+	variable_set('flickr_api_key', $form_state['values']['flickr_api_key']);
+	variable_set('flickr_profile_url', $form_state['values']['flickr_profile_url']);
+
+	$nsid_request = file_get_contents("http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key={$api_key}&url={$profile_url}");
+	if ($nsid = unserialize($nsid_request)) {
+		variable_set('flickr_user_nsid', $nsid['user']['id']);
+	}
+	
 }
 
 // vim: set ft=php :

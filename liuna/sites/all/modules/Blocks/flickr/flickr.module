@@ -25,7 +25,7 @@ function flickr_block_info() {
 function flickr_menu() {
 	$items['admin/config/flickr'] = array(
 		'title' => 'Flickr',
-		'description' => 'Display a grid of thumbnails from a Flickr feed',
+		'description' => 'Displays a random selection of a user\'s Flickr favorites',
 		'position' => 'right',
 		'weight' => -5,
 		'page callback' => 'system_admin_menu_block_page',
@@ -136,13 +136,30 @@ function flickr_block_view($delta = '') {
 function flickr_block_contents($delta) {
 	switch ($delta) {
 	case 'flickr':
-		$feed_url = variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?nsid=62751423@N00&lang=en-us&format=php_serial');
+		$user_id     = urlencode(variable_get('flickr_user_nsid', '62751423@N00'));
+		$api_key     = urlencode(variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428'));
 		$photo_count = variable_get('flickr_num_photos', 16);
-		$flickr_feed = file_get_contents($feed_url);
+		$flickr_url  = "http://api.flickr.com/services/rest/?method=flickr.favorites.getPublicList&api_key={$api_key}&user_id={$user_id}&format=php_serial";
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $flickr_url);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		$flickr_photos = curl_exec();
 
-		if ($feed = unserialize($flickr_feed)) {
-			xdebug_break();
-			$content = theme('flickr_thumbnail_grid', array('items' => $feed['items'], 'photo_count' => $photo_count));
+		if ($feed = unserialize($flickr_photos)) {
+			$photos = $feed['photos']['photo'];
+
+			if ($photo_count >= count($photos)) {
+				$photo_selection = $photos;
+			} else {
+				$photo_selection = array();
+				$randomized = shuffle($photos);
+
+				for ($i = 0; $i < $photo_count; $i++) {
+					$photo_selection[] = $photos[$i];
+				}
+			}
+
+			$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection));
 			//return $content;
 			return array('#markup' => $content);
 		}
