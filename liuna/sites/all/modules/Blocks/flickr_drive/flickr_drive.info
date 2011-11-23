@@ -1,0 +1,10 @@
+name = Flickr Drive Box Widget
+description = "Displays a chronological list of tagged photos"
+package = "Liuna Blocks"
+core = 7.x
+files[] = flickr-drive.module
+files[] = flickr-drive.admin.inc
+files[] = flickr-drive.install
+files[] = flickr-drive.uninstall
+
+configure=admin/config/flickr-drive/settings
