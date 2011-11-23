@@ -60,14 +60,14 @@ function flickr_theme() {
 
 function theme_flickr_thumbnail_grid($items) {
 	$limit  = $items['photo_count'];
-	$photos = flickr_assemble_photo_array($items['items'], $limit);
+	$photos = flickr_assemble_photo_array($items['items']);
 
 	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
 	foreach($photos as $photo) {
 		$output .= <<<END_LIST_ITEM
 <li class="flickr-thumb">
 	<a href="{$photo['url']}" class="photo-wrap {$photo['class']}">
-		<img src="{$photo['src']}" width="{$photo['width']}" height="{$photo['height']}" alt="{$photo['alt']}" />
+		<img src="{$photo['source']}" width="{$photo['width']}" height="{$photo['height']}" alt="{$photo['label']}" />
 	</a>
 </li>
 END_LIST_ITEM;
@@ -81,34 +81,25 @@ END_LIST_ITEM;
  *
  * Assembles an array of landscape photos for use in the Flickr thumbnail grid
  */
-function flickr_assemble_photo_array($items, $limit) {
+function flickr_assemble_photo_array($items) {
 	$output = array();
-	$count  = 0;
 	foreach ($items as $item) {
-		if ($count++ > $limit) break;
-
-		// Parse Flickr's pre-built HTML string for image data
-		$dom = new DOMDocument;
-		$dom->loadHTML($item['description']);
-		$img = $dom->getElementsByTagName('img')->item(0);
-
-		// grab image attributes
-		$photo_data = array(
-			'width'    => (int)$img->getAttribute('width') / 2,
-			'height'   => (int)$img->getAttribute('height') / 2,
-			'src'      => $img->getAttribute('src'),
-			'alt'      => $img->getAttribute('alt'),
-			'url'      => $item['url'],
-			'raw_html' => $item['description'],
+		$api_key = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
+		$photo_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key={$api_key}&photo_id={$item['id']}&format=php_serial";
+		$curl = curl_init();
+		$curl_opts = array(
+			CURLOPT_URL => $photo_url,
+			CURLOPT_RETURNTRANSFER => true,
 		);
+		curl_setopt_array($curl, $curl_opts);
+		$resp = curl_exec($curl);
 
-		$photo_data['class'] = ($photo_data['width'] > $photo_data['height']) ? 'landscape' : 'portrait';
-
-		// skip portrait images
-		//if ($photo_data['height'] > $photo_data['width']) continue;
-
-		// otherwise, append photo to output array
-		$output[] = $photo_data;
+		if (array_key_exists('sizes', $resp)) {
+			$sizes      = $resp['sizes'];
+			$photo_data = $sizes[2];
+			$photo_data['class'] = $photo_data['width'] > $photo_data['height'] ? 'landscape' : 'portrait';
+			$output[]   = $photo_data;
+		}
 	}
 
 	$remainder = count($output) % 6;
@@ -142,7 +133,7 @@ function flickr_block_contents($delta) {
 		$flickr_url  = "http://api.flickr.com/services/rest/?method=flickr.favorites.getPublicList&api_key={$api_key}&user_id={$user_id}&format=php_serial";
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $flickr_url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		$flickr_photos = curl_exec();
 
 		if ($feed = unserialize($flickr_photos)) {
