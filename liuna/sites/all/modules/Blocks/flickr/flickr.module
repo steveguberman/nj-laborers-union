@@ -151,16 +151,11 @@ function flickr_block_contents($delta) {
 			if ($photo_count >= count($photos)) {
 				$photo_selection = $photos;
 			} else {
-				$photo_selection = array();
-				$randomized = shuffle($photos);
-
-				for ($i = 0; $i < $photo_count; $i++) {
-					$photo_selection[] = $photos[$i];
-				}
+				$randomized      = shuffle($photos);
+				$photo_selection = array_slice($randomized, 0, $photo_count);
 			}
 
 			$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection));
-			//return $content;
 			return array('#markup' => $content);
 		}
 
