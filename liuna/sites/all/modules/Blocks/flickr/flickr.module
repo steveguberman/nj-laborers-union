@@ -133,20 +133,17 @@ function flickr_block_contents($delta) {
 		$photo_count   = variable_get('flickr_num_photos', 16);
 		$flickr        = new Flickr($api_key);
 		$flickr_photos = $flickr->get_favorites($user_id);
+		$photos        = $flickr_photos['photo'];
 
-		if ($feed = unserialize($flickr_photos)) {
-			$photos = $feed['photo'];
-
-			if ($photo_count >= count($photos)) {
-				$photo_selection = $photos;
-			} else {
-				$randomized      = shuffle($photos);
-				$photo_selection = array_slice($randomized, 0, $photo_count);
-			}
-
-			$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection));
-			return array('#markup' => $content);
+		if ($photo_count >= count($photos)) {
+			$photo_selection = $photos;
+		} else {
+			$randomized      = shuffle($photos);
+			$photo_selection = array_slice($randomized, 0, $photo_count);
 		}
+
+		$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection));
+		return array('#markup' => $content);
 
 		break;
 	}
