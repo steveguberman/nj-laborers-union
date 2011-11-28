@@ -62,6 +62,8 @@ function flickr_theme() {
 	return array(
 		'flickr_thumbnail_grid' => array(
 			'variables' => array('items' => NULL),
+			'template' => 'flickr-thumbnail-grid.tpl.php',
+			'file' => 'flickr.block.inc',
 		),
 	);
 }
