@@ -96,7 +96,7 @@ function flickr_assemble_photo_array($items) {
 			CURLOPT_RETURNTRANSFER => true,
 		);
 		curl_setopt_array($curl, $curl_opts);
-		$resp = curl_exec($curl);
+		$resp = unserialize(curl_exec($curl));
 
 		if (array_key_exists('sizes', $resp)) {
 			$sizes      = $resp['sizes'];
