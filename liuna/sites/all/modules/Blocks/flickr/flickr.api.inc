@@ -49,7 +49,7 @@ class Flickr {
 
 		try {
 			$faves = $this->fire_request();
-			return $faves;
+			return $faves['photos'];
 		} catch (Exception $e) {
 			if (function_exists('pretty_r')) {
 				pretty_r("Flickr API caught exception: " . $e->getMessage());
@@ -75,7 +75,7 @@ class Flickr {
 
 		try {
 			$sizes = $this->fire_request();
-			return $sizes;
+			return $sizes['sizes'];
 		} catch (Exception $e) {
 			if (function_exists('pretty_r')) {
 				pretty_r("Flickr API caught exception: " . $e->getMessage());

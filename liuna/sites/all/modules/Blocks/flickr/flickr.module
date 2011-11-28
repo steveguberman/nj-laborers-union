@@ -6,6 +6,14 @@
  */
 
 /**
+ * Implementation of hook_init()
+ */
+function flickr_init() {
+	$flickr_path = drupal_get_path('module', 'flickr');
+	require_once($flickr_path . '/flickr.api.inc');
+}
+
+/**
  * Implementation of hook_block_info()
  */
 function flickr_block_info() {
@@ -84,21 +92,11 @@ END_LIST_ITEM;
  */
 function flickr_assemble_photo_array($items) {
 	$output = array();
+	$api_key = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
+	$flickr = new Flickr($api_key);
+
 	foreach ($items as $item) {
-		$api_key = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
-		$photo_url = flickr_api_url(array(
-			'method'   => 'flickr.photos.getSizes',
-			'api_key'  => $api_key,
-			'photo_id' => $item['id'],
-			'format'   => 'php_serial',
-		));
-		$curl = curl_init();
-		$curl_opts = array(
-			CURLOPT_URL => $photo_url,
-			CURLOPT_RETURNTRANSFER => true,
-		);
-		curl_setopt_array($curl, $curl_opts);
-		$resp = unserialize(curl_exec($curl));
+		$resp = $flickr->get_sizes($item['id']);
 
 		if (array_key_exists('sizes', $resp)) {
 			$sizes      = $resp['sizes']['size'];
@@ -115,20 +113,6 @@ function flickr_assemble_photo_array($items) {
 	}
 
 	return $output;
-}
-
-/**
- * Helper: Build Flickr API URL
- */
-function flickr_api_url($args) {
-	$base = "http://api.flickr.com/services/rest/?";
-	if (0 < count($args)) {
-		foreach ($args as $key => $val) {
-			$encoded_val = urlencode($val);
-			$base .= "{$key}={$encoded_val}&";	
-		}
-	}
-	return rtrim($base, "&?");
 }
 
 /**
