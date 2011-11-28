@@ -106,9 +106,10 @@ function flickr_assemble_photo_array($items) {
 		}
 	}
 
-	$remainder = count($output) % 6;
-	if ($remainder) {
-		$output = array_slice($output, 0, count($output) - $remainder);
+	$nitems = count($output);
+	$remainder = $nitems % 6;
+	if ($remainder && 6 < $nitems) {
+		$output = array_slice($output, 0, $nitems - $remainder);
 	}
 
 	return $output;
