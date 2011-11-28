@@ -59,7 +59,20 @@ function flickr_drive_menu() {
  * Implementation of hook_theme()
  */
 function flickr_drive_theme() {
+	return array(
+		'flickr_drive_thumbnail_list' => array(
+			'arguments' => array('items' => NULL),
+		),
+	);
+}
 
+/**
+ * Theme function: build unordered list of thumbnails for display
+ */
+function theme_flickr_drive_thumbnail_list($items) {
+	$photos = $items['items'];
+	$output = "<ul id='flickr-drive-box'></ul>";
+	return $output;
 }
 
 /**
