@@ -99,7 +99,7 @@ function flickr_assemble_photo_array($items) {
 		$resp = unserialize(curl_exec($curl));
 
 		if (array_key_exists('sizes', $resp)) {
-			$sizes      = $resp['sizes'];
+			$sizes      = $resp['sizes']['size'];
 			$photo_data = $sizes[2];
 			$photo_data['class'] = $photo_data['width'] > $photo_data['height'] ? 'landscape' : 'portrait';
 			$output[]   = $photo_data;
