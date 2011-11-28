@@ -92,6 +92,14 @@ function flickr_drive_block_view($delta = '') {
 function flickr_drive_block_contents($delta) {
 	switch ($delta) {
 	case 'flickr':
+		$api_key    = variable_get('flickr_drive_api_key', '6dccccbedab9f442055f9d2a25ab6428');
+		$user_id    = variable_get('flickr_drive_user_nsid', '62751423@N00');
+		$tag        = variable_get('flickr_drive_photo_tag', 'njldrive');
+		$num_photos = variable_get('flickr_drive_num_photos', 2);
+		$flickr     = new Flickr($api_key);
+		$photos     = $flickr->get_tagged_photos($tag, $num_photos);
+		$photos     = $photos['photo'];
+
 		return array('#markup' => "foo");
 	}
 }

@@ -51,10 +51,34 @@ class Flickr {
 			$faves = $this->fire_request();
 			return $faves['photos'];
 		} catch (Exception $e) {
-			if (function_exists('pretty_r')) {
-				pretty_r("Flickr API caught exception: " . $e->getMessage());
-				return false;
-			}
+			$this->log_error($e->getMessage());
+			return false;
+		}
+	}
+
+	/**
+	 * Get tagged photos
+	 *
+	 * Calls flickr.photos.search and finds photos with the given tag
+	 *
+	 * $tags should be a string, a comma delimited list of tags or a single tag.
+	 */
+	public function get_tagged_photos($tags, $per_page=50, $page_num=1) {
+		$url = $this->build_api_url(array(
+			'method'   => 'flickr.photos.search',
+			'tags'     => $tags,
+			'page'     => $page_num,
+			'per_page' => $per_page,
+		));
+
+		curl_setopt($this->curl, CURLOPT_URL, $url);
+
+		try {
+			$resp = $this->fire_request();
+			return $resp['photos'];
+		} catch (Exception $e) {
+			$this->log_error($e->getMessage());
+			return false;
 		}
 	}
 
@@ -77,11 +101,42 @@ class Flickr {
 			$sizes = $this->fire_request();
 			return $sizes['sizes']['size'];
 		} catch (Exception $e) {
-			if (function_exists('pretty_r')) {
-				pretty_r("Flickr API caught exception: " . $e->getMessage());
-				return false;
-			}
+			$this->log_error($e->getMessage());
+			return false;
 		}
+	}
+
+	/**
+	 * Lookup Flickr user's NSID via the URL to their profile
+	 *
+	 * Calls flickr.urls.lookupUser and returns their NSID as a string
+	 */
+	public function lookup_user_id($url) {
+		$url = $this->build_api_url(array(
+			'method'  => 'flickr.urls.lookupUser',
+			'api_key' => $this->api_key,
+			'url'     => $url,
+		));
+
+		curl_setopt($this->curl, CURLOPT_URL, $url);
+
+		try {
+			$url = $this->fire_request();
+			return $url['user']['id'];
+		} catch (Exception $e) {
+			$this->log_error($e->getMessage());
+			return false;
+		}
+	}
+
+	/**
+	 * Log exception via pretty_r if available (private)
+	 */
+	private function log_error($msg) {
+		if function_exists('pretty_r') {
+			pretty_r($msg);
+		}
+		return null;
 	}
 
 	/**

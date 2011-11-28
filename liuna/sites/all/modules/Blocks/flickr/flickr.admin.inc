@@ -49,19 +49,19 @@ function flickr_admin_settings() {
 }
 
 function flickr_admin_settings_submit($form, $form_state) {
+	$flickr_path = drupal_get_path('module', 'flickr');
+	require_once($flickr_path . '/flickr.api.inc');
+
 	$profile_url = urlencode($form_state['values']['flickr_profile_url']);
 	$api_key     = urlencode($form_state['values']['flickr_api_key']);
+	$flickr      = new Flickr($api_key);
+	$user_id     = $flickr->lookup_user_id($profile_url);
 
+	variable_set('flickr_user_nsid', $user_id);
 	variable_set('flickr_feed_url', $form_state['values']['flickr_feed_url']);
 	variable_set('flickr_num_photos', $form_state['values']['flickr_num_photos']);
 	variable_set('flickr_api_key', $form_state['values']['flickr_api_key']);
 	variable_set('flickr_profile_url', $form_state['values']['flickr_profile_url']);
-
-	$nsid_request = file_get_contents("http://api.flickr.com/services/rest/?method=flickr.urls.lookupUser&api_key={$api_key}&url={$profile_url}");
-	if ($nsid = unserialize($nsid_request)) {
-		variable_set('flickr_user_nsid', $nsid['user']['id']);
-	}
-	
 }
 
 // vim: set ft=php :
