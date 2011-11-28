@@ -151,5 +151,9 @@ function flickr_block_contents($delta) {
 	}
 }
 
+function template_preprocess_flickr_thumbnail_grid(&$variables) {
+	$variables['foo'] = "moobs";
+}
+
 // vim: set ft=php :
 ?>

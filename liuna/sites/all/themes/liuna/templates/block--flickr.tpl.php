@@ -7,3 +7,4 @@
 ?>
 <h1>Flickr Feed</h1>
 <?php echo $variables['elements']['#markup']; ?>
+<?php pretty_r($variables); ?>
