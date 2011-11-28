@@ -66,6 +66,7 @@ class Flickr {
 	public function get_tagged_photos($tags, $per_page=50, $page_num=1) {
 		$url = $this->build_api_url(array(
 			'method'   => 'flickr.photos.search',
+			'api_key'  => $this->api_key,
 			'tags'     => $tags,
 			'page'     => $page_num,
 			'per_page' => $per_page,
