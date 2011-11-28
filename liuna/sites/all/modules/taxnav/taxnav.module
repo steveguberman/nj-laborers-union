@@ -2,7 +2,7 @@
 
 function taxnav_menu() {
 
-$path ='admin/taxnav/rebuild';
+$path ='admin/taxnav/';
 	$items[$path]=array();
 		$items[$path]['title'] 			= 'Tax Nav Build';
 		$items[$path]['desciption'] 		= 'Collect all node that are assigned the tax nav vocabulary and build their tree';
@@ -20,18 +20,93 @@ $path ='admin/taxnav/rebuild';
 function taxnav_permission(){
 }
 
-function taxnav_taxonomy_term_delete($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
-function taxnav_taxonomy_term_insert($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
-function taxnav_taxonomy_term_update($vocabulary){ _taxnav_taxonomy_change($vocabulary); }
 
-function _taxnav_taxonomy_change($vocabulary){
-	if($vocabulary->vid== variable_get('taxnav_vocabulary')){
-	include_once(drupal_get_path('module','taxnav').'/build.taxnav.inc');
-	build();
+/////////////////////////////////////////////////////////////////////
+// CREATE A NEW SECTION
+function taxnav_taxonomy_term_insert($term){ 
+	if($term->vid== variable_get('taxnav_vocabulary')){
+	_create_taxnav_page($term);
+	_create_taxnav_tree($term); 
+	}
+}
+// CHANGE A SECTIONS NAME
+function taxnav_taxonomy_term_update($term){ 
+	if($term->vid== variable_get('taxnav_vocabulary')){
+	_create_taxnav_tree($term); 
+	}
+}
+// DELETE A SECTION 
+function taxnav_taxonomy_term_delete($term){ 
+	if($term->vid== variable_get('taxnav_vocabulary')){
+	_create_taxnav_tree($term); 
+	_delete_taxnav_page($term);
 	}
 }
 
+/////////////////////////////////////////////////////////////////////
 
+/*
+	Include the file with the build function 
+*/
+function _create_taxnav_tree($term){
+	include_once(drupal_get_path('module','taxnav').'/build.taxnav.inc');
+	build();
+}
+
+
+function _create_taxnav_page($term){
+xdebug_break();
+	drupal_set_message('Creating term page');
+
+	$body_text = "Please update this information!";
+
+	$node = new stdClass();
+	$node->type = 'taxnav';
+
+	node_object_prepare($node);
+
+	$node->title = 'Node created for term '.$term->name;
+	$node->language =  LANGUAGE_NONE;
+
+	$node->body[$node->language][0]['value']	= $body_text;
+	$node->body[$node->language][0]['summary']	= text_summary($body_text);
+	$node->body[$node->language][0]['format']	= 'plain_text';
+
+	$node->tid_to_node[$node->language][0]['value'] = $term->tid;
+
+	// ['path']
+
+	dpm($node,'Creating Term page');
+
+	node_save($node);
+	drupal_set_message('Term Page Saved');
+}
+
+
+// now with zero % error checking
+function _delete_taxnav_page($term){
+	node_delete(_taxnav_page_from_tid($term->tid)->nid);
+}
+
+// o boy this should have some error checking
+function _taxnav_page_from_tid($tid){
+	drupal_set_message('Searching for term page');
+	$query = new EntityFieldQuery;
+		$query->entityCondition('entity_type','node');
+		$query->propertyCondition('type','taxnav');
+		$query->fieldCondition('tid_to_node','value',$tid,'=');
+			$results = $query->execute();
+	
+	drupal_set_message('Querying for term page');
+	dpm($results,'Query Results');
+
+		foreach($results as $node){
+			foreach($node as $entry){
+				drupal_set_message("Returned Node $entry->nid");
+				return node_load($entry->nid);
+			}
+		}
+}
 
 
 function taxnav_node_info(){

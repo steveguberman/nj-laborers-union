@@ -7,3 +7,5 @@ dependencies[]  =  number
 files[]		= 'taxnav.module'
 files[]		= 'taxnav.admin.inc'
 files[]		= 'taxnav.install'
+
+configure=admin/config/taxnav/settings

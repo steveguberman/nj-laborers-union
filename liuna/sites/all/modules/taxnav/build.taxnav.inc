@@ -54,16 +54,18 @@ $processing=array();
 
 	$plid=0;
 
-	foreach($tree as $leaf){
+	foreach($tree as $tid => $leaf){
 	drupal_set_message('Creating Leaf');
 	dpm($leaf);
 			if(!$leaf['parent_list']){
 			$plid=0;
 			}
+	
+	$taxnav_page=_taxnav_page_from_tid($tid);
 
 			$item=array();
-				$item['link_path']	= drupal_get_normal_path("node/1");
-				$item['link_title']	= 'DUMMYLINK '.$leaf['name'];
+				$item['link_path']	= drupal_get_normal_path("node/$taxnav_page->nid");
+				$item['link_title']	= '__'.$leaf['name'];
 				$item['menu_name']	= variable_get('taxnav_menu');			
 				$item['plid']		= $plid;
 					$plid=menu_link_save($item);

@@ -45,16 +45,20 @@ function taxnav_install()
 	$tid_to_node	= array();
 		$tid_to_node['field_name'] 	= 'tid_to_node';
 		$tid_to_node['type'] 		= 'number_integer';
-
 		field_create_field($tid_to_node);
 
 	$instance_tid_to_node	= array();
 		$instance_tid_to_node['field_name']	= 'tid_to_node';
-		$instance_tid_to_node['entity_type']	= 'tid_to_node';
+		$instance_tid_to_node['entity_type']	= 'node';
+		$instance_tid_to_node['label']	= 'tid_to_node';
 		$instance_tid_to_node['bundle']		= 'taxnav';
-		$instance_tid_to_node['required']	=  TRUE;
-		
+			$instance_tid_to_node['widget']		= array();
+				$instance_tid_to_node['type']		= 'number';
+			$instance_tid_to_node['display']	= array();
+				$instance_tid_to_node['display']['default']	= array();
+					$instance_tid_to_node['display']['default']['type']	= 'number_integer';
 		field_create_instance($instance_tid_to_node);
+		
 }
 
 function taxnav_uninstall()
