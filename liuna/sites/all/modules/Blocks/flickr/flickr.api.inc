@@ -133,7 +133,7 @@ class Flickr {
 	 * Log exception via pretty_r if available (private)
 	 */
 	private function log_error($msg) {
-		if function_exists('pretty_r') {
+		if (function_exists('pretty_r')) {
 			pretty_r($msg);
 		}
 		return null;
