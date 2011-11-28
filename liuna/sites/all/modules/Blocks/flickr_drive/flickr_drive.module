@@ -71,7 +71,17 @@ function flickr_drive_theme() {
  */
 function theme_flickr_drive_thumbnail_list($items) {
 	$photos = $items['items'];
-	$output = "<ul id='flickr-drive-box'></ul>";
+	$output = "<ul id='flickr-drive-box'>";
+
+	foreach ($photos as $photo) {
+		$width = $photo['width'] / 2;
+		$height = $photo['height'] / 2;
+		$output .= "<li>\n<a href='{$photo['fullsize']}' target='_blank'>\n";
+		$output .= "\t<img src='{$photo['source']}' width='{$width}' height='{$height}' />\n";
+		$output .= "</a>\n</li>";
+	}
+
+	$output .= "\n</ul>\n";
 	return $output;
 }
 
@@ -97,10 +107,23 @@ function flickr_drive_block_contents($delta) {
 		$tag        = variable_get('flickr_drive_photo_tag', 'njldrive');
 		$num_photos = variable_get('flickr_drive_num_photos', 2);
 		$flickr     = new Flickr($api_key);
-		$photos     = $flickr->get_tagged_photos($tag, $num_photos);
-		$photos     = $photos['photo'];
+		$tagged     = $flickr->get_tagged_photos($tag, $num_photos);
+		$photos     = array();
 
-		return array('#markup' => "foo");
+		// Grab data for each matches photo
+		foreach ($tagged['photo'] as $photo) {
+			if (!isset($photo['id'])) continue;
+			$sizes = $flickr->get_sizes($photo['id']);
+			$photo_data = $sizes[2];
+			$photo_data['class'] = $photo_data['width'] > $photo_data['height'] ? 'landscape' : 'portrait';
+			$photo_data['fullsize'] = $sizes[4]['url'];
+			$photos[] = $photo_data;
+		}
+
+		$html = theme('flickr_drive_thumbnail_list', array('items' => $photos));
+
+		return array('#markup' => $html);
+		break;
 	}
 }
 
