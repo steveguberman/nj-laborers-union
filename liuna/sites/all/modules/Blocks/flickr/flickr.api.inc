@@ -69,6 +69,7 @@ class Flickr {
 			'tags'     => $tags,
 			'page'     => $page_num,
 			'per_page' => $per_page,
+			'format'   => 'php_serial',
 		));
 
 		curl_setopt($this->curl, CURLOPT_URL, $url);
@@ -116,6 +117,7 @@ class Flickr {
 			'method'  => 'flickr.urls.lookupUser',
 			'api_key' => $this->api_key,
 			'url'     => $url,
+			'format'  => 'php_serial',
 		));
 
 		curl_setopt($this->curl, CURLOPT_URL, $url);
