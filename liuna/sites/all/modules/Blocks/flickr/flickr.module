@@ -96,14 +96,10 @@ function flickr_assemble_photo_array($items) {
 	$flickr = new Flickr($api_key);
 
 	foreach ($items as $item) {
-		$resp = $flickr->get_sizes($item['id']);
-
-		if (array_key_exists('size', $resp)) {
-			$sizes      = $resp['size'];
-			$photo_data = $sizes[2];
-			$photo_data['class'] = $photo_data['width'] > $photo_data['height'] ? 'landscape' : 'portrait';
-			$output[]   = $photo_data;
-		}
+		$sizes = $flickr->get_sizes($item['id']);
+		$photo_data = $sizes[2];
+		$photo_data['class'] = $photo_data['width'] > $photo_data['height'] ? 'landscape' : 'portrait';
+		$output[]   = $photo_data;
 	}
 
 	$nitems = count($output);

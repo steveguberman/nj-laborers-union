@@ -75,7 +75,7 @@ class Flickr {
 
 		try {
 			$sizes = $this->fire_request();
-			return $sizes['sizes'];
+			return $sizes['sizes']['size'];
 		} catch (Exception $e) {
 			if (function_exists('pretty_r')) {
 				pretty_r("Flickr API caught exception: " . $e->getMessage());
