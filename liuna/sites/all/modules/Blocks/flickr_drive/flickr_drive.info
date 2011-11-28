@@ -6,5 +6,6 @@ files[] = flickr-drive.module
 files[] = flickr-drive.admin.inc
 files[] = flickr-drive.install
 files[] = flickr-drive.uninstall
+dependencies[] = flickr
 
 configure=admin/config/flickr-drive/settings
