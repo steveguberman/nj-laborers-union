@@ -515,7 +515,7 @@ function taxonomy_overview_terms_submit($form, &$form_state) {
   foreach ($changed_terms as $changed) {
     
     //You need the to retrieve the full term object for hook invocation
-    $term = taxonomy_term_load($changed->tid); 
+    $term = (object)$changed; 
    
     module_invoke_all('taxonomy_term_presave', $term);
     module_invoke_all('entity_presave', $term, 'taxonomy_term');  
