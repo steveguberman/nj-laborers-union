@@ -1,15 +1,17 @@
 name = Liuna
-description = Liuna development/deploy build =/
+description = Liuna development build.
 version = VERSION
 core = 7.x
 dependencies[] = block
 dependencies[] = menu
+dependencies[] = number
 dependencies[] = devel
 dependencies[] = devel_node_access
 dependencies[] = examples
 dependencies[] = googleanalytics
 dependencies[] = libraries
 dependencies[] = spohelpers
+dependencies[] = taxonomy
 
 files[]=liuna.profile
 

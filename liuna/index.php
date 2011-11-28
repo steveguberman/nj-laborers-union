@@ -2,6 +2,12 @@
 ini_set('display_errors', 1); 
 error_reporting(E_ALL);
 
+if(!function_exists('xdebug_break')){
+	function xdebug_break(){
+	trigger_error('REMOVE Debug functions from script!',E_WARNING);
+	}
+}
+
 //ini_set('error_log', dirname(__FILE__) . '/error_log.txt'); 
 
 /**

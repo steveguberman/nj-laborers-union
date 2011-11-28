@@ -513,7 +513,13 @@ function taxonomy_overview_terms_submit($form, &$form_state) {
 
   // Save all updated terms.
   foreach ($changed_terms as $changed) {
-    $term = (object) $changed;
+    
+    //You need the to retrieve the full term object for hook invocation
+    $term = (object)$changed; 
+   
+    module_invoke_all('taxonomy_term_presave', $term);
+    module_invoke_all('entity_presave', $term, 'taxonomy_term');  
+
     // Update term_hierachy and term_data directly since we don't have a
     // fully populated term object to save.
     db_update('taxonomy_term_hierarchy')
@@ -525,13 +531,25 @@ function taxonomy_overview_terms_submit($form, &$form_state) {
       ->fields(array('weight' => $term->weight))
       ->condition('tid', $term->tid, '=')
       ->execute();
+	
+    module_invoke_all("taxonomy_term_update", $term);
+    module_invoke_all("entity_update", $term, 'taxonomy_term');
   }
 
   // Update the vocabulary hierarchy to flat or single hierarchy.
   if ($vocabulary->hierarchy != $hierarchy) {
+    module_invoke_all('taxonomy_vocabulary_presave', $vocabulary);
+    module_invoke_all('entity_presave', $vocabulary, 'taxonomy_vocabulary');
+
     $vocabulary->hierarchy = $hierarchy;
     taxonomy_vocabulary_save($vocabulary);
+	
+    module_invoke_all('taxonomy_vocabulary_update', $vocabulary);
+    module_invoke_all('entity_update', $vocabulary, 'taxonomy_vocabulary');
   }
+
+	
+
   drupal_set_message(t('The configuration options have been saved.'));
 }
 

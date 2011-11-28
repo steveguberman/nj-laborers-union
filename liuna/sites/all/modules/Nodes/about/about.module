@@ -63,42 +63,9 @@ function about_node_info(){
  * Implement hook_form() with the standard default form.
  */
 function about_form($node,$form_state){
+	xdebug_break();
 	return node_content_form($node,$form_state);
 }
-
-
-/**
- * Implements hook_node_access()
- */
-
-/*
-function about_node_access($node,$op,$account){
-$is_author = $account->uid == $node->uid;
-
-xdebug_break();
-
-switch($op){
-		//Allow if user's role has 'create about' permission.
-		case 'create':
-		if(user_access('create about',$account)){
-			return NODE_ACCES_ALLOW;
-		}
-		//Allow if user's role has 'edit about' permission.
-		case 'update':
-		if( user_access('edit own about',$account) && $is_author ||
-		    user_access('edit any about',$account) ){
-			return NODE_ACCES_ALLOW;
-		}
-		//Allow if user's role has 'delete about permission'
-		case 'delete':
-		if( user_access('delete own about',$account) && $is_author ||
-		    user_access('delete any about',$account) ){
-			return NODE_ACCES_ALLOW;
-		}
-	}
-
-}
-*/
 
 function about_node_access($node, $op, $account) {
  
@@ -131,6 +98,14 @@ xdebug_break();
   // Returning nothing from this function would have the same effect.
   return NODE_ACCESS_IGNORE;
 }
+
+
+
+function about_node_insert($node){
+	
+}
+
+
 
 
 /* vim: set filetype=php : */

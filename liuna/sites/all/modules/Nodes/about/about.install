@@ -1,32 +1,34 @@
 <?php
-
 /**
  * @file
  * Install file for About pages node.
  */
-
-/**
- * Implements hook_install()
- * - Add the tile field
- * - Add the body field
- * - Configure the body field
- */
-
 function about_install()
 {
+	// If modules where loaded during this run of hook install make sure previous modules have had
+	// database entries and node types have been updated
 	node_types_rebuild();
+
+
 	$types = node_type_get_types();
-
-	// Add the nodes body field
 	node_add_body_field($types['about']);
-	// Load the instance definition for out content type`s body
 	$body_instance = field_info_instance('node','body','about');
-	// Configure the body field
-	$body_instance['type'] = 'text_summary_or_trimmed';
+		$body_instance['type'] = 'text_summary_or_trimmed';
+		field_update_instance($body_instance);
 
-	// Save the changes to the body field instance.
-	field_update_instance($body_instance);
 
+	$vocabulary_nav_field_instance = array();
+	$vocabulary_nav_field_instance['field_name']	= 'taxnav_vocabulary';
+	$vocabulary_nav_field_instance['entity_type']	= 'node';
+ 	$vocabulary_nav_field_instance['bundle'] 	= 'about';
+	 	$vocabulary_nav_field_instance['widget'] 	= array();
+			$vocabulary_nav_field_instance['widget']['type']	= 'options_select';
+			 	$vocabulary_nav_field_instance['widget']['display'] 	= array();
+				 	$vocabulary_nav_field_instance['widget']['display']['full'] = array();
+					 	$vocabulary_nav_field_instance['widget']['display']['full']['type'] = 'taxonomy_term_reference_link';
+	
+						field_create_instance($vocabulary_nav_field_instance);
+/*
 	// Create all the fields we are adding to out content type.
 	foreach ( _about_installed_fields() as $field){
 		#field_create_field($field);
@@ -38,68 +40,54 @@ function about_install()
 		#$instance['bundle']	= 'about';
 		#field_create_instance($instance);
 	}
+*/
 }
-
-//as per ~/projects/nj-laborers-union/liuna/modules/forum/forum.install
-
-  // If we enable forum at the same time as taxonomy we need to call
-  // field_associate_fields() as otherwise the field won't be enabled until
-  // hook modules_enabled is called which takes place after hook_enable events.
 
 /**
- * Implements hook_enable()
+ * Implements hook_enable() function about_enable(){}
  */
-
-function about_enable(){
-  field_associate_fields('taxonomy');
-
-$vocabulary = taxonomy_vocabulary_load(variable_get('about_nav_vocabulary', 0));
-	if (!$vocabulary) {
-		$edit = array(
-		'name' => About,
-		'machine_name' => 'about',
-		'description' => 'Sub pages for the about navigation section',
-		'hierarchy' => 1,
-		'module' => 'about',
-		'weight' => 0,
-		);
-			$vocabulary = (object) $edit;
-		
-		taxonomy_vocabulary_save($vocabulary);
-		} // this may be in the wrong place!
-		variable_set('about_nav_vocabulary', $vocabulary->vid);
-}
-
-
+/*
 function  _about_installed_fields(){
-	return array(
-		'title'=> array(
-			'field_name'	=> 'about_title',
-			'label'		=> 'Name of the page',
-			'type'		=> 'text',
-			),
-		);
+	return $fields
 }
 
 function _about_installed_instances(){
-	return array(
-		'title'	=> array(
-			'field_name'	=> 'about_title',
-			'type'		=> 'text',
-			'label'		=> 'Name of the page',
-			'widget'	=> array(
-					'type'	=> 'text_field',
-					),
-			'display'	=> array(
-					'Pages List'	=> array(
-							'label'	=> 'Name of the Page',
-							'type'	=> 'text',
-							),
-					),
-			),
-		);
+	return $fields
 }
+*/
 
+
+function about_uninstall()
+{
+
+
+	$sql	= 'Select nid FROM {node} n WHERE n.type = :type';
+	$result	= db_query($sql, array(':type' => 'about'));
+	$nids	= array();
+
+		foreach($result as $row){ $nids[]= $row->nid; }
+		
+		
+	node_delete_multiple($nids);
+
+/*
+// Loop over each of the fields defined by this module and delete
+// all instances of the field, their data, and the field itself.
+	foreach(array_keys(_about_installed_fields()) as $field){
+	field_delete_field($field);
+	}
+
+// Loop over any remaining field instances attached to the job_post
+// content type ( such as the body field) and delete them individually.
+	$instances = field_info_instances('node','about');
+	foreach( $instances as $instance_name => $instance ){
+		field_delete_instance($instance);
+	}
+*/
+
+	node_type_delete('about');
+	field_purge_batch(1000);
+}
 
 
 /* vim: set filetype=php : */

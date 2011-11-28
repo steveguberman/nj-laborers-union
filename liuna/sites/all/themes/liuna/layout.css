@@ -59,17 +59,28 @@ body.two-sidebars #sidebar-first {
 /**
  * Flickr Thumbnail Grid Styles
  */
+
+#flickr-thumbnail-grid  {
+	border:solid;
+	border-width:1px;
+	width:780px;
+	height:400px;
+	background-color:#000000;
+	list-style:none;
+}
+
+
+
 #flickr-thumbnail-grid a {
-	border: none;
+	border: solid;
+	border-width:1px;
 	width: 120px;
 	height: 120px;
 	float: left;
 }
 
-#flickr-thumbnail-grid a.landscape {
-	padding-top: 22px;
+#flickr-thumbnail-grid a.landscape img{
 }
 
-#flickr-thumbnail-grid a.portrait {
-	padding-left: 32px;
+#flickr-thumbnail-grid a.portrait img{
 }

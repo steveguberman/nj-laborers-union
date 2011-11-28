@@ -1,0 +1,178 @@
+<?php
+
+function taxnav_menu() {
+
+$path ='admin/taxnav/';
+	$items[$path]=array();
+		$items[$path]['title'] 			= 'Tax Nav Build';
+		$items[$path]['desciption'] 		= 'Collect all node that are assigned the tax nav vocabulary and build their tree';
+		$items[$path]['position'] 		= 'right';
+		$items[$path]['weight'] 		= '-100';
+		#$items[$path]['type'] 			=  MENU_CALLBACK;
+		$items[$path]['page callback'] 		= 'build';
+		$items[$path]['access arguments'] 	=  array('administer site configuration');
+		$items[$path]['file'] 			= 'build.taxnav.inc';
+		$items[$path]['file path'] 		=  drupal_get_path('module','taxnav');
+	
+	return $items;
+};
+
+function taxnav_permission(){
+}
+
+
+/////////////////////////////////////////////////////////////////////
+// CREATE A NEW SECTION
+function taxnav_taxonomy_term_insert($term){ 
+	if($term->vid== variable_get('taxnav_vocabulary')){
+	_create_taxnav_page($term);
+	_create_taxnav_tree($term); 
+	}
+}
+// CHANGE A SECTIONS NAME
+function taxnav_taxonomy_term_update($term){ 
+	if($term->vid== variable_get('taxnav_vocabulary')){
+	_create_taxnav_tree($term); 
+	}
+}
+// DELETE A SECTION 
+function taxnav_taxonomy_term_delete($term){ 
+	if($term->vid== variable_get('taxnav_vocabulary')){
+	_create_taxnav_tree($term); 
+	_delete_taxnav_page($term);
+	}
+}
+
+/////////////////////////////////////////////////////////////////////
+
+/*
+	Include the file with the build function 
+*/
+function _create_taxnav_tree($term){
+	include_once(drupal_get_path('module','taxnav').'/build.taxnav.inc');
+	build();
+}
+
+
+function _create_taxnav_page($term){
+xdebug_break();
+	drupal_set_message('Creating term page');
+
+	$body_text = "Please update this information!";
+
+	$node = new stdClass();
+	$node->type = 'taxnav';
+
+	node_object_prepare($node);
+
+	$node->title = 'Node created for term '.$term->name;
+	$node->language =  LANGUAGE_NONE;
+
+	$node->body[$node->language][0]['value']	= $body_text;
+	$node->body[$node->language][0]['summary']	= text_summary($body_text);
+	$node->body[$node->language][0]['format']	= 'plain_text';
+
+	$node->tid_to_node[$node->language][0]['value'] = $term->tid;
+
+	// ['path']
+
+	dpm($node,'Creating Term page');
+
+	node_save($node);
+	drupal_set_message('Term Page Saved');
+}
+
+
+// now with zero % error checking
+function _delete_taxnav_page($term){
+	node_delete(_taxnav_page_from_tid($term->tid)->nid);
+}
+
+// o boy this should have some error checking
+function _taxnav_page_from_tid($tid){
+	drupal_set_message('Searching for term page');
+	$query = new EntityFieldQuery;
+		$query->entityCondition('entity_type','node');
+		$query->propertyCondition('type','taxnav');
+		$query->fieldCondition('tid_to_node','value',$tid,'=');
+			$results = $query->execute();
+	
+	drupal_set_message('Querying for term page');
+	dpm($results,'Query Results');
+
+		foreach($results as $node){
+			foreach($node as $entry){
+				drupal_set_message("Returned Node $entry->nid");
+				return node_load($entry->nid);
+			}
+		}
+}
+
+
+function taxnav_node_info(){
+	return array(
+		'taxnav'=> array(
+			'name' 		=> 'Taxnav Place Holder Pages',
+			'base' 		=> 'taxnav',
+			'description'	=> 'These pages are created for each taxonomy term created if no page exists for a term it will not be clickable',
+			'has_title'	=> 'TRUE',
+			'title_label'	=> 'Page Name',
+			'help'		=> 'Page will be displayed in menu in lui of taxonomy placeholders'
+		)
+	);
+};
+
+
+
+
+function taxnav_form($node,$form_state){
+	return node_content_form($node,$form_state);
+}
+
+/* universal form override
+function taxnav_form_alter(&$form,&$form_state,$form_id){
+}
+*/
+
+function taxnav_form_taxnav_node_form_alter(&$form,&$form_state,$form_id){
+	$form['options']['#access']=user_access('edit any taxnav content');
+	xdebug_break();
+}
+
+/* custom validation
+function taxnav_validate($node,$form,$form_state){
+}
+*/
+
+function taxnav_node_access($node, $op, $account) {
+
+	$type = is_string($node) ? $node : $node->type;
+
+	$q=user_access('create ' . $type . ' content', $account);
+	$qq=user_role_permissions(array('admin'));
+	$qqq='create ' . $type . ' content';
+
+  if (in_array($type, node_permissions_get_configured_types())) {
+    if ($op == 'create' && user_access('create ' . $type . ' content', $account)) {
+      return NODE_ACCESS_ALLOW;
+    }
+
+    if ($op == 'update') {
+      if (user_access('edit any ' . $type . ' content', $account) || (user_access('edit own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+
+    if ($op == 'delete') {
+      if (user_access('delete any ' . $type . ' content', $account) || (user_access('delete own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+  }
+
+  // Returning nothing from this function would have the same effect.
+  return NODE_ACCESS_IGNORE;
+}
+
+/* vim: set filetype=php : */
+?>
