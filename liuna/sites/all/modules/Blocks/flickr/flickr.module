@@ -96,6 +96,7 @@ function flickr_assemble_photo_array($items) {
 	$flickr = new Flickr($api_key);
 
 	foreach ($items as $item) {
+		if (!isset($item['id'])) continue;
 		$sizes = $flickr->get_sizes($item['id']);
 		$photo_data = $sizes[2];
 		$photo_data['class'] = $photo_data['width'] > $photo_data['height'] ? 'landscape' : 'portrait';
