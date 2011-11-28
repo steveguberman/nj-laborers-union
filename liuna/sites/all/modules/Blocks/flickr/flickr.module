@@ -85,7 +85,12 @@ function flickr_assemble_photo_array($items) {
 	$output = array();
 	foreach ($items as $item) {
 		$api_key = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
-		$photo_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key={$api_key}&photo_id={$item['id']}&format=php_serial";
+		$photo_url = flickr_api_url(array(
+			'method'   => 'flickr.photos.getSizes',
+			'api_key'  => $api_key,
+			'photo_id' => $item['id'],
+			'format'   => 'php_serial',
+		));
 		$curl = curl_init();
 		$curl_opts = array(
 			CURLOPT_URL => $photo_url,
@@ -111,6 +116,20 @@ function flickr_assemble_photo_array($items) {
 }
 
 /**
+ * Helper: Build Flickr API URL
+ */
+function flickr_api_url($args) {
+	$base = "http://api.flickr.com/services/rest/?";
+	if (0 < count($args)) {
+		foreach ($args as $key => $val) {
+			$encoded_val = urlencode($val);
+			$base .= "{$key}={$encoded_val}&";	
+		}
+	}
+	return rtrim($base, "&?");
+}
+
+/**
  * Implementation of hook_block_view()
  */
 function flickr_block_view($delta = '') {
@@ -130,11 +149,16 @@ function flickr_block_contents($delta) {
 		$user_id     = urlencode(variable_get('flickr_user_nsid', '62751423@N00'));
 		$api_key     = urlencode(variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428'));
 		$photo_count = variable_get('flickr_num_photos', 16);
-		$flickr_url  = "http://api.flickr.com/services/rest/?method=flickr.favorites.getPublicList&api_key={$api_key}&user_id={$user_id}&format=php_serial";
+		$flickr_url  = flickr_api_url(array(
+			'method'  => 'flickr.favorites.getPublicList',
+			'api_key' => $api_key,
+			'user_id' => $user_id,
+			'format'  => 'php_serial',
+		));
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $flickr_url);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-		$flickr_photos = curl_exec();
+		$flickr_photos = curl_exec($curl);
 
 		if ($feed = unserialize($flickr_photos)) {
 			$photos = $feed['photos']['photo'];
