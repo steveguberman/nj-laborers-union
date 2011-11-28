@@ -63,10 +63,12 @@ function theme_flickr_thumbnail_grid($items) {
 
 	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
 	foreach($photos as $photo) {
+		$width = $photo['width'] / 2;
+		$height = $photo['height'] / 2;
 		$output .= <<<END_LIST_ITEM
 <li class="flickr-thumb">
 	<a href="{$photo['url']}" class="photo-wrap {$photo['class']}">
-		<img src="{$photo['source']}" width="{$photo['width']}" height="{$photo['height']}" alt="{$photo['label']}" />
+		<img src="{$photo['source']}" width="{$width}" height="{$height}" alt="{$photo['label']}" />
 	</a>
 </li>
 END_LIST_ITEM;
