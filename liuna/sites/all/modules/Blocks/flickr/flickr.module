@@ -146,8 +146,8 @@ function flickr_block_view($delta = '') {
 function flickr_block_contents($delta) {
 	switch ($delta) {
 	case 'flickr':
-		$user_id     = urlencode(variable_get('flickr_user_nsid', '62751423@N00'));
-		$api_key     = urlencode(variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428'));
+		$user_id     = variable_get('flickr_user_nsid', '62751423@N00');
+		$api_key     = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
 		$photo_count = variable_get('flickr_num_photos', 16);
 		$flickr_url  = flickr_api_url(array(
 			'method'  => 'flickr.favorites.getPublicList',
@@ -156,8 +156,12 @@ function flickr_block_contents($delta) {
 			'format'  => 'php_serial',
 		));
 		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_URL, $flickr_url);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		$curl_opts = array(
+			CURLOPT_URL => $flickr_url,
+			CURLOPT_RETURNTRANSFER => true,
+		);
+		curl_setopt_array($curl, $curl_opts);
+
 		$flickr_photos = curl_exec($curl);
 
 		if ($feed = unserialize($flickr_photos)) {
