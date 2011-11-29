@@ -1,6 +1,6 @@
 <ul id="flickr-thumbnail-grid">
-	<?php pretty_r($photos); ?>
 	<?php foreach ($photos as $thumb): ?>
+		<?php if (!isset($thumb)) continue; ?>
 		<?php
 		$width = $thumb['width'] / 2;
 		$height = $thumb['height'] / 2;

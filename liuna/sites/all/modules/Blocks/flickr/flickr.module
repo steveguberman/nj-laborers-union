@@ -146,7 +146,7 @@ function flickr_block_contents($delta) {
 			$photo_selection = array_slice($randomized, 0, $photo_count);
 		}
 
-		$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection));
+		$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection, 'api_key' => $api_key));
 		return array('#markup' => $content);
 
 		break;
