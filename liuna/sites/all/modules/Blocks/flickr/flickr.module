@@ -61,13 +61,13 @@ function flickr_menu() {
 function flickr_theme() {
 	return array(
 		'flickr_thumbnail_grid' => array(
-			'variables' => array('items' => NULL),
-			'template' => 'flickr-thumbnail-grid.tpl.php',
+			'variables' => array('items' => NULL, 'api_key' => NULL),
 			'file' => 'flickr.block.inc',
+			'template' => 'flickr-thumbnail-grid',
 		),
 	);
 }
-
+/*
 function theme_flickr_thumbnail_grid($items) {
 	$photos = flickr_assemble_photo_array($items['items']);
 
@@ -86,6 +86,7 @@ END_LIST_ITEM;
 	$output .= "</ul>";
 	return $output;
 }
+ */
 
 /**
  * Helper: assemble_photo_array($items, $limit)
