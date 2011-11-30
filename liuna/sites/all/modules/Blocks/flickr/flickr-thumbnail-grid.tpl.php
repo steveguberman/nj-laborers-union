@@ -16,7 +16,7 @@
 
 <ul id="flickr-thumbnail-grid">
 	<?php foreach ($photos as $thumb): ?>
-		<?php if (!isset($thumb)) continue; ?>
+		<?php if (!isset($thumb['width'])) continue; ?>
 		<?php
 		$width = $thumb['width'] / 2;
 		$height = $thumb['height'] / 2;
