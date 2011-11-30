@@ -73,7 +73,7 @@ function flickr_drive_theme() {
  */
 function flickr_drive_block_view($delta = '') {
 	switch ($delta) {
-		case 'flickr':
+		case 'flickr_drive':
 			$block['subject'] = t('Flickr Drive Box Block');
 			$block['content'] = flickr_drive_block_contents($delta);
 			return $block;
@@ -84,14 +84,13 @@ function flickr_drive_block_view($delta = '') {
 // provides content for block_view function above
 function flickr_drive_block_contents($delta) {
 	switch ($delta) {
-	case 'flickr':
+	case 'flickr_drive':
 		$api_key    = variable_get('flickr_drive_api_key', '6dccccbedab9f442055f9d2a25ab6428');
 		$user_id    = variable_get('flickr_drive_user_nsid', '62751423@N00');
 		$tag        = variable_get('flickr_drive_photo_tag', 'njldrive');
 		$num_photos = variable_get('flickr_drive_num_photos', 2);
 		$flickr     = new Flickr($api_key);
 		$tagged     = $flickr->get_tagged_photos($tag, $num_photos);
-		$photos     = array();
 
 		$html = theme('flickr_drive_thumbnail_list', array('items' => $tagged['photo'], 'api_key' => $api_key));
 
