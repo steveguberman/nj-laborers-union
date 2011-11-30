@@ -19,7 +19,7 @@
 		<?php if (!isset($thumb['width'])) continue; ?>
 		<li class="flickr-thumb">
 			<a href="<?php echo $thumb['url']; ?>" class="photo-wrap <?php echo $thumb['class']; ?>">
-				<img src="<?php echo $thumb['source']; ?>" width="<?php echo $width; ?>" height="<?php echo $height; ?>" alt="<?php echo $thumb['label']; ?>"/>
+				<img src="<?php echo $thumb['source']; ?>" width="<?php echo $thumb['width']; ?>" height="<?php echo $thumb['height']; ?>" alt="<?php echo $thumb['label']; ?>"/>
 			</a>
 		</li>
 	<?php endforeach; ?>
