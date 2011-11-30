@@ -10,6 +10,7 @@ function template_preprocess_flickr_thumbnail_grid(&$variables) {
 		$data = @$flickr->get_sizes($photo['id']);
 		$thumb = $data[2];
 		$thumb['url'] = $data[count($data)-1]['url'];
+		$thumb['class'] = ($thumb['width'] > $thumb['height']) ? "landscape" : "portrait";
 		$photos[] = $thumb;
 	}
 	$variables['photos'] = $photos;
