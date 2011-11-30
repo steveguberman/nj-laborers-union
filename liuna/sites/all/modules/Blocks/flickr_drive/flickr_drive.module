@@ -62,7 +62,7 @@ function flickr_drive_theme() {
 	return array(
 		'flickr_drive_thumbnail_list' => array(
 			'variables' => array('items' => NULL, 'api_key' => NULL),
-			'file' => 'flickr-drive.block.inc',
+			'file' => 'flickr_drive.block.inc',
 			'template' => 'flickr-drive-thumbnail-list',
 		),
 	);
