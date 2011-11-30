@@ -5,5 +5,7 @@
  * Renders a Flickr feed (as serialized PHP) into a grid of thumbnails with links to the original image.
  */
 ?>
-<h1>Flickr Feed</h1>
-<?php echo $variables['elements']['#markup']; ?>
+<div id="flickr-feed">
+	<h1>Flickr Feed</h1>
+	<?php echo $variables['elements']['#markup']; ?>
+</div>
