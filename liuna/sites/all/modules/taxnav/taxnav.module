@@ -2,7 +2,7 @@
 
 function taxnav_menu() {
 
-$path ='admin/taxna';
+$path ='admin/taxnav';
 	$items[$path]=array();
 		$items[$path]['title'] 			= 'Tax Nav Build';
 		$items[$path]['description'] 		= 'Catagories Menu';
@@ -120,19 +120,22 @@ function taxnav_node_info(){
 };
 
 
-
-
 function taxnav_form($node,$form_state){
 	return node_content_form($node,$form_state);
 }
 
 /* universal form override
 function taxnav_form_alter(&$form,&$form_state,$form_id){
-}
+}/asdd
 */
 
 function taxnav_form_taxnav_node_form_alter(&$form,&$form_state,$form_id){
-	$form['options']['#access']=user_access('edit any taxnav content');
+
+	$form['options']['#access']		= user_access('edit any taxnav content');
+	#$form['body']['und'][0]['#type'] 	= 'textarea';
+	#$form['body']['und'][0]['#base_type'] 	= 'textarea';
+	dpm($form,'Form');
+
 	xdebug_break();
 }
 
