@@ -82,3 +82,35 @@ body.two-sidebars #sidebar-first {
 
 #flickr-thumbnail-grid a.portrait img{
 }
+
+/**
+ * Slider Module Custom Styles
+ */
+#block-slider-slider {
+	width: 900px;
+	margin: 20px auto;
+}
+
+#liuna-slider a {
+	display: block;
+	width: 900px;
+	height: 290px;
+}
+
+#slider-thumbnails {
+	list-style: none;
+	padding-left: 0;
+	margin: 10px auto;
+	width: 900px;
+	padding-left: 23px;
+}
+
+#slider-thumbnails li {
+	float: left;
+	width: 200px;
+	margin-right: 20px;
+}
+
+.clear {
+	clear: both;
+}

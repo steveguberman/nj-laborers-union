@@ -13,11 +13,8 @@
  * - $href: URL that the slide should link to.
  */
 ?>
-<li class="panel" data-title="<?php echo $title_encoded; ?>" data-caption="<?php echo $caption_encoded; ?>">
+<li data-title="<?php echo $title_encoded; ?>" data-caption="<?php echo $caption_encoded; ?>" data-thumb="<?php echo $thumb; ?>">
 	<a href="<?php echo $href; ?>" class="slide-link">
 		<img src="<?php echo $src; ?>" width="900" height="290" alt="<?php echo $title_encoded; ?>"/>
 	</a>
-	<div class="thumbnail" style="display: none;">
-		<img src="<?php echo $thumb; ?>" width="200" height="100" alt="<?php echo $title_encoded; ?>" />
-	</div>
 </li>

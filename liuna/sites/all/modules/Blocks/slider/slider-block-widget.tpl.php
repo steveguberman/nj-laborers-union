@@ -13,3 +13,6 @@
 		<?php echo $slide; ?>
 	<?php endforeach; ?>
 </ul>
+<ul id="slider-thumbnails">
+</ul>
+<div class="clear"></div>

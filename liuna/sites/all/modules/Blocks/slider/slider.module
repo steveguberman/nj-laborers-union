@@ -43,6 +43,31 @@ function slider_init() {
 		$custom_js = <<<END_JS
 (function($){
 	$(document).ready(function() {
+		$('#liuna-slider').find('li').each(function(idx) {
+			var thumbURL = $(this).attr('data-thumb'),
+				img = new Image(),
+				target = $('#slider-thumbnails');
+
+			img.src = thumbURL;
+			img.width = 200;
+			img.height = 100;
+
+			var listItem = $('<li/>', {
+					'class': 'slider-thumb'
+				}),
+				thumbLink = $('<a/>', {
+					'href': '#',
+					data: {
+						slideIndex: idx
+					},
+					click: function(evt) {
+						$('#liuna-slider').anythingSlider($(this).data('slideIndex'));
+						return false;
+					}
+				});
+			thumbLink.append(img);
+			listItem.append(thumbLink).appendTo(target);
+		});
 		$('#liuna-slider').anythingSlider({
 			width: 900,
 			height: 290,
@@ -136,22 +161,22 @@ function slider_block_contents($delta) {
 		array(
 			'title'   => 'Outer Space',
 			'caption' => 'Lorem ipsum dollar',
-			'src'     => 'http://flickholdr.com/900/290/astronomy',
-			'thumb'   => 'http://flickholdr.com/200/100/astronomy',
+			'src'     => 'http://placehold.it/900/290',
+			'thumb'   => 'http://placehold.it/200/100',
 			'href'    => 'http://google.com',
 		),
 		array(
 			'title'   => 'Inner Space',
 			'caption' => 'Journey to the center of the mind',
-			'src'     => 'http://flickholdr.com/900/290/mind',
-			'thumb'   => 'http://flickholdr.com/200/100/mind',
+			'src'     => 'http://placehold.it/900/290',
+			'thumb'   => 'http://placehold.it/200/100',
 			'href'    => 'http://flickr.com',
 		),
 		array(
 			'title'   => 'Landscape',
 			'caption' => 'Landscapes are pretty',
-			'src'     => 'http://flickholdr.com/900/290/landscape',
-			'thumb'   => 'http://flickholdr.com/200/100/landscape',
+			'src'     => 'http://placehold.it/900/290',
+			'thumb'   => 'http://placehold.it/200/100',
 			'href'    => 'http://njl.verge180.com/',
 		),
 	);
