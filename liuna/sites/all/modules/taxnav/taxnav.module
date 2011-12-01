@@ -2,17 +2,45 @@
 
 function taxnav_menu() {
 
-$path ='admin/taxnav';
-	$items[$path]=array();
-		$items[$path]['title'] 			= 'Tax Nav Build';
-		$items[$path]['description'] 		= 'Catagories Menu';
-		$items[$path]['weight'] 		= '-100';
-		$items[$path]['access arguments']	=  array('access adminstration pages');
-		$items[$path]['type'] 			=  MENU_NORMAL_ITEM;
-		$items[$path]['page callback'] 		= 'taxnav_permission';
+$access = array(TRUE);
+$items=array();
 
-	return $items;
+$manage ='taxnav';
+	$items[$manage]=array();
+		$items[$manage]['title'] 		= 'Tax Nav Build';
+		$items[$manage]['description'] 		= 'Catagories Menu';
+		$items[$manage]['weight'] 		= '0';
+		$items[$manage]['access arguments']	=  $access;
+		$items[$manage]['file path']		=  drupal_get_path('module','taxonomy');
+		$items[$manage]['file']			= 'taxonomy.admin.inc';
+		$items[$manage]['page callback'] 	= 'drupal_get_form';
+		$items[$manage]['page arguments']	=  array('taxonomy_overview_terms', taxonomy_vocabulary_load(variable_get('taxnav_vocabulary')));
+
+$add	='taxnav/add';
+	$items[$add]=array();
+		$items[$add]['title']			= 'add new section';
+		$items[$add]['description']		= 'create new section';
+		$items[$add]['weight']			= '100';
+		$items[$add]['access arguments']	= $access;
+		$items[$add]['file path']		= drupal_get_path('module','taxonomy');
+		$items[$add]['file']			= 'taxonomy.admin.inc';
+		$items[$add]['page arguments']		=  array('taxonomy_form_term',array(),taxonomy_vocabulary_load(variable_get('taxnav_vocabulary')));
+		$items[$add]['type']			=  MENU_LOCAL_ACTION;
+		
+$view	='taxnav_view';
+	$items[$view]=array();
+		$items[$view]['title'] 			= 'Tax Nav View';
+		$items[$view]['description'] 		= 'View all navs';
+		$items[$view]['weight'] 		= '0';
+		$items[$view]['access arguments']	=  $access;
+		$items[$view]['file path']		=  drupal_get_path('module','taxonomy');
+		$items[$view]['page callback'] 		= 'node_view';
+		$items[$view]['page arguments']		=  array(_taxnav_nodes());
+
+
+		return $items;
 };
+
 
 function taxnav_permission(){
 }
@@ -75,6 +103,22 @@ xdebug_break();
 function _delete_taxnav_page($term){
 	node_delete(_taxnav_page_from_tid($term->tid)->nid);
 }
+
+
+function _taxnav_nodes(){
+	$query = new EntityFieldQuery;
+		$query->entityCondition('entity_type','node');
+		$query->propertyCondition('type','taxnav');
+			$results = $query->execute();
+	$nodes = array();
+		foreach($results as $unwrap){
+			foreach($unwrap as $node){
+			array_push($nodes,node_load($node->nid));
+			}
+		}
+	return $nodes;
+}
+
 
 function _taxnav_page_from_tid($tid){
 	drupal_set_message('Searching for term page');
