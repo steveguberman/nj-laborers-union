@@ -25,6 +25,9 @@ function slider_block_info() {
  */
 function slider_init() {
 	// Load AnythingSlider jQuery library, dependencies, and base CSS
+	$slider_easing = variable_get('slider_animation_easing', 'easeOutQuad');
+	$slider_speed  = variable_get('slider_animation_speed', 400);
+
 	if (module_exists('libraries')) {
 		$slider_lib = libraries_get_path('anythingslider');
 		$js_libs = array(
@@ -40,9 +43,9 @@ function slider_init() {
 		$custom_js = <<<END_JS
 (function($){
 	$(document).ready(function() {
-		$('#slider').anythingSlider({
+		$('#liuna-slider').anythingSlider({
 			theme: 'metallic',
-			easing: 'easeInQuad',
+			easing: '$slider_easing',
 			onSlideComplete: function(slider) {
 				console.log('slide transition');
 			}
