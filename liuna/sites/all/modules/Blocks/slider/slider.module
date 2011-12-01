@@ -73,7 +73,7 @@ function slider_init() {
 			theme: 'naked',
 			height: 290,
 			resizeContents: false,
-			autoPlay: false,
+			autoPlay: true,
 			easing: '$slider_easing',
 			onSlideComplete: function(slider) {
 				console.log('slide transition');

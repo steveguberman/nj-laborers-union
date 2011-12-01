@@ -16,5 +16,8 @@
 <li data-title="<?php echo $title_encoded; ?>" data-caption="<?php echo $caption_encoded; ?>" data-thumb="<?php echo $thumb; ?>">
 	<a href="<?php echo $href; ?>" class="slide-link">
 		<img src="<?php echo $src; ?>" width="900" height="290" alt="<?php echo $title_encoded; ?>"/>
+		<p class="caption">
+			<?php echo $title; ?>
+		</p>
 	</a>
 </li>
