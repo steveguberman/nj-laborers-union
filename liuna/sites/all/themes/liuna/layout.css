@@ -88,7 +88,7 @@ body.two-sidebars #sidebar-first {
  */
 #block-slider-slider {
 	width: 900px;
-	margin: 20px auto;
+	margin: 10px auto;
 }
 
 #liuna-slider a {
@@ -100,9 +100,9 @@ body.two-sidebars #sidebar-first {
 #slider-thumbnails {
 	list-style: none;
 	padding-left: 0;
-	margin: 10px auto;
+	margin: 0px auto;
 	width: 900px;
-	padding-left: 23px;
+	padding-left: 45px;
 }
 
 #slider-thumbnails li {

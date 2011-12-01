@@ -38,7 +38,7 @@ function slider_init() {
 		);
 		$css_files = array(
 			$slider_lib . '/css/anythingslider.css',
-			$slider_lib . '/css/theme-metallic.css',
+			$slider_lib . '/css/theme-naked.css',
 		);
 		$custom_js = <<<END_JS
 (function($){
