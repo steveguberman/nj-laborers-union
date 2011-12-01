@@ -44,6 +44,10 @@ function slider_init() {
 (function($){
 	$(document).ready(function() {
 		$('#liuna-slider').anythingSlider({
+			width: 900,
+			height: 290,
+			resizeContents: false,
+			autoPlay: false,
 			theme: 'metallic',
 			easing: '$slider_easing',
 			onSlideComplete: function(slider) {
@@ -60,7 +64,6 @@ END_JS;
 		foreach ($css_files as $css) {
 			drupal_add_css($css, 'file');
 		}
-		pretty_r('Init complete');
 	}
 }
 

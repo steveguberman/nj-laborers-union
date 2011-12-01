@@ -8,19 +8,8 @@
  */
 ?>
 
-<div id="liuna-slider">
-	<span class="arrow back">
-		<a href="#">&laquo;</a>
-	</span>
-	<span class="arrow forward">
-		<a href="#">&raquo;</a>
-	</span>
-
-	<div class="slider-window">
-		<ul id="slider-1" class="anythingBase">
-			<?php foreach ($slides as $slide): ?>
-				<?php echo $slide; ?>
-			<?php endforeach; ?>
-		</ul>
-	</div>
-</div>
+<ul id="liuna-slider">
+	<?php foreach ($slides as $slide): ?>
+		<?php echo $slide; ?>
+	<?php endforeach; ?>
+</ul>
