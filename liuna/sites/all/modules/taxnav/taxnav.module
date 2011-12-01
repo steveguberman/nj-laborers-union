@@ -116,27 +116,30 @@ function taxnav_form($node,$form_state){
 
 
 function taxnav_form_taxnav_node_form_alter(&$form,&$form_state,$form_id){
-	$form['options']['#access']		= user_access('edit any taxnav content');
-	$form['tid_to_node']['#access']		= false;
-	
-	dpm($form);
+
 }
 
 function taxnav_field_widget_text_textarea_with_summary_form_alter(&$element,&$form_state,$context){
-	
+
 	if($element['#field_name'] == 'body'){
 		$widget = $element;
-		$widget['#type'] = 'textarea';
-	
+			$widget['#type'] = 'textarea';
+			unset($widget['#base_type']);
+			unset($widget['#format']);
+			unset($widget['summary']);
+		
 		unset($element['#type']);
 		unset($element['#default_value']);
 		unset($element['#rows']);
 		unset($element['#attributes']);
 		unset($element['#format']);
-		unset($element['#basetype']);
+		unset($element['#base_type']);
 
 		$element['value'] = $widget;
+
+		dpm($element,'my element');
 	}
+
 }
 
 function taxnav_node_access($node, $op, $account) {
