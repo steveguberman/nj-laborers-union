@@ -6,5 +6,4 @@
  */
 ?>
 <h1>Slider-tron</h1>
-<?php pretty_r("I Exist!"); ?>
 <?php echo $variables['elements']['#markup']; ?>
