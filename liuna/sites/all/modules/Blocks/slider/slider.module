@@ -80,6 +80,7 @@ function slider_menu() {
 		'title' => 'Slider Block Settings',
 		'description' => 'Slider Widget Settings',
 		'page arguments' => array('slider_admin_settings'),
+		'page callback'  => 'drupal_get_form',
 		'access arguments' => array('administer site configuration'),
 		'type' => MENU_NORMAL_ITEM,
 		'file' => 'slider.admin.inc',
