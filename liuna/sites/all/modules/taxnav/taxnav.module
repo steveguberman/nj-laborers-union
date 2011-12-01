@@ -17,22 +17,19 @@ $path ='admin/taxnav';
 function taxnav_permission(){
 }
 
-
-/////////////////////////////////////////////////////////////////////
-// CREATE A NEW SECTION
 function taxnav_taxonomy_term_insert($term){ 
 	if($term->vid== variable_get('taxnav_vocabulary')){
 	_create_taxnav_page($term);
 	_create_taxnav_tree($term); 
 	}
 }
-// CHANGE A SECTIONS NAME
+
 function taxnav_taxonomy_term_update($term){ 
 	if($term->vid== variable_get('taxnav_vocabulary')){
 	_create_taxnav_tree($term); 
 	}
 }
-// DELETE A SECTION 
+
 function taxnav_taxonomy_term_delete($term){ 
 	if($term->vid== variable_get('taxnav_vocabulary')){
 	_create_taxnav_tree($term); 
@@ -40,11 +37,6 @@ function taxnav_taxonomy_term_delete($term){
 	}
 }
 
-/////////////////////////////////////////////////////////////////////
-
-/*
-	Include the file with the build function 
-*/
 function _create_taxnav_tree($term){
 	include_once(drupal_get_path('module','taxnav').'/build.taxnav.inc');
 	build();
@@ -80,12 +72,10 @@ xdebug_break();
 }
 
 
-// now with zero % error checking
 function _delete_taxnav_page($term){
 	node_delete(_taxnav_page_from_tid($term->tid)->nid);
 }
 
-// o boy this should have some error checking
 function _taxnav_page_from_tid($tid){
 	drupal_set_message('Searching for term page');
 	$query = new EntityFieldQuery;
@@ -124,25 +114,30 @@ function taxnav_form($node,$form_state){
 	return node_content_form($node,$form_state);
 }
 
-/* universal form override
-function taxnav_form_alter(&$form,&$form_state,$form_id){
-}/asdd
-*/
 
 function taxnav_form_taxnav_node_form_alter(&$form,&$form_state,$form_id){
-
 	$form['options']['#access']		= user_access('edit any taxnav content');
-	#$form['body']['und'][0]['#type'] 	= 'textarea';
-	#$form['body']['und'][0]['#base_type'] 	= 'textarea';
-	dpm($form,'Form');
-
-	xdebug_break();
+	$form['tid_to_node']['#access']		= false;
+	
+	dpm($form);
 }
 
-/* custom validation
-function taxnav_validate($node,$form,$form_state){
+function taxnav_field_widget_text_textarea_with_summary_form_alter(&$element,&$form_state,$context){
+	
+	if($element['#field_name'] == 'body'){
+		$widget = $element;
+		$widget['#type'] = 'textarea';
+	
+		unset($element['#type']);
+		unset($element['#default_value']);
+		unset($element['#rows']);
+		unset($element['#attributes']);
+		unset($element['#format']);
+		unset($element['#basetype']);
+
+		$element['value'] = $widget;
+	}
 }
-*/
 
 function taxnav_node_access($node, $op, $account) {
 
