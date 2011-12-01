@@ -58,7 +58,7 @@ function slider_init() {
 				thumbLink = $('<a/>', {
 					'href': '#',
 					data: {
-						slideIndex: idx
+						slideIndex: idx + 1
 					},
 					click: function(evt) {
 						$('#liuna-slider').anythingSlider($(this).data('slideIndex'));
