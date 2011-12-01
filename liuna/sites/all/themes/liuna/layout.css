@@ -95,6 +95,7 @@ body.two-sidebars #sidebar-first {
 	display: block;
 	width: 900px;
 	height: 290px;
+	text-decoration: none !important;
 }
 
 #liuna-slider a p.caption {
@@ -107,7 +108,7 @@ body.two-sidebars #sidebar-first {
 	left: 0;
 	text-align: left;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 28px;
+	font-size: 24px;
 	font-weight: bold;
 	text-decoration: none !important;
 	letter-spacing: -1px;
