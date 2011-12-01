@@ -83,6 +83,7 @@ function slider_menu() {
 		'access arguments' => array('administer site configuration'),
 		'type' => MENU_NORMAL_ITEM,
 		'file' => 'slider.admin.inc',
+		'file path' => drupal_get_path('module', 'slider'),
 	);
 
 	return $items;
