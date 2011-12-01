@@ -60,8 +60,8 @@ function slider_init() {
 					data: {
 						slideIndex: idx + 1
 					},
-					click: function(evt) {
-						$('#liuna-slider').anythingSlider($(this).data('slideIndex'));
+					mouseover: function(evt) {
+						$('#liuna-slider').stop().anythingSlider($(this).data('slideIndex'));
 						return false;
 					}
 				});
@@ -70,10 +70,10 @@ function slider_init() {
 		});
 		$('#liuna-slider').anythingSlider({
 			width: 900,
+			theme: 'naked',
 			height: 290,
 			resizeContents: false,
 			autoPlay: false,
-			theme: 'metallic',
 			easing: '$slider_easing',
 			onSlideComplete: function(slider) {
 				console.log('slide transition');
