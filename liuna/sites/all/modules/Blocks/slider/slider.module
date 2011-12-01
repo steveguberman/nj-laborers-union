@@ -126,19 +126,25 @@ function slider_block_contents($delta) {
 	// hard-coded slider items for development
 	$slides = array(
 		array(
-			'title' => 'Outer Space',
+			'title'   => 'Outer Space',
 			'caption' => 'Lorem ipsum dollar',
-			'src' => 'http://flickholdr.com/900/290/astronomy',
+			'src'     => 'http://flickholdr.com/900/290/astronomy',
+			'thumb'   => 'http://flickholdr.com/200/100/astronomy',
+			'href'    => 'http://google.com',
 		),
 		array(
-			'title' => 'Inner Space',
+			'title'   => 'Inner Space',
 			'caption' => 'Journey to the center of the mind',
-			'src' => 'http://flickholdr.com/900/290/mind',
+			'src'     => 'http://flickholdr.com/900/290/mind',
+			'thumb'   => 'http://flickholdr.com/200/100/mind',
+			'href'    => 'http://flickr.com',
 		),
 		array(
-			'title' => 'Landscape',
+			'title'   => 'Landscape',
 			'caption' => 'Landscapes are pretty',
-			'src' => 'http://flickholdr.com/900/290/landscape'
+			'src'     => 'http://flickholdr.com/900/290/landscape',
+			'thumb'   => 'http://flickholdr.com/200/100/landscape',
+			'href'    => 'http://njl.verge180.com/',
 		),
 	);
 	$slider_html = theme('slider_block_widget', array('items' => $slides));
