@@ -95,32 +95,15 @@ function slider_theme() {
 	return array(
 		'slider_block_item' => array(
 			'variables' => array('item' => NULL),
+			'file' => 'slider.block.inc',
+			'template' => 'slider-block-item',
 		),
 		'slider_block_widget' => array(
 			'variables' => array('items' => NULL),
+			'file' => 'slider.block.inc',
+			'template' => 'slider-block-widget',
 		),
 	);
-}
-
-/**
- * THEME HELPER FUNCTIONS
- */
-function theme_slider_block_item($item) {
-	$output = "<div class='slider-item'>\n";
-	$output .= "</div>";
-	return $output;
-}
-
-function theme_slider_block_widget($items) {
-	$output = "<div id='liuna-slider'>\n";
-	foreach ($items['items'] as $slide) {
-		$output .= '<div class="slide">'."\n";
-		$output .= "<h2>{$slide['title']}</h2>\n";
-		$output .= "</div>\n";
-	}
-
-	$output .= "</div>\n";
-	return $output;
 }
 
 /**
@@ -131,7 +114,6 @@ function slider_block_view($delta = '') {
 		case 'slider':
 			$block['subject'] = t('Slider');
 			$block['content'] = slider_block_contents($delta);
-			pretty_r($block['content']);
 			return $block;
 			break;
 	}

@@ -45,7 +45,6 @@ function flickr_drive_admin_settings() {
 
 	$form['#submit'][] = 'flickr_drive_admin_settings_submit';
 
-	pretty_r($form);
 	return system_settings_form($form);
 }
 
