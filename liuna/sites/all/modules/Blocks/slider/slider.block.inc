@@ -17,6 +17,8 @@ function template_preprocess_slider_block_item(&$variables) {
 	$variables['src']     = $slide['src'];
 	$variables['thumb']   = $slide['thumb'];
 	$variables['href']    = $slide['href'];
+	$variables['title_encoded'] = htmlspecialchars($variables['title']);
+	$variables['caption_encoded'] = htmlspecialchars($variables['caption']);
 }
 
 /**

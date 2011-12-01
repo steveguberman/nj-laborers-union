@@ -147,8 +147,13 @@ function slider_block_contents($delta) {
 			'href'    => 'http://njl.verge180.com/',
 		),
 	);
-	$slider_html = theme('slider_block_widget', array('items' => $slides));
-	return array('#markup' => $slider_html);
+
+	switch ($delta) {
+		case 'slider':
+			$slider_html = theme('slider_block_widget', array('items' => $slides));
+			return array('#markup' => $slider_html);
+			break;
+	}
 }
 
 // vim: set ft=php :
