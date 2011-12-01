@@ -33,17 +33,16 @@ $view	='taxnav_view';
 		$items[$view]['description'] 		= 'View all navs';
 		$items[$view]['weight'] 		= '0';
 		$items[$view]['access arguments']	=  $access;
-		$items[$view]['file path']		=  drupal_get_path('module','taxonomy');
-		$items[$view]['page callback'] 		= 'node_view';
-		$items[$view]['page arguments']		=  array(_taxnav_nodes());
-
+		$items[$view]['page callback'] 		= 'tax_nav_list';
+		$items[$view]['type']	 		=  MENU_CALLBACK;
 
 		return $items;
 };
 
-
-function taxnav_permission(){
+function tax_nav_list(){
+	return node_view_multiple(_taxnav_nodes());
 }
+
 
 function taxnav_taxonomy_term_insert($term){ 
 	if($term->vid== variable_get('taxnav_vocabulary')){
@@ -110,13 +109,15 @@ function _taxnav_nodes(){
 		$query->entityCondition('entity_type','node');
 		$query->propertyCondition('type','taxnav');
 			$results = $query->execute();
+	
 	$nodes = array();
 		foreach($results as $unwrap){
 			foreach($unwrap as $node){
-			array_push($nodes,node_load($node->nid));
+			array_push($nodes,$node->nid);
 			}
 		}
-	return $nodes;
+xdebug_break();
+	return node_load_multiple($nodes);
 }
 
 
