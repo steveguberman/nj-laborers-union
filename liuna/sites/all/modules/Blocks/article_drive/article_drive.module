@@ -1,0 +1,103 @@
+<?php
+/**
+ * @file
+ * Article List Drive Box Module
+ *
+ * Displays a list of recent articles in the Drive Box
+ */
+
+/**
+ * Implementation of hook_init()
+ */
+function article_drive_init() {
+
+}
+
+/**
+ * Implementation of hook_block_info()
+ */
+function article_drive_block_info() {
+	$blocks['article_drive'] = array(
+		'info' => t('Drive Box Article List'),
+		'status' => TRUE,
+		'region' => 'sidebar_first',
+		'weight' => 0,
+		'visibility' => 1,
+	);
+	return $blocks;
+}
+
+/**
+ * Implementation of hook_menu()
+ */
+function article_drive_menu() {
+	$items['admin/config/article_drive'] = array(
+		'title' => 'Drive Box Article List',
+		'description' => 'Displays a list of recent articles in the Drive Box',
+		'position' => 'right',
+		'weight' => -5,
+		'page callback' => 'system_admin_menu_block_page',
+		'access arguments' => array('administer site configuration'),
+		'file' => 'system.admin.inc',
+		'file path' => drupal_get_path('module', 'system'),
+	);
+
+	$items['admin/config/article_drive/settings'] = array(
+		'title' => 'Drive Box Article List Settings',
+		'description' => 'Drive Box Article List Settings',
+		'page callback' => 'drupal_get_form',
+		'page arguments' => array('article_drive_admin_settings'),
+		'access arguments' => array('administer site configuration'),
+		'type' => MENU_NORMAL_ITEM,
+		'file' => 'article_drive.admin.inc',
+	);
+
+	return $items;
+}
+
+/**
+ * Implementation of hook_theme()
+ */
+function article_drive_theme() {
+	return array(
+		'article_drive_list' => array(
+			'variables' => array('items' => NULL),
+			'file' => 'article_drive.block.inc',
+			'template' => 'article-drive-list',
+		),
+		'article_drive_list_item' => array(
+			'variables' => array('item' => NULL),
+			'file' => 'article_drive.block.inc',
+			'template' => 'article-drive-list-item',
+		),
+	);
+}
+
+/**
+ * Implementation of hook_block_view()
+ */
+function article_drive_block_view($delta = '') {
+	switch ($delta) {
+		case 'article_drive':
+			$block['subject'] = 'Recent Articles';
+			$block['content'] = article_drive_block_contents($delta);
+			return $block;
+			break;
+	}
+}
+
+/**
+ * Provides content for the block view hook
+ */
+function article_drive_block_contents($delta) {
+	switch ($delta) {
+		case 'article_drive':
+			$articles = array();
+			$html = theme('article_drive_list', array('items' => $articles));
+			return array('#markup' => $html);
+			break;
+	}
+}
+
+// vim: set ft=php :
+?>

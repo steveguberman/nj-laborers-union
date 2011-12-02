@@ -1,0 +1,10 @@
+name = Article List Drive Box Widget
+description = "Displays a list of recent articles in the Drive Box"
+package = "Liuna Blocks"
+core = 7.x
+files[] = article_drive.module
+files[] = article_drive.admin.inc
+files[] = article_drive.install
+files[] = article_drive.uninstall
+
+configure=admin/config/article_drive/settings
