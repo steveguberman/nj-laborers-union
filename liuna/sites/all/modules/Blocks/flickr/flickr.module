@@ -67,26 +67,6 @@ function flickr_theme() {
 		),
 	);
 }
-/*
-function theme_flickr_thumbnail_grid($items) {
-	$photos = flickr_assemble_photo_array($items['items']);
-
-	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
-	foreach($photos as $photo) {
-		$width = $photo['width'] / 2;
-		$height = $photo['height'] / 2;
-		$output .= <<<END_LIST_ITEM
-<li class="flickr-thumb">
-	<a href="{$photo['url']}" class="photo-wrap {$photo['class']}">
-		<img src="{$photo['source']}" width="{$width}" height="{$height}" alt="{$photo['label']}" />
-	</a>
-</li>
-END_LIST_ITEM;
-	}
-	$output .= "</ul>";
-	return $output;
-}
- */
 
 /**
  * Helper: assemble_photo_array($items, $limit)
