@@ -7,9 +7,10 @@ $items=array();
 
 $manage ='taxnav';
 	$items[$manage]=array();
-		$items[$manage]['title'] 		= 'Tax Nav Build';
+		$items[$manage]['title'] 		= 'Manage Sections';
 		$items[$manage]['description'] 		= 'Catagories Menu';
 		$items[$manage]['weight'] 		= '0';
+		$items[$manage]['menu_name'] 		=  variable_get('workers_menu');
 		$items[$manage]['access arguments']	=  $access;
 		$items[$manage]['file path']		=  drupal_get_path('module','taxonomy');
 		$items[$manage]['file']			= 'taxonomy.admin.inc';
@@ -18,9 +19,10 @@ $manage ='taxnav';
 
 $add	='taxnav/add';
 	$items[$add]=array();
-		$items[$add]['title']			= 'add new section';
+		$items[$add]['title']			= 'Create New Section';
 		$items[$add]['description']		= 'create new section';
 		$items[$add]['weight']			= '100';
+		$items[$add]['menu_name'] 		=  variable_get('workers_menu');
 		$items[$add]['access arguments']	= $access;
 		$items[$add]['file path']		= drupal_get_path('module','taxonomy');
 		$items[$add]['file']			= 'taxonomy.admin.inc';
@@ -29,12 +31,13 @@ $add	='taxnav/add';
 		
 $view	='taxnav_view';
 	$items[$view]=array();
-		$items[$view]['title'] 			= 'Tax Nav View';
+		$items[$view]['title'] 			= 'Manage Sections Pages';
 		$items[$view]['description'] 		= 'View all navs';
+		$items[$view]['menu_name'] 		=  variable_get('workers_menu');
 		$items[$view]['weight'] 		= '0';
 		$items[$view]['access arguments']	=  $access;
 		$items[$view]['page callback'] 		= 'tax_nav_list';
-		$items[$view]['type']	 		=  MENU_CALLBACK;
+		#$items[$view]['type']	 		=  MENU_CALLBACK;
 
 		return $items;
 };
