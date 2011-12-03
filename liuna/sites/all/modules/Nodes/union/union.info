@@ -1,7 +1,7 @@
-name		= 'About'
-description	= 'About pages for NJ laborers'
+name		= 'union'
+description	= 'union pages for NJ laborers'
 package		= 'Liuna Nodes'
-core		= 7.x
+core		=  7.x
 dependencies[]  =  taxnav
 dependencies[]  =  image
 files[]		= 'union.module'
