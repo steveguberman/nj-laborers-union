@@ -107,6 +107,7 @@ function _delete_taxnav_page($term){
 }
 
 
+// now called nodes_of_type($type);
 function _taxnav_nodes(){
 	$query = new EntityFieldQuery;
 		$query->entityCondition('entity_type','node');
