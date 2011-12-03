@@ -4,7 +4,8 @@ package		= 'Liuna Nodes'
 core		=  7.x
 dependencies[]  =  taxonomy
 dependencies[]  =  number
-files[]		= 'taxnav.module'
+dependencies[]  =  spohelpers
+files[]		= 'taxnax.module'
 files[]		= 'taxnav.admin.inc'
 files[]		= 'taxnav.install'
 
