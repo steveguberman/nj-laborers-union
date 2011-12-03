@@ -1,0 +1,10 @@
+name		= 'About'
+description	= 'About pages for NJ laborers'
+package		= 'Liuna Nodes'
+core		= 7.x
+dependencies[]  =  taxnav
+dependencies[]  =  image
+files[]		= 'union.module'
+files[]		= 'union.admin.inc'
+files[]		= 'union.install'
+configure	= 'admin/config/union/settings'

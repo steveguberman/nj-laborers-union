@@ -1,0 +1,103 @@
+<?php
+/**
+ * @file
+ * Lets user create pages in the union section of the site.
+ *
+ * Displays a link that lets authenticated users create union section pages.
+ * All these pages are viewable by default to all the sites visitors.
+ * Pages do not need to be approved. Default is to display the page.
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+
+
+function union_menu() {
+
+$newUnion='new/union';
+	$items[$newUnion] = array();
+		$items[$newUnion]['title'] 		= 'Add new Union';
+		$items[$newUnion]['page callback'] 	= 'node_add';
+		$items[$newUnion]['page arguments']	= 'union';
+		$items[$newUnion]['access callback']	= 'node_access';
+		$items[$newUnion]['access arguments'] 	=  array('create union');
+		$items[$newUnion]['description'] 	= 'Add a new union';
+		$items[$newUnion]['file path'] 		=  drupal_get_path('module','node');
+		$items[$newUnion]['file'] 		= 'node.pages.inc';
+	 
+	return $items;
+
+//$deleteUnion
+//$editUnion
+
+}
+
+
+/**
+ * Implements hook_node_info() to provide info union type.
+ */
+
+
+function union_node_info(){
+	return array(
+		'union'=> array(
+			'name' 		=> 'Union Pages',
+			'base' 		=> 'union',
+			'description'	=> 'site About pages',
+			'has_title'	=> 'TRUE',
+			'title_label'	=> 'Page Name',
+			'help'		=> 'Page will be displayed in menu under the FAQ page'
+		)
+	);
+};
+
+/**
+ * Implement hook_form() with the standard default form.
+ */
+function union_form($node,$form_state){
+	xdebug_break();
+	return node_content_form($node,$form_state);
+}
+
+function union_node_access($node, $op, $account) {
+ 
+	$type = is_string($node) ? $node : $node->type;
+
+	$q=user_access('create ' . $type . ' content', $account);
+	$qq=user_role_permissions(array('admin'));
+	$qqq='create ' . $type . ' content';
+
+  if (in_array($type, node_permissions_get_configured_types())) {
+    if ($op == 'create' && user_access('create ' . $type . ' content', $account)) {
+      return NODE_ACCESS_ALLOW;
+    }
+
+    if ($op == 'update') {
+      if (user_access('edit any ' . $type . ' content', $account) || (user_access('edit own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+
+    if ($op == 'delete') {
+      if (user_access('delete any ' . $type . ' content', $account) || (user_access('delete own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+  }
+
+  // Returning nothing from this function would have the same effect.
+  return NODE_ACCESS_IGNORE;
+}
+
+
+
+function union_node_insert($node){
+	
+}
+
+
+
+
+/* vim: set filetype=php : */
+?>
