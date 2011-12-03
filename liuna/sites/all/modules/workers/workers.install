@@ -1,0 +1,26 @@
+<?php
+
+function workers_install(){
+
+	$new_menu = array();
+		$new_menu['menu_name']		= 'workers_menu';
+		$new_menu['title']		= 'NJL Admin Menu';
+		$new_menu['description']	= 'Contains the various menu links to administer the Liuna website';
+	
+		menu_save($new_menu);
+		variable_set('workers_menu',$new_menu['menu_name']);
+
+}
+
+
+function workers_uninstall(){
+	
+	$result = db_query("SELECT * FROM menu_custom WHERE menu_name=:menu_name", array( 'menu_name'=> variable_get('workers_menu') ) );
+	menu_delete($result->fetchAssoc());
+	variable_del('workers_menu');
+
+}
+
+
+/* vim: set filetype=php : */
+?>

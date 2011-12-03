@@ -1,0 +1,9 @@
+name		= 'Workers'
+description	= 'Creates some dependencies that other modules for project will need. For example the admin menu'
+package		= 'Liuna Nodes'
+core		=  7.x
+dependencies[]  =  menu
+files[]		= 'workers.module'
+files[]		= 'workers.install'
+
+configure=admin/config/workers/settings
