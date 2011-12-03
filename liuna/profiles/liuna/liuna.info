@@ -13,6 +13,9 @@ dependencies[] = googleanalytics
 dependencies[] = libraries
 dependencies[] = spohelpers
 dependencies[] = taxonomy
+dependencies[] = workers
+dependencies[] = taxnav
+
 
 files[]=liuna.profile
 
