@@ -92,6 +92,8 @@ function union_install()
 		$union_address_instance['bundle']	= 'union';
 			//$union_address_instance['widget'] = array();
 	
+	// phone number/s should be add more if you like
+	// website
 }
 
 
