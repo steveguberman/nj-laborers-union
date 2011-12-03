@@ -85,15 +85,38 @@ function union_install()
 	$union_address = array();
 		$union_address['field_name']	= 'union_address';
 		$union_address['type']		= 'text';
+			field_create_field($union_address);
 
 	$union_address_instance = array();
 		$union_address_instance['field_name']	= 'union_address_instance';
 		$union_address_instance['entity_type']	= 'node';
 		$union_address_instance['bundle']	= 'union';
 			//$union_address_instance['widget'] = array();
+				field_create_instance($union_address_instance);
+
+
+	$union_contact = array();
+		$union_contact['field_name']	= 'union_contact';
+		$union_contact['type']		= 'text';
+			field_create_field($union_contact);
 	
-	// phone number/s should be add more if you like
-	// website
+	$union_contact_instace = array();
+		$union_contact_instace['field_name'] 	= 'union_contact_instance';
+		$union_contact_instace['entity_type'] 	= 'node';
+		$union_contact_instace['bundle']	= 'union';
+			field_create_instance($union_contact_instance);
+
+	$union_website = array();
+		$union_website['field_name']	= 'union_website';
+		$union_website['type']		= 'text';
+			field_create_field($union_website);
+
+	$union_website_instance = array();
+		$union_website['field_name']	= 'union_website_instance';
+		$union_website['type']		= 'text';
+			field_create_field($union_website_instance);
+
+
 }
 
 
