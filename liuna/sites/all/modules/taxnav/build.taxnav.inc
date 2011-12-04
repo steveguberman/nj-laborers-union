@@ -35,13 +35,13 @@ $processing=array();
 						}
 		}
 	
-	dpm($tree,'Menu tree');
+	//dpm($tree,'Menu tree');
 
-	drupal_set_message('Removing Old Menu Tree');
+	//drupal_set_message('Removing Old Menu Tree');
 	$result = db_query("SELECT * FROM menu_custom WHERE menu_name=:menu_name", array( 'menu_name'=> variable_get('taxnav_menu') ) );
 	menu_delete($result->fetchAssoc());
 
-	drupal_set_message('Creating New  Menu Tree');
+	//drupal_set_message('Creating New  Menu Tree');
 	$new_menu = array();
 		$new_menu['menu_name']		= 'taxnav_menu';
 		$new_menu['title']		= 'Taxnav menu';
@@ -49,16 +49,23 @@ $processing=array();
 	
 		menu_save($new_menu);
 
-	drupal_set_message('Populating Menu Tree');
+	//drupal_set_message('Populating Menu Tree');
 
+	
+	//dpm($tree,'tree');
 
-	$plid=0;
 
 	foreach($tree as $tid => $leaf){
-	drupal_set_message('Creating Leaf');
-	dpm($leaf);
-			if(!$leaf['parent_list']){
-			$plid=0;
+	//drupal_set_message('Creating Leaf');
+	//dpm($leaf);
+
+		$plid=0;
+			if($leaf['parent_list']){
+				
+			$parent_id = $leaf['parent_list'][sizeof($leaf['parent_list'])-1];
+				//dpm($parent_id,'Parent Id');
+
+			$plid= $tree[$parent_id]['lid'];
 			}
 	
 	$taxnav_page=_taxnav_page_from_tid($tid);
@@ -68,23 +75,25 @@ $processing=array();
 				$item['link_title']	= '__'.$leaf['name'];
 				$item['menu_name']	= variable_get('taxnav_menu');			
 				$item['plid']		= $plid;
-					$plid=menu_link_save($item);
+											// This has to break the laws of the programming universe
+					$leaf['lid'] = menu_link_save($item);
+					$tree[$tid] = $leaf;
 
-	drupal_set_message('Adding nodes to leaf');
-		dpm($leaf);
+	//drupal_set_message('Adding nodes to leaf');
 		if($leaf['nodes']){
 			foreach($leaf['nodes'] as $id => $node){
 			$item=array();
 				$item['link_path']	= drupal_get_normal_path("node/$id");
 				$item['link_title']	= $node;
 				$item['menu_name']	= variable_get('taxnav_menu');
-				$item['plid']		= $plid;
-				dpm($item,'Menu Entry');
-				dpm(menu_link_save($item),'SPOOT');
+				$item['plid']		= $tree[$tid]['lid'];  // <--- here we pull the raptor from the hat
+				//dpm($item,'Menu Entry');
+				//dpm(menu_link_save($item),'SPOOT');
 			}
 		}
+
 	}
-	drupal_set_message('TaxNav Menu Built');
+	//drupal_set_message('TaxNav Menu Built');
 	
 	
 }
