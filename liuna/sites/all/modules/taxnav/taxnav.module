@@ -5,6 +5,7 @@ function taxnav_menu() {
 $access = array(TRUE);
 $items=array();
 
+
 $manage ='taxnav';
 	$items[$manage]=array();
 		$items[$manage]['title'] 		= 'Manage Sections';
@@ -28,7 +29,7 @@ $add	='taxnav/add';
 		$items[$add]['file']			= 'taxonomy.admin.inc';
 		$items[$add]['page arguments']		=  array('taxonomy_form_term',array(),taxonomy_vocabulary_load(variable_get('taxnav_vocabulary')));
 		$items[$add]['type']			=  MENU_LOCAL_ACTION;
-		
+ /*	
 $view	='taxnav_view';
 	$items[$view]=array();
 		$items[$view]['title'] 			= 'Manage Sections Pages';
@@ -37,7 +38,9 @@ $view	='taxnav_view';
 		$items[$view]['weight'] 		= '0';
 		$items[$view]['access arguments']	=  $access;
 		$items[$view]['page callback'] 		= 'tax_nav_list';
-		#$items[$view]['type']	 		=  MENU_CALLBACK;
+		$items[$view]['type']	 		=  MENU_CALLBACK;
+
+ */
 
 $rebuild ='rebuild';
 	$items[$rebuild]=array();
