@@ -1,0 +1,89 @@
+<?php
+/**
+ * @file
+ * Lets user create pages in the page section of the site.
+ *
+ * Displays a link that lets authenticated users create page section pages.
+ * All these pages are viewable by default to all the sites visitors.
+ * Pages do not need to be approved. Default is to display the page.
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+
+
+function page_menu() {
+
+};
+
+
+/**
+ * Implements hook_node_info() to provide info page type.
+ */
+
+
+function page_node_info(){
+	return array(
+		'page'=> array(
+			'name' 		=> 'Static Pages',
+			'base' 		=> 'page',
+			'description'	=> 'sites static pages',
+			'has_title'	=> 'TRUE',
+			'title_label'	=> 'Page Name',
+			'help'		=> 'Page will be displayed in taxnav menu based on taxonomy'
+		)
+	);
+};
+
+/**
+ * Implement hook_form() with the standard default form.
+ */
+function page_form($node,$form_state){
+	xdebug_break();
+	return node_content_form($node,$form_state);
+}
+
+function page_node_access($node, $op, $account) {
+ 
+xdebug_break();
+
+	 $type = is_string($node) ? $node : $node->type;
+
+	$q=user_access('create ' . $type . ' content', $account);
+	$qq=user_role_permissions(array('admin'));
+	$qqq='create ' . $type . ' content';
+
+  if (in_array($type, node_permissions_get_configured_types())) {
+    if ($op == 'create' && user_access('create ' . $type . ' content', $account)) {
+      return NODE_ACCESS_ALLOW;
+    }
+
+    if ($op == 'update') {
+      if (user_access('edit any ' . $type . ' content', $account) || (user_access('edit own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+
+    if ($op == 'delete') {
+      if (user_access('delete any ' . $type . ' content', $account) || (user_access('delete own ' . $type . ' content', $account) && ($account->uid == $node->uid))) {
+        return NODE_ACCESS_ALLOW;
+      }
+    }
+  }
+
+  // Returning nothing from this function would have the same effect.
+  return NODE_ACCESS_IGNORE;
+}
+
+
+
+function page_node_insert($node){
+	
+}
+
+
+
+
+/* vim: set filetype=php : */
+?>

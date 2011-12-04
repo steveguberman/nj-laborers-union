@@ -1,0 +1,7 @@
+name		= 'Static Pages'
+description	= 'Add static pages to site'
+package		= 'Liuna Nodes'
+core		=  7.x
+dependencies[]  =  taxnav
+files[]		= 'page.module'
+files[]		= 'page.install'
