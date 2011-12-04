@@ -39,7 +39,19 @@ $view	='taxnav_view';
 		$items[$view]['page callback'] 		= 'tax_nav_list';
 		#$items[$view]['type']	 		=  MENU_CALLBACK;
 
-		return $items;
+$rebuild ='rebuild';
+	$items[$rebuild]=array();
+		$items[$rebuild]['title'] 		= 'Rebuild Menu For taxnav';
+		$items[$rebuild]['description'] 	= 'Rebuild taxnav menu';
+		$items[$rebuild]['weight'] 		= '500';
+		$items[$rebuild]['menu_name'] 		=  variable_get('workers_menu');
+		$items[$rebuild]['access arguments']	=  $access;
+		$items[$rebuild]['file']		= 'build.taxnav.inc';
+		$items[$rebuild]['page callback'] 	= 'build';
+		#$items[$view]['type']	 		=  MENU_CALLBACK;
+
+	return $items;
+
 };
 
 function tax_nav_list(){
@@ -75,7 +87,7 @@ function _create_taxnav_tree($term){
 
 function _create_taxnav_page($term){
 xdebug_break();
-	drupal_set_message('Creating term page');
+	//drupal_set_message('Creating term page');
 
 	$body_text = "Please update this information!";
 
@@ -95,10 +107,10 @@ xdebug_break();
 
 	// ['path']
 
-	dpm($node,'Creating Term page');
+	//dpm($node,'Creating Term page');
 
 	node_save($node);
-	drupal_set_message('Term Page Saved');
+	//drupal_set_message('Term Page Saved');
 }
 
 
@@ -126,19 +138,19 @@ xdebug_break();
 
 
 function _taxnav_page_from_tid($tid){
-	drupal_set_message('Searching for term page');
+	//drupal_set_message('Searching for term page');
 	$query = new EntityFieldQuery;
 		$query->entityCondition('entity_type','node');
 		$query->propertyCondition('type','taxnav');
 		$query->fieldCondition('tid_to_node','value',$tid,'=');
 			$results = $query->execute();
 	
-	drupal_set_message('Querying for term page');
-	dpm($results,'Query Results');
+	//drupal_set_message('Querying for term page');
+	//dpm($results,'Query Results');
 
 		foreach($results as $node){
 			foreach($node as $entry){
-				drupal_set_message("Returned Node $entry->nid");
+				//drupal_set_message("Returned Node $entry->nid");
 				return node_load($entry->nid);
 			}
 		}
@@ -186,7 +198,7 @@ function taxnav_field_widget_text_textarea_with_summary_form_alter(&$element,&$f
 
 		$element['value'] = $widget;
 
-		dpm($element,'my element');
+		//dpm($element,'my element');
 	}
 
 }
