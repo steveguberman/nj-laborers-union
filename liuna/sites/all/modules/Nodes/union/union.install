@@ -10,50 +10,62 @@
 function union_install()
 {
 
-	$union_term = array();
-		$union['name'] = 'unions';
-		$union['vocabulary_machine_name'] = get_variable('taxnav_vocabulary');
-			$union_term_id = taxonomy_term_save($union_term);
+	$taxnav_vid = variable_get('taxnav_vocabulary');
 
+		$union_term = array();
+			$union_term['name'] 	= 'unions';
+			$union_term['vid']	= $taxnav_vid;
+				$union_term=(object)$union_term;
+					 taxonomy_term_save($union_term);
+
+xdebug_break();
 		$workers_term = array();
-			$workers_term['name'] = 'building';
-			$workers_term['vocabulary_machine_name'] = get_variable('taxnav_vocabulary');
+			$workers_term['name']	= 'workers';
+			$workers_term['vid']	= $taxnav_vid;
+			$workers_term['parent']	= $union_term->tid;
+				$workers_term = (object)$workers_term;
 				$workers_term_term_id = taxonomy_term_save($workers_term);
 
 		$heavy_term = array();
-			$heavy_term['name'] = 'building';
-			$heavy_term['vocabulary_machine_name'] = get_variable('taxnav_vocabulary');
-				$heavy_term_term_id = taxonomy_term_save($workers_term);
+			$heavy_term['name']	= 'heavy';
+			$heavy_term['vid']	= $taxnav_vid;
+			$heavy_term['parent']	= $union_term->tid;
+				$heavy_term = (object)$heavy_term;
+				$heavy_term_term_id = taxonomy_term_save($heavy_term);
 
-		$none_term = array();
-			$none_term['name'] = 'building';
-			$none_term['vocabulary_machine_name'] = get_variable('taxnav_vocabulary');
-				$none_term_term_id = taxonomy_term_save($workers_term);
+		$non_term = array();
+			$non_term['name'] 	= 'non';
+			$non_term['vid']	= $taxnav_vid;
+			$non_term['parent'] 	= $union_term->tid;
+				$non_term = (object)$non_term;
+				$non_term_term_id = taxonomy_term_save($non_term);
 
 	node_types_rebuild();
 
+	
 	$union_image_field = array();
 		$union_image_field['field_name']	= 'union_image_field';
 		$union_image_field['type']		= 'image';
 				field_create_field($union_image_field);
 
 	$union_image_field_instance = array();
-		$union_image_field_instance['field_name']	= 'union_image_field_instance';   
+		$union_image_field_instance['field_name']	= 'union_image_field';   
 		$union_image_field_instance['entity_type']	= 'node';   
 		$union_image_field_instance['bundle']		= 'union';   
 		$union_image_field_instance['required']		=  1;   
 			$union_image_field_instance['settings']  = array();   
 				$union_image_field_instance['settings']['alt_field']		= 1;
 				$union_image_field_instance['settings']['file_extensions']	= array('jpg','jpeg','png');
-				$union_image_field_instance['settings']['max_filesiaxe']	= '5 MB';
+				$union_image_field_instance['settings']['max_filesize']		= '5 MB';
 				$union_image_field_instance['settings']['min_resolution']	= '10 x 10';
 				$union_image_field_instance['settings']['title_field']		=  0;
-			$union_image_field_instance['widget'] = array();
-				$union_image_field_instance['widget']['type'] 		= 'image_image';
-				$union_image_field_instance['widget']['settings']	= 'preview_image_style';
+			#$union_image_field_instance['widget'] = array();
+				#$union_image_field_instance['widget']['type'] 		= 'image_image';
+				#$union_image_field_instance['widget']['settings']	= 'preview_image_style';
 					field_create_instance($union_image_field_instance);
+	 
 
-
+	
 
 	$types = node_type_get_types();
 	node_add_body_field($types['union']);
@@ -62,66 +74,87 @@ function union_install()
 
 		field_update_instance($body_instance);
 
-	$taxnav_vocbulary_union = array();
-		$field['field_name']	= 'taxnav_vocabulary_union';
-		$field['type']		= 'taxonomy_term_reference';
-		$field['cardinality']	=  FIELD_CARDINALITY_UNLIMITED;
-			$field['settings'] = array();
-				$field['settings']['allowed_values']['vocabulary']	= get_variable('taxnav_vocabulary');
-				$field['settings']['allowed_values']['parent']		= $union_term_id;
-						field_create_field($taxnav_vocbulary_union);
 
-	$taxnav_vocabulary_union_instance = array();
-	$taxnav_vocabulary_union_instance['field_name']	= 'taxnav_vocabulary_union';
-	$taxnav_vocabulary_union_instance['entity_type']	= 'node';
- 	$taxnav_vocabulary_union_instance['bundle'] 	= 'union';
-	 	$taxnav_vocabulary_union_instance['widget'] 	= array();
-			$taxnav_vocabulary_union_instance['widget']['type']	= 'options_select';
-			$taxnav_vocabulary_union_instance['widget']['display'] 	= array();
-			$taxnav_vocabulary_union_instance['widget']['display']['full'] = array();
-				$taxnav_vocabulary_union_instance['widget']['display']['full']['type'] = 'taxonomy_term_reference_link';
-						field_create_instance($taxnav_vocabulary_union_instance);
 
-	$union_address = array();
-		$union_address['field_name']	= 'union_address';
-		$union_address['type']		= 'text';
-			field_create_field($union_address);
+
+	
+	$union_taxnav_vocabulary_field = array();
+		$union_taxnav_vocabulary_field['field_name']	= 'union_taxnav_vocabulary';
+		$union_taxnav_vocabulary_field['type']		= 'taxonomy_term_reference';
+		$union_taxnav_vocabulary_field['settings'] 	=  array();
+			$union_taxnav_vocabulary_field['settings']['allowed_values'] = array();
+				$union_taxnav_vocabulary_field['settings']['allowed_values'][0]=array();
+					$union_taxnav_vocabulary_field['settings']['allowed_values'][0]['vocabulary']	= 'taxnav_vocabulary';
+					$union_taxnav_vocabulary_field['settings']['allowed_values'][0]['parent']	= $union_term->tid;
+						field_create_field($union_taxnav_vocabulary_field);
+
+
+
+	$union_taxnav_vocabulary_instance = array();
+	$union_taxnav_vocabulary_instance['field_name']		= 'union_taxnav_vocabulary';
+	$union_taxnav_vocabulary_instance['entity_type']	= 'node';
+ 	$union_taxnav_vocabulary_instance['bundle'] 		= 'union';
+	 	$union_taxnav_vocabulary_instance['widget'] 	= array();
+			$union_taxnav_vocabulary_instance['widget']['type']	= 'options_select';
+			$union_taxnav_vocabulary_instance['widget']['display'] 	= array();
+			$union_taxnav_vocabulary_instance['widget']['display']['full'] = array();
+				$union_taxnav_vocabulary_instance['widget']['display']['full']['type'] = 'taxonomy_term_reference_link';
+						field_create_instance($union_taxnav_vocabulary_instance);
+	 
+
+
+	$union_address_field = array();
+		$union_address_field['field_name']	= 'union_address_field';
+		$union_address_field['type']		= 'text';
+			field_create_field($union_address_field);
 
 	$union_address_instance = array();
-		$union_address_instance['field_name']	= 'union_address_instance';
+		$union_address_instance['field_name']	= 'union_address_field';
 		$union_address_instance['entity_type']	= 'node';
 		$union_address_instance['bundle']	= 'union';
 			//$union_address_instance['widget'] = array();
 				field_create_instance($union_address_instance);
-
-
-	$union_contact = array();
-		$union_contact['field_name']	= 'union_contact';
-		$union_contact['type']		= 'text';
-			field_create_field($union_contact);
+ 
 	
-	$union_contact_instace = array();
-		$union_contact_instace['field_name'] 	= 'union_contact_instance';
-		$union_contact_instace['entity_type'] 	= 'node';
-		$union_contact_instace['bundle']	= 'union';
+	$union_contact_field = array();
+		$union_contact_field['field_name']	= 'union_contact_field';
+		$union_contact_field['type']		= 'text';
+			field_create_field($union_contact_field);
+	
+	$union_contact_instance = array();
+		$union_contact_instance['field_name'] 	= 'union_contact_field';
+		$union_contact_instance['entity_type'] 	= 'node';
+		$union_contact_instance['bundle']	= 'union';
 			field_create_instance($union_contact_instance);
-
-	$union_website = array();
-		$union_website['field_name']	= 'union_website';
-		$union_website['type']		= 'text';
-			field_create_field($union_website);
+ 
+		
+	$union_website_field = array();
+		$union_website_field['field_name']	= 'union_website_field';
+		$union_website_field['type']		= 'text';
+			field_create_field($union_website_field);
 
 	$union_website_instance = array();
-		$union_website['field_name']	= 'union_website_instance';
-		$union_website['type']		= 'text';
-			field_create_field($union_website_instance);
-
+		$union_website_instance['field_name']	= 'union_website_field';
+		$union_website_instance['entity_type']	= 'node';
+		$union_website_instance['bundle']	= 'union';
+			field_create_instance($union_website_instance);
 
 }
 
-
 function union_uninstall()
 {
+
+	$taxnav_vid = variable_get('taxnav_vocabulary');
+
+	$terms_to_delete = array_merge( taxonomy_get_term_by_name('unions') , taxonomy_get_term_by_name('workers') , taxonomy_get_term_by_name('heavy') , taxonomy_get_term_by_name('non') );
+
+		foreach($terms_to_delete as $term){
+			if($term->vid == $taxnav_vid){
+			taxonomy_term_delete($term->tid);
+			}
+		}
+
+
 	$sql	= 'Select nid FROM {node} n WHERE n.type = :type';
 	$result	= db_query($sql, array(':type' => 'union'));
 	$nids	= array();
@@ -131,7 +164,10 @@ function union_uninstall()
 		
 	node_delete_multiple($nids);
 
-	field_delete_field('taxonomy_vocabulary_union');
+	field_delete_field('union_image_field');
+	field_delete_field('union_address_field');
+	field_delete_field('union_contact_field');
+	field_delete_field('union_website_field');
 
 	node_type_delete('union');
 	field_purge_batch(1000);
@@ -171,7 +207,7 @@ $field = array(
 	      'settings' => array(
 		'allowed_values' => array(
 		  array(
-		    'vocabulary' => get_variable('taxnav_vocabulary'),
+		    'vocabulary' => $taxnav_vid,
 		    'parent' => $union_term_id,
 		  ),
 		),
