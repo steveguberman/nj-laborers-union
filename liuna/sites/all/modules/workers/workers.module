@@ -7,4 +7,24 @@ function workers_block_view_menu_workers_menu_alter(&$data,$block){
 }
 
 
+function nodes_of_type($type){
+	$query = new EntityFieldQuery;
+		$query->entityCondition('entity_type','node');
+		$query->propertyCondition('type',$type);
+			$results = $query->execute();
+	
+	$nodes = array();
+		foreach($results as $unwrap){
+			foreach($unwrap as $node){
+			array_push($nodes,$node->nid);
+			}
+		}
+xdebug_break();
+	return node_load_multiple($nodes);
+}
+
+
+
+
+
 ?>

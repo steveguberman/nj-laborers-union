@@ -38,7 +38,7 @@ function taxnav_install()
 
 		taxonomy_vocabulary_save($nav_tags);
 		variable_set( 'taxnav_vocabulary' ,  $nav_tags->vid );
-
+/*
 	$vocabulary_nav_field = array();
 		$vocabulary_nav_field['field_name']	= 'taxnav_vocabulary';
 		$vocabulary_nav_field['type']		= 'taxonomy_term_reference';
@@ -49,7 +49,7 @@ function taxnav_install()
 					$vocabulary_nav_field['settings']['allowed_values'][0]['parent']	= '0';
 					
 		field_create_field($vocabulary_nav_field);
-
+*/
 
 	$types = node_type_get_types();
 	node_add_body_field($types['taxnav']);

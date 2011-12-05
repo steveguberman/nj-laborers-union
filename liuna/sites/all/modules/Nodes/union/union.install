@@ -102,7 +102,6 @@ xdebug_break();
 						field_create_instance($union_taxnav_vocabulary_instance);
 	 
 
-
 	$union_address_field = array();
 		$union_address_field['field_name']	= 'union_address_field';
 		$union_address_field['type']		= 'text';
@@ -127,18 +126,7 @@ xdebug_break();
 		$union_contact_instance['bundle']	= 'union';
 			field_create_instance($union_contact_instance);
  
-		
-	$union_website_field = array();
-		$union_website_field['field_name']	= 'union_website_field';
-		$union_website_field['type']		= 'text';
-			field_create_field($union_website_field);
-
-	$union_website_instance = array();
-		$union_website_instance['field_name']	= 'union_website_field';
-		$union_website_instance['entity_type']	= 'node';
-		$union_website_instance['bundle']	= 'union';
-			field_create_instance($union_website_instance);
-
+	
 }
 
 function union_uninstall()

@@ -10,23 +10,6 @@
  * Pretty prints variables wrapped in <pre>
  */
 
-function nodes_of_type($type){
-	$query = new EntityFieldQuery;
-		$query->entityCondition('entity_type','node');
-		$query->propertyCondition('type',$type);
-			$results = $query->execute();
-	
-	$nodes = array();
-		foreach($results as $unwrap){
-			foreach($unwrap as $node){
-			array_push($nodes,$node->nid);
-			}
-		}
-xdebug_break();
-	return node_load_multiple($nodes);
-}
-
-
 
 function pretty_r($data){
 	#drupal_set_message('<pre>'. print_r($data, true) .'</pre>pre>');
