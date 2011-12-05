@@ -1,0 +1,9 @@
+name		= 'Articles'
+description	= 'Add section streams to sections'
+package		= 'Liuna Nodes'
+core		=  7.x
+dependencies[]  =  taxnav
+dependencies[]  =  union
+dependencies[]  =  list
+files[]		= 'articles.module'
+files[]		= 'articles.install'

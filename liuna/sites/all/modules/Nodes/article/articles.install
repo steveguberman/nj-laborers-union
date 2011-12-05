@@ -1,0 +1,61 @@
+<?php
+
+function articles_install()
+{
+	// If modules where loaded during this run of hook install make sure previous modules have had
+	// database entries and node types have been updated
+	node_types_rebuild();
+
+
+	$types = node_type_get_types();
+	node_add_body_field($types['articles']);
+	$body_instance = field_info_instance('node','body','articles');
+		$body_instance['type'] = 'text_summary_or_trimmed';
+		field_update_instance($body_instance);
+	
+	
+
+	$user_union_field = array();
+		$user_union_field['field_name']	= 'user_union_field';
+		$user_union_field['type']	= 'list_text';
+		$user_union_field['settings']	= array();
+			$user_union_field['settings']['allowed_values_function'] = 'spang';
+			field_create_field($user_union_field);
+
+	$user_union_field_instance = array();
+		$user_union_field_instance['field_name']	= 'user_union_field';
+		$user_union_field_instance['entity_type']	= 'user';
+		$user_union_field_instance['bundle']		= 'user';
+			field_create_instance($user_union_field_instance);
+		
+
+}
+
+
+function spang(){
+return array('one','two','three');
+}
+
+
+function articles_uninstall()
+{
+
+
+	$sql	= 'Select nid FROM {node} n WHERE n.type = :type';
+	$result	= db_query($sql, array(':type' => 'articles'));
+	$nids	= array();
+
+		foreach($result as $row){ $nids[]= $row->nid; }	
+		
+	node_delete_multiple($nids);
+
+
+	field_delete_field('user_union_field');
+
+	node_type_delete('articles');
+	field_purge_batch(1000);
+}
+
+
+/* vim: set filetype=php : */
+?>
