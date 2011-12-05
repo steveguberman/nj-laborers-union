@@ -29,7 +29,7 @@ xdebug_break();
 
 
 function pretty_r($data){
-	drupal_set_message('<pre>'. print_r($data, true) .'</pre>pre>');
+	#drupal_set_message('<pre>'. print_r($data, true) .'</pre>pre>');
 }
 
 

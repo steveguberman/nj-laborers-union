@@ -79,7 +79,8 @@ xdebug_break();
 
 
 function page_node_insert($node){
-	
+	//require_once(drupal_get_path('module','taxnav'));
+	//build();
 }
 
 

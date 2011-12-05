@@ -13,19 +13,20 @@
  */
 
 //nodes_of_type($type);
+/*
 function union_menu() {
 
 	$access = true;
 
 $new	= 'union/new';
-	$items[$newUnion] = array();
+	$items[$new] = array();
 		$items[$new]['title'] 			= 'Add new Union';
 		$items[$new]['description'] 		= 'Add a new union';
 		$items[$new]['menu_name'] 		=  variable_get('workers_menu');
 		$items[$new]['page callback'] 		= 'node_add';
-		$items[$new]['page arguments']		= 'union';
+		$items[$new]['page arguments']		=  array('union');
 		$items[$new]['access callback']		= 'node_access';
-		$items[$new]['access arguments']	=  array('create union');
+		$items[$new]['access arguments']	=  array('create union','union');
 		$items[$new]['file path'] 		=  drupal_get_path('module','node');
 		$items[$new]['file'] 			= 'node.pages.inc';
 	 
@@ -36,12 +37,13 @@ $view	= 'union/view';
 		$items[$view]['description'] 		= 'View all unions';
 		$items[$view]['menu_name'] 		=  variable_get('workers_menu');
 		$items[$view]['weight'] 		= '0';
-		$items[$view]['page callback'] 		=  union_rendered_list();
+		$items[$view]['page callback'] 		= 'union_rendered_list';
 		$items[$view]['access arguments']	=  $access;
 		#$items[$view]['type']	 		=  MENU_CALLBACK;
 
 	return $items;
 }
+ */
 
 function union_rendered_list(){
 return node_view_multiple(nodes_of_type('union'));
