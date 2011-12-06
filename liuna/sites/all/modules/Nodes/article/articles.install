@@ -14,27 +14,61 @@ function articles_install()
 		field_update_instance($body_instance);
 	
 	
+	$unions_field = array();
+		$unions_field['field_name']	= 'unions_field';
+		$unions_field['type']		= 'list_integer';
+		$unions_field['cardinality']	=  FIELD_CARDINALITY_UNLIMITED;
+			$unions_field['settings']	=  array();
+				#$unions_field['settings']['allowed_values'] = array();
+				$unions_field['settings']['allowed_values_function'] = 'union_field_allowed_values';
+			field_create_field($unions_field);
+	
+	
+	$unions_field_instance = array();
+		$unions_field_instance['field_name'] 	= 'unions_field';
+		$unions_field_instance['entity_type']	= 'node';
+		$unions_field_instance['bundle']	= 'articles';
+		$unions_field_instance['widget']	=  array();
+			$unions_field_instance['widget']['type'] = 'options_buttons';
+				field_create_instance($unions_field_instance);
+	
+	
+/* // Field with cardinality 1.
+    $this->card_1 = array(
+      'field_name' => 'card_1',
+      'type' => 'list_integer',
+      'cardinality' => 1,
+      'settings' => array(
+        // Make sure that 0 works as an option.
+        'allowed_values' => array(0 => 'Zero', 1 => 'One', 2 => 'Some <script>dangerous</script> & unescaped <strong>markup</strong>'),
+      ),
+    );
 
-	$user_union_field = array();
-		$user_union_field['field_name']	= 'user_union_field';
-		$user_union_field['type']	= 'list_text';
-		$user_union_field['settings']	= array();
-			$user_union_field['settings']['allowed_values_function'] = 'spang';
-			field_create_field($user_union_field);
+    $instance = array(
+      'field_name' => $this->card_2['field_name'],
+      'entity_type' => 'test_entity',
+      'bundle' => 'test_bundle',
+      'widget' => array(
+        'type' => 'options_buttons',
+      ),
+    );
 
-	$user_union_field_instance = array();
-		$user_union_field_instance['field_name']	= 'user_union_field';
-		$user_union_field_instance['entity_type']	= 'user';
-		$user_union_field_instance['bundle']		= 'user';
-			field_create_instance($user_union_field_instance);
-		
+*/
+
 
 }
 
 
-function spang(){
-return array('one','two','three');
+
+function field_unions_list(){
+$union_list = nodes_of_type('union');
+$union_list_mapped = array();
+	foreach($union_list as $vid => $union){
+	$union_list_mapped[$vid] = $union->title;
+	}
+		return $union_list_mapped;
 }
+
 
 
 function articles_uninstall()
@@ -50,7 +84,7 @@ function articles_uninstall()
 	node_delete_multiple($nids);
 
 
-	field_delete_field('user_union_field');
+	field_delete_field('unions_field');
 
 	node_type_delete('articles');
 	field_purge_batch(1000);
