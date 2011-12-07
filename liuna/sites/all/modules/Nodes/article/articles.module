@@ -9,48 +9,17 @@
  */
 
 
+function articles_permission(){
+	$items = array();	
+	$unions = nodes_of_type('union');
 
-
-
-function union_field_allowed_values($field){
-
-$union_list = nodes_of_type('union');
-$union_list_mapped = array();
-
-
-	foreach($union_list as $vid => $union){
-		foreach(permissions_list() as $permission){
-			if($permission == 'Publish to '.$union->title){
-			$union_list_mapped[$vid] = $union->title;
-			}
-		}
+	foreach($unions as $union){
+		$items['Publish to '.$union->title]['title'] 		= 'Publish to '.$union->title;
+		$items['Publish to '.$union->title]['description'] 	= 'User can create articles visible to the '.$union->title.' article section';
 	}
-		return $union_list_mapped;
-
-
+		return $items;
 }
 
-
-function permissions_list(){
-
-	global $user;
-
-	$user_permissions_list = array();
-		foreach(user_role_permissions($user->roles) as $permission_group){
-			foreach($permission_group as $permission => $true){
-			$user_permissions_list[] = $permission;
-			}			
-		}
-	return $user_permissions_list;
-}
-
-
-//function articles_menu() {};
-
-
-/**
- * Implements hook_node_info() to provide info articles type.
- */
 
 
 function articles_node_info(){
@@ -67,60 +36,7 @@ function articles_node_info(){
 };
 
 
-
-/*
-/// adjust user form
-function articles_form_alter(&$form, &$form_state, $form_id){
-drupal_set_message($form_id);
-
-
-if($form_id == 'page_node_form'){
-dpm($form, 'form');
-dpm($form_state,'form state');
-}
-
-
-	if( !($form_id =='user_register_form' || $form_id == 'user_profile+_form') ){
-		return;
-	}
-
-
-		$form['#validate'][] = 'is_union_form_validate';
-
-		$form['user_union_field'] = array();
-			$form['union']['#type']		= 'select';
-			$form['union']['#title']	= 'Union';
-				$form['union']['#options']	= array();
-
-				$form['union']['#pre_render']	= array('form_get_unions');
-				$form['union']['#DANGEROUS_SKIP_CHECK']	= false;
-				$form['union']['#validated']		= true;
-				$form['union']['#description']	= 'Union the user writes articles for';
-}
-
-function is_union_form_validate($form, &$form_state){}
-
-function form_get_unions($element){
-$union_list = nodes_of_type('union');
-$union_list_mapped = array();
-
-	foreach($union_list as $vid => $union){
-	$union_list_mapped[$vid] = $union->title;
-	}
-
-	$element['#options'] = $union_list_mapped;
-
-	return $element;
-}
-*/
-
-
-
-/**
- * Implement hook_form() with the standard default form.
- */
 function articles_form($node,$form_state){
-	xdebug_break();
 	return node_content_form($node,$form_state);
 }
 
@@ -155,39 +71,31 @@ function articles_node_access($node, $op, $account) {
 }
 
 
+function union_field_allowed_values($field){
+$union_list = nodes_of_type('union');
+$union_list_mapped = array();
 
-function articles_node_insert($node){
-	
-	if($node->type == 'union'){
-	print_r($node);
-	exit();
+	foreach($union_list as $vid => $union){
+		foreach(_permissions_list() as $permission){
+			if($permission == 'Publish to '.$union->title){
+			$union_list_mapped[$vid] = $union->title;
+			}
+		}
 	}
-	
-	
-
-	//require_once(drupal_get_path('module','taxnav'));
-	//build();
+		return $union_list_mapped;
 }
 
+function _permissions_list(){
+	global $user;
 
-/*
- foreach ($permissions as $name) {
-    db_merge('role_permission')
-      ->key(array(
-        'rid' => $rid,
-        'permission' => $name,
-      ))
-      ->fields(array(
-        'module' => $modules[$name],
-      ))
-      ->execute();
-  }
-
-  // Clear the user access cache.
-  drupal_static_reset('user_access');
-  drupal_static_reset('user_role_permissions');
-*/
-
+	$user_permissions_list = array();
+		foreach(user_role_permissions($user->roles) as $permission_group){
+			foreach($permission_group as $permission => $true){
+			$user_permissions_list[] = $permission;
+			}			
+		}
+	return $user_permissions_list;
+}
 
 
 /* vim: set filetype=php : */

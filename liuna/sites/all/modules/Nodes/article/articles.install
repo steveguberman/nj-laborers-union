@@ -27,34 +27,10 @@ function articles_install()
 	$unions_field_instance = array();
 		$unions_field_instance['field_name'] 	= 'unions_field';
 		$unions_field_instance['entity_type']	= 'node';
-		$unions_field_instance['bundle']	= 'articles';
+		$unions_field_instance['bundle']	= 'agticles';
 		$unions_field_instance['widget']	=  array();
 			$unions_field_instance['widget']['type'] = 'options_buttons';
 				field_create_instance($unions_field_instance);
-	
-	
-/* // Field with cardinality 1.
-    $this->card_1 = array(
-      'field_name' => 'card_1',
-      'type' => 'list_integer',
-      'cardinality' => 1,
-      'settings' => array(
-        // Make sure that 0 works as an option.
-        'allowed_values' => array(0 => 'Zero', 1 => 'One', 2 => 'Some <script>dangerous</script> & unescaped <strong>markup</strong>'),
-      ),
-    );
-
-    $instance = array(
-      'field_name' => $this->card_2['field_name'],
-      'entity_type' => 'test_entity',
-      'bundle' => 'test_bundle',
-      'widget' => array(
-        'type' => 'options_buttons',
-      ),
-    );
-
-*/
-
 
 }
 
@@ -73,7 +49,6 @@ $union_list_mapped = array();
 
 function articles_uninstall()
 {
-
 
 	$sql	= 'Select nid FROM {node} n WHERE n.type = :type';
 	$result	= db_query($sql, array(':type' => 'articles'));
