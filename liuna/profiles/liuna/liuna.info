@@ -11,10 +11,6 @@ dependencies[] = devel_node_access
 dependencies[] = examples
 dependencies[] = googleanalytics
 dependencies[] = libraries
-dependencies[] = spohelpers
-dependencies[] = taxonomy
-dependencies[] = workers
-dependencies[] = taxnav
 
 
 files[]=liuna.profile
