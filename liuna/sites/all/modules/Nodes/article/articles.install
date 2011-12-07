@@ -19,7 +19,6 @@ function articles_install()
 		$unions_field['type']		= 'list_integer';
 		$unions_field['cardinality']	=  FIELD_CARDINALITY_UNLIMITED;
 			$unions_field['settings']	=  array();
-				#$unions_field['settings']['allowed_values'] = array();
 				$unions_field['settings']['allowed_values_function'] = 'union_field_allowed_values';
 			field_create_field($unions_field);
 	
@@ -27,7 +26,7 @@ function articles_install()
 	$unions_field_instance = array();
 		$unions_field_instance['field_name'] 	= 'unions_field';
 		$unions_field_instance['entity_type']	= 'node';
-		$unions_field_instance['bundle']	= 'agticles';
+		$unions_field_instance['bundle']	= 'articles';
 		$unions_field_instance['widget']	=  array();
 			$unions_field_instance['widget']['type'] = 'options_buttons';
 				field_create_instance($unions_field_instance);
@@ -35,15 +34,6 @@ function articles_install()
 }
 
 
-
-function field_unions_list(){
-$union_list = nodes_of_type('union');
-$union_list_mapped = array();
-	foreach($union_list as $vid => $union){
-	$union_list_mapped[$vid] = $union->title;
-	}
-		return $union_list_mapped;
-}
 
 
 

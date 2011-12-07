@@ -1,59 +1,4 @@
 <?php
-/**
- * @file
- * Lets user create pages in the union section of the site.
- *
- * Displays a link that lets authenticated users create union section pages.
- * All these pages are viewable by default to all the sites visitors.
- * Pages do not need to be approved. Default is to display the page.
- */
-
-/**
- * Implementation of hook_menu().
- */
-
-//nodes_of_type($type);
-/*
-function union_menu() {
-
-	$access = true;
-
-$new	= 'union/new';
-	$items[$new] = array();
-		$items[$new]['title'] 			= 'Add new Union';
-		$items[$new]['description'] 		= 'Add a new union';
-		$items[$new]['menu_name'] 		=  variable_get('workers_menu');
-		$items[$new]['page callback'] 		= 'node_add';
-		$items[$new]['page arguments']		=  array('union');
-		$items[$new]['access callback']		= 'node_access';
-		$items[$new]['access arguments']	=  array('create union','union');
-		$items[$new]['file path'] 		=  drupal_get_path('module','node');
-		$items[$new]['file'] 			= 'node.pages.inc';
-	 
-//$editUnion
-$view	= 'union/view';
-	$items[$view]=array();
-		$items[$view]['title'] 			= 'View and edit union pages';
-		$items[$view]['description'] 		= 'View all unions';
-		$items[$view]['menu_name'] 		=  variable_get('workers_menu');
-		$items[$view]['weight'] 		= '0';
-		$items[$view]['page callback'] 		= 'union_rendered_list';
-		$items[$view]['access arguments']	=  $access;
-		#$items[$view]['type']	 		=  MENU_CALLBACK;
-
-	return $items;
-}
- */
-
-function union_rendered_list(){
-return node_view_multiple(nodes_of_type('union'));
-}
-
-
-/**
- * Implements hook_node_info() to provide info union type.
- */
-
 
 function union_node_info(){
 	return array(
@@ -105,14 +50,6 @@ function union_node_access($node, $op, $account) {
   // Returning nothing from this function would have the same effect.
   return NODE_ACCESS_IGNORE;
 }
-
-
-
-function union_node_insert($node){
-	
-}
-
-
 
 
 /* vim: set filetype=php : */

@@ -2,7 +2,6 @@
 
 function taxnav_menu() {
 
-$access = array(TRUE);
 $items=array();
 
 
@@ -12,7 +11,7 @@ $manage ='taxnav';
 		$items[$manage]['description'] 		= 'Catagories Menu';
 		$items[$manage]['weight'] 		= '0';
 		$items[$manage]['menu_name'] 		=  variable_get('workers_menu');
-		$items[$manage]['access arguments']	=  $access;
+		$items[$manage]['access arguments']	=  array('administer taxonomy');
 		$items[$manage]['file path']		=  drupal_get_path('module','taxonomy');
 		$items[$manage]['file']			= 'taxonomy.admin.inc';
 		$items[$manage]['page callback'] 	= 'drupal_get_form';
@@ -24,23 +23,11 @@ $add	='taxnav/add';
 		$items[$add]['description']		= 'create new section';
 		$items[$add]['weight']			= '100';
 		$items[$add]['menu_name'] 		=  variable_get('workers_menu');
-		$items[$add]['access arguments']	= $access;
-		$items[$add]['file path']		= drupal_get_path('module','taxonomy');
+		$items[$add]['access arguments']	=  array('administer taxonomy');
+		$items[$add]['file path']		=  drupal_get_path('module','taxonomy');
 		$items[$add]['file']			= 'taxonomy.admin.inc';
 		$items[$add]['page arguments']		=  array('taxonomy_form_term',array(),taxonomy_vocabulary_load(variable_get('taxnav_vocabulary')));
 		$items[$add]['type']			=  MENU_LOCAL_ACTION;
- /*	
-$view	='taxnav_view';
-	$items[$view]=array();
-		$items[$view]['title'] 			= 'Manage Sections Pages';
-		$items[$view]['description'] 		= 'View all navs';
-		$items[$view]['menu_name'] 		=  variable_get('workers_menu');
-		$items[$view]['weight'] 		= '0';
-		$items[$view]['access arguments']	=  $access;
-		$items[$view]['page callback'] 		= 'tax_nav_list';
-		$items[$view]['type']	 		=  MENU_CALLBACK;
-
- */
 
 $rebuild ='rebuild';
 	$items[$rebuild]=array();
@@ -179,12 +166,9 @@ function taxnav_form($node,$form_state){
 }
 
 
-function taxnav_form_taxnav_node_form_alter(&$form,&$form_state,$form_id){
-
-}
 
 function taxnav_field_widget_text_textarea_with_summary_form_alter(&$element,&$form_state,$context){
-
+	/*
 	if($element['#field_name'] == 'body'){
 		$widget = $element;
 			$widget['#type'] = 'textarea';
@@ -203,7 +187,7 @@ function taxnav_field_widget_text_textarea_with_summary_form_alter(&$element,&$f
 
 		//dpm($element,'my element');
 	}
-
+	*/
 }
 
 function taxnav_node_access($node, $op, $account) {

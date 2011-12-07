@@ -126,6 +126,18 @@ xdebug_break();
 		$union_contact_instance['bundle']	= 'union';
 			field_create_instance($union_contact_instance);
  
+		
+	$union_contact_field = array();
+		$union_contact_field['field_name']	= 'union_website';
+		$union_contact_field['type']		= 'text';
+			field_create_field($union_contact_field);
+	
+	$union_contact_instance = array();
+		$union_contact_instance['field_name'] 	= 'union_website';
+		$union_contact_instance['entity_type'] 	= 'node';
+		$union_contact_instance['bundle']	= 'union';
+			field_create_instance($union_contact_instance);
+ 
 	
 }
 
@@ -160,83 +172,5 @@ function union_uninstall()
 	node_type_delete('union');
 	field_purge_batch(1000);
 }
-
-/*
-$field = array(
-      'field_name' => $name,
-      'type' => 'image',
-      'settings' => array(),
-      'cardinality' => !empty($field_settings['cardinality']) ? $field_settings['cardinality'] : 1,
-    );
-    $field['settings'] = array_merge($field['settings'], $field_settings);
-    field_create_field($field);
-
-    $instance = array(
-      'field_name' => $field['field_name'],
-      'entity_type' => 'node',
-      'label' => $name,
-      'bundle' => $type_name,
-      'required' => !empty($instance_settings['required']),
-      'settings' => array(),
-      'widget' => array(
-        'type' => 'image_image',
-        'settings' => array(),
-      ),
-    );
-    $instance['settings'] = array_merge($instance['settings'], $instance_settings);
-    $instance['widget']['settings'] = array_merge($instance['widget']['settings'], $widget_settings);
-*/
-
-	/*
-	    $field = array(
-	      'field_name' => 'taxonomy_vocabulary_union',
-	      'type' => 'taxonomy_term_reference',
-	      'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-	      'settings' => array(
-		'allowed_values' => array(
-		  array(
-		    'vocabulary' => $taxnav_vid,
-		    'parent' => $union_term_id,
-		  ),
-		),
-	      ),
-	    );
-	    field_create_field($field);
-	*/
-
-
-
-
-//sure makes sense to do it like this but also makes me feel like I am missing small details so lets tuck it away.
-/*
-// Create all the fields we are adding to out content type.
-foreach ( _union_installed_fields() as $field){
-	#field_create_field($field);
-}
-
-// Create all the instances of out field
-foreach (_union_installed_instances() as $instance){
-	#$instance['entity_type']	= 'node';
-	#$instance['bundle']		= 'union';
-	#field_create_instance($instance);
-}
-*/
-
-
-/*
-// Loop over each of the fields defined by this module and delete
-// all instances of the field, their data, and the field itself.
-	foreach(array_keys(_union_installed_fields()) as $field){
-	field_delete_field($field);
-	}
-
-// Loop over any remaining field instances attached to the job_post
-// content type ( such as the body field) and delete them individually.
-	$instances = field_info_instances('node','union');
-	foreach( $instances as $instance_name => $instance ){
-		field_delete_instance($instance);
-	}
-*/
-
 
 ?>

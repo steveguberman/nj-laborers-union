@@ -30,7 +30,7 @@ function articles_node_info(){
 			'description'	=> 'Union Article Pages',
 			'has_title'	=> 'TRUE',
 			'title_label'	=> 'Page Name',
-			'help'		=> 'Page will be displayed in taxnav menu based on taxonomy'
+			'help'		=> 'Article will be displayed based on unions select etc...'
 		)
 	);
 };

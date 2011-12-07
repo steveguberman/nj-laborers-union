@@ -10,6 +10,46 @@ function workers_install(){
 		menu_save($new_menu);
 		variable_set('workers_menu',$new_menu['menu_name']);
 
+
+	$add_link = array();
+		$add_link['link_path'] 		= 'node/add';
+		$add_link['link_title']		= 'Add Content';
+		$add_link['menu_name']		= 'workers_menu';
+
+	menu_link_save($add_link);
+
+
+	$add_link = array();
+		$add_link['link_path'] 		= 'admin/content';
+		$add_link['link_title']		= 'Administer Content';
+		$add_link['menu_name']		= 'workers_menu';
+
+	menu_link_save($add_link);
+
+
+	$add_link = array();
+		$add_link['link_path'] 		= 'admin/people';
+		$add_link['link_title']		= 'Manage Users';
+		$add_link['menu_name']		= 'workers_menu';
+
+	menu_link_save($add_link);
+
+
+	$corrected_html = array();
+		$corrected_html['format'] 	= 'corrector_html';
+		$corrected_html['name'] 	= 'Corrected HTML';
+		$corrected_html['weight']	= '-100';
+			$corrected_html['filters'] = array();
+				$corrected_html['filters']['filter_htmlcorrector'] = array();
+					$corrected_html['filters']['weight'] = 0;
+					$corrected_html['filters']['status'] = 1;
+xdebug_break();
+	$corrected_html = (object) $corrected_html;
+	filter_format_save($corrected_html);
+	$corrected_html_permission = filter_permission_name($corrected_html);
+	user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array($corrected_html_permission));
+
+
 }
 
 

@@ -5,21 +5,7 @@ function taxnav_install()
 	field_associate_fields('taxonomy');
 	node_types_rebuild();
 
-	$corrected_html = array();
-		$corrected_html['format'] 	= 'corrector_html';
-		$corrected_html['name'] 	= 'Corrected HTML';
-		$corrected_html['weight']	= '-100';
-			$corrected_html['filters'] = array();
-				$corrected_html['filters']['filter_htmlcorrector'] = array();
-					$corrected_html['filters']['weight'] = 0;
-					$corrected_html['filters']['status'] = 1;
-
-	$corrected_html = (object) $corrected_html;
-	filter_format_save($corrected_html);
-	$corrected_html_permission = filter_permission_name($corrected_html);
-	user_role_grant_permissions(DRUPAL_AUTHENTICATED_RID, array($corrected_html_permission));
-
-
+	
 	$new_menu = array();
 		$new_menu['menu_name']		= 'taxnav_menu';
 		$new_menu['title']		= 'Taxnav menu';
