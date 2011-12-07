@@ -1,6 +1,0 @@
-name		= 'Videos'
-description	= 'Video Widgets'
-package		= 'Liuna Blocks'
-core		= 7.x
-files[]		= 'about.module'
-configure	= 'admin/config/content/videos/settings'
