@@ -59,6 +59,7 @@ function articles_install()
     $instance = field_create_instance($instance);
 }
 */
+/*
 
 	$article_is_slider_field = array();
 		$article_is_slider_field['field_name']	= 'article_is_slider_field';
@@ -71,13 +72,13 @@ function articles_install()
 				field_create_field($article_is_slider_field);		
 			
 	$article_is_slider_field_instance = array();
-		$article_is_slider_field['field name']	= 'article_is_slider_field';
+		$article_is_slider_field['field_name']	= 'article_is_slider_field';
 		$article_is_slider_field['entity_type'] = 'node';
 		$article_is_slider_field['bundle']	= 'article';
 		$article_is_slider_field['widget']	=  array();
 			$article_is_slider_field['widget']['type'] = 'options_onoff';
 				field_create_instance($article_is_slider_field_instance);
-	
+*/	
 }
 
 
@@ -97,6 +98,7 @@ function articles_uninstall()
 
 
 	field_delete_field('unions_field');
+	field_delete_field('article_is_slider_field');
 
 	node_type_delete('articles');
 	field_purge_batch(1000);

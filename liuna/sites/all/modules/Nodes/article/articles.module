@@ -18,8 +18,56 @@ function articles_permission(){
 		$items['Publish to '.$union->title]['description'] 	= 'User can create articles visible to the '.$union->title.' article section';
 	}
 		return $items;
+
 }
 
+
+function articles_block_info(){
+
+	$items = array();
+		$items['articles_list'] = array();
+		$items['articles_list']['info'] = 'Article List';
+			return $items;
+
+}
+
+function articles_theme(){
+	
+	$items = array();
+		$items['articles_list'] = array();
+		$items['articles_list']['variables'] 	= array('articles'=>NULL,'union_nid'=>NULL);
+		$items['articles_list']['file'] 	= 'articles.block.inc';
+		$items['articles_list']['template'] 	= 'articles-list';
+
+			return $items;
+}
+
+
+function articles_block_view($delta=''){
+	$block = array();
+	
+	switch ($delta){
+
+	case 'articles_list':
+	
+
+		$block['subject'] = 'Articles List Block';
+		$block['content'] =  articles_list_block_contents($delta);
+		break;
+	}		
+	return $block;
+}
+
+
+function articles_list_block_contents($delta){
+
+	global $union_nid;
+	$data = nodes_of_type('articles');
+	
+	$content = theme('articles_list',array('articles'=>$data,'union_nid'=>$union_nid));
+
+	return array('#markup' => $content);
+}
 
 
 function articles_node_info(){
@@ -75,10 +123,11 @@ function union_field_allowed_values($field){
 $union_list = nodes_of_type('union');
 $union_list_mapped = array();
 
-	foreach($union_list as $vid => $union){
+	foreach($union_list as $nid => $union){
 		foreach(_permissions_list() as $permission){
 			if($permission == 'Publish to '.$union->title){
-			$union_list_mapped[$vid] = $union->title;
+			dpm($nid,'saved as uid');
+			$union_list_mapped[$nid] = $union->title;
 			}
 		}
 	}
