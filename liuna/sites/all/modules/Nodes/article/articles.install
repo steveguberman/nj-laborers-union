@@ -30,7 +30,54 @@ function articles_install()
 		$unions_field_instance['widget']	=  array();
 			$unions_field_instance['widget']['type'] = 'options_buttons';
 				field_create_instance($unions_field_instance);
+/*
+    // Boolean field.
+    $this->bool = array(
+      'field_name' => 'bool',
+      'type' => 'list_boolean',
+      'cardinality' => 1,
+      'settings' => array(
+        // Make sure that 0 works as a 'on' value'.
+        'allowed_values' => array(1 => 'Zero', 0 => 'Some <script>dangerous</script> & unescaped <strong>markup</strong>'),
+      ),
+    );
+    $this->bool = field_create_field($this->bool);
 
+*/
+
+/*
+ function testOnOffCheckbox() {
+    // Create an instance of the 'boolean' field.
+    $instance = array(
+      'field_name' => $this->bool['field_name'],
+      'entity_type' => 'test_entity',
+      'bundle' => 'test_bundle',
+      'widget' => array(
+        'type' => 'options_onoff',
+      ),
+    );
+    $instance = field_create_instance($instance);
+}
+*/
+
+	$article_is_slider_field = array();
+		$article_is_slider_field['field_name']	= 'article_is_slider_field';
+		$article_is_slider_field['type']	= 'list_boolean';
+		$article_is_slider_field['cardinality']	=  1;
+		$article_is_slider_field['settings'] 	=  array();
+		$article_is_slider_field['settings']['allowed_values'] 	=  array();
+			$article_is_slider_field['settings']['allowed_values'][0] =  'Do not display in slider';
+			$article_is_slider_field['settings']['allowed_values'][1] =  'Display in slider';
+				field_create_field($article_is_slider_field);		
+			
+	$article_is_slider_field_instance = array();
+		$article_is_slider_field['field name']	= 'article_is_slider_field';
+		$article_is_slider_field['entity_type'] = 'node';
+		$article_is_slider_field['bundle']	= 'article';
+		$article_is_slider_field['widget']	=  array();
+			$article_is_slider_field['widget']['type'] = 'options_onoff';
+				field_create_instance($article_is_slider_field_instance);
+	
 }
 
 
