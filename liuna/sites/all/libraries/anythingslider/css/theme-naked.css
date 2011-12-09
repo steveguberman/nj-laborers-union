@@ -1,0 +1,16 @@
+/**
+ * AnythingSlider Naked Theme
+ * by Mike Green
+ */
+
+div.anythingSlider-naked .anythingWindow {
+	border: none;
+}
+
+div.anythingSlider-naked .anythingControls {
+	display: none !important;
+}
+
+div.anythingSlider-naked .arrow {
+	display: none !important;
+}

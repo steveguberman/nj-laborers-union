@@ -6,6 +6,14 @@
  */
 
 /**
+ * Implementation of hook_init()
+ */
+function flickr_init() {
+	$flickr_path = drupal_get_path('module', 'flickr');
+	require_once($flickr_path . '/flickr.api.inc');
+}
+
+/**
  * Implementation of hook_block_info()
  */
 function flickr_block_info() {
@@ -25,7 +33,7 @@ function flickr_block_info() {
 function flickr_menu() {
 	$items['admin/config/flickr'] = array(
 		'title' => 'Flickr',
-		'description' => 'Display a grid of thumbnails from a Flickr feed',
+		'description' => 'Displays a random selection of a user\'s Flickr favorites',
 		'position' => 'right',
 		'weight' => -5,
 		'page callback' => 'system_admin_menu_block_page',
@@ -53,27 +61,11 @@ function flickr_menu() {
 function flickr_theme() {
 	return array(
 		'flickr_thumbnail_grid' => array(
-			'arguments' => array('items' => NULL, 'photo_count' => 15),
+			'variables' => array('items' => NULL, 'api_key' => NULL),
+			'file' => 'flickr.block.inc',
+			'template' => 'flickr-thumbnail-grid',
 		),
 	);
-}
-
-function theme_flickr_thumbnail_grid($items) {
-	$limit  = $items['photo_count'];
-	$photos = flickr_assemble_photo_array($items['items'], $limit);
-
-	$output = '<ul id="flickr-thumbnail-grid">' . "\n";
-	foreach($photos as $photo) {
-		$output .= <<<END_LIST_ITEM
-<li class="flickr-thumb">
-	<a href="{$photo['url']}" class="photo-wrap {$photo['class']}">
-		<img src="{$photo['src']}" width="{$photo['width']}" height="{$photo['height']}" alt="{$photo['alt']}" />
-	</a>
-</li>
-END_LIST_ITEM;
-	}
-	$output .= "</ul>";
-	return $output;
 }
 
 /**
@@ -81,39 +73,23 @@ END_LIST_ITEM;
  *
  * Assembles an array of landscape photos for use in the Flickr thumbnail grid
  */
-function flickr_assemble_photo_array($items, $limit) {
+function flickr_assemble_photo_array($items) {
 	$output = array();
-	$count  = 0;
+	$api_key = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
+	$flickr = new Flickr($api_key);
+
 	foreach ($items as $item) {
-		if ($count++ > $limit) break;
-
-		// Parse Flickr's pre-built HTML string for image data
-		$dom = new DOMDocument;
-		$dom->loadHTML($item['description']);
-		$img = $dom->getElementsByTagName('img')->item(0);
-
-		// grab image attributes
-		$photo_data = array(
-			'width'    => (int)$img->getAttribute('width') / 2,
-			'height'   => (int)$img->getAttribute('height') / 2,
-			'src'      => $img->getAttribute('src'),
-			'alt'      => $img->getAttribute('alt'),
-			'url'      => $item['url'],
-			'raw_html' => $item['description'],
-		);
-
-		$photo_data['class'] = ($photo_data['width'] > $photo_data['height']) ? 'landscape' : 'portrait';
-
-		// skip portrait images
-		//if ($photo_data['height'] > $photo_data['width']) continue;
-
-		// otherwise, append photo to output array
-		$output[] = $photo_data;
+		if (!isset($item['id'])) continue;
+		$sizes = $flickr->get_sizes($item['id']);
+		$photo_data = $sizes[2];
+		$photo_data['class'] = $photo_data['width'] > $photo_data['height'] ? 'landscape' : 'portrait';
+		$output[]   = $photo_data;
 	}
 
-	$remainder = count($output) % 6;
-	if ($remainder) {
-		$output = array_slice($output, 0, count($output) - $remainder);
+	$nitems = count($output);
+	$remainder = $nitems % 6;
+	if ($remainder && 6 < $nitems) {
+		$output = array_slice($output, 0, $nitems - $remainder);
 	}
 
 	return $output;
@@ -132,26 +108,31 @@ function flickr_block_view($delta = '') {
 	}
 }
 
-/**
- * Implementation of hook_block_contents()
- */
+// provides content for block_view function above
 function flickr_block_contents($delta) {
 	switch ($delta) {
 	case 'flickr':
-		$feed_url = variable_get('flickr_feed_url', 'http://api.flickr.com/services/feeds/photos_faves.gne?nsid=62751423@N00&lang=en-us&format=php_serial');
-		$photo_count = variable_get('flickr_num_photos', 16);
-		$flickr_feed = file_get_contents($feed_url);
+		$user_id       = variable_get('flickr_user_nsid', '62751423@N00');
+		$api_key       = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
+		$photo_count   = variable_get('flickr_num_photos', 16);
+		$flickr        = new Flickr($api_key);
+		$flickr_photos = $flickr->get_favorites($user_id);
+		$photos        = $flickr_photos['photo'];
 
-		if ($feed = unserialize($flickr_feed)) {
-			xdebug_break();
-			$content = theme('flickr_thumbnail_grid', array('items' => $feed['items'], 'photo_count' => $photo_count));
-			//return $content;
-			return array('#markup' => $content);
+		if ($photo_count >= count($photos)) {
+			$photo_selection = $photos;
+		} else {
+			$randomized      = shuffle($photos);
+			$photo_selection = array_slice($randomized, 0, $photo_count);
 		}
+
+		$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection, 'api_key' => $api_key));
+		return array('#markup' => $content);
 
 		break;
 	}
 }
+
 
 // vim: set ft=php :
 ?>

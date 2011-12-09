@@ -1,0 +1,193 @@
+<?php
+/**
+ * @file slider.module
+ * 
+ * Displays a JavaScript powered slider block w/ customizable slides
+ */
+
+/**
+ * Implements hook_block_info()
+ */
+function slider_block_info() {
+	$blocks['slider'] = array(
+		'info' => t('Slider w/ customizable slides'),
+		'status' => TRUE,
+		'region' => 'footer',
+		'weight' => 1,
+		'visibility' => 1,
+	);
+	return $blocks;
+}
+
+/**
+ * Slider module initialization
+ * Implements hook_init()
+ */
+function slider_init() {
+	// Load AnythingSlider jQuery library, dependencies, and base CSS
+	$slider_easing = variable_get('slider_animation_easing', 'easeOutQuad');
+	$slider_speed  = variable_get('slider_animation_speed', 400);
+
+	if (module_exists('libraries')) {
+		$slider_lib = libraries_get_path('anythingslider');
+		$js_libs = array(
+			$slider_lib . '/js/jquery.easing.1.2.js',
+			$slider_lib . '/js/swfobject.js',
+			$slider_lib . '/js/jquery.anythingslider.js',
+			$slider_lib . '/js/jquery.anythingslider.video.js',
+		);
+		$css_files = array(
+			$slider_lib . '/css/anythingslider.css',
+			$slider_lib . '/css/theme-naked.css',
+		);
+		$custom_js = <<<END_JS
+(function($){
+	$(document).ready(function() {
+		$('#liuna-slider').find('li').each(function(idx) {
+			var thumbURL = $(this).attr('data-thumb'),
+				img = new Image(),
+				target = $('#slider-thumbnails');
+
+			img.src = thumbURL;
+			img.width = 200;
+			img.height = 100;
+
+			var listItem = $('<li/>', {
+					'class': 'slider-thumb'
+				}),
+				thumbLink = $('<a/>', {
+					'href': '#',
+					data: {
+						slideIndex: idx + 1
+					},
+					mouseover: function(evt) {
+						$('#liuna-slider').stop().anythingSlider($(this).data('slideIndex'));
+						return false;
+					}
+				});
+			thumbLink.append(img);
+			listItem.append(thumbLink).appendTo(target);
+		});
+		$('#liuna-slider').anythingSlider({
+			width: 900,
+			theme: 'naked',
+			height: 290,
+			resizeContents: false,
+			autoPlay: true,
+			easing: '$slider_easing',
+			onSlideComplete: function(slider) {
+				console.log('slide transition');
+			}
+		});
+	});
+})(jQuery);
+END_JS;
+		foreach ($js_libs as $lib) {
+			drupal_add_js($lib, 'file');
+		}
+		drupal_add_js($custom_js, 'inline');
+		foreach ($css_files as $css) {
+			drupal_add_css($css, 'file');
+		}
+	}
+}
+
+/**
+ * Implements hook_menu()
+ */
+function slider_menu() {
+	$items['admin/config/slider'] = array(
+		'title' => 'Slider',
+		'description' => 'JS Slider w/ customizable slides',
+		'position' => 'right',
+		'weight' => -5,
+		'page callback' => 'system_admin_menu_block_page',
+		'access arguments' => array('administer site configuration'),
+		'file' => 'system.admin.inc',
+		'file path' => drupal_get_path('module', 'system'),
+	);
+
+	$items['admin/config/slider/settings'] = array(
+		'title' => 'Slider Block Settings',
+		'description' => 'Slider Widget Settings',
+		'page arguments' => array('slider_admin_settings'),
+		'page callback'  => 'drupal_get_form',
+		'access arguments' => array('administer site configuration'),
+		'type' => MENU_NORMAL_ITEM,
+		'file' => 'slider.admin.inc',
+		'file path' => drupal_get_path('module', 'slider'),
+	);
+
+	return $items;
+}
+
+/**
+ * Implements hook_theme()
+ */
+function slider_theme() {
+	return array(
+		'slider_block_item' => array(
+			'variables' => array('item' => NULL),
+			'file' => 'slider.block.inc',
+			'template' => 'slider-block-item',
+		),
+		'slider_block_widget' => array(
+			'variables' => array('items' => NULL),
+			'file' => 'slider.block.inc',
+			'template' => 'slider-block-widget',
+		),
+	);
+}
+
+/**
+ * Implements hook_block_view()
+ */
+function slider_block_view($delta = '') {
+	switch ($delta) {
+		case 'slider':
+			$block['subject'] = t('Slider');
+			$block['content'] = slider_block_contents($delta);
+			return $block;
+			break;
+	}
+}
+
+/**
+ * Provides content for block_view function above
+ */
+function slider_block_contents($delta) {
+	// hard-coded slider items for development
+	$slides = array(
+		array(
+			'title'   => 'Outer Space',
+			'caption' => 'Lorem ipsum dollar',
+			'src'     => 'http://placehold.it/900/290',
+			'thumb'   => 'http://placehold.it/200/100',
+			'href'    => 'http://google.com',
+		),
+		array(
+			'title'   => 'Inner Space',
+			'caption' => 'Journey to the center of the mind',
+			'src'     => 'http://placehold.it/900/290',
+			'thumb'   => 'http://placehold.it/200/100',
+			'href'    => 'http://flickr.com',
+		),
+		array(
+			'title'   => 'Landscape',
+			'caption' => 'Landscapes are pretty',
+			'src'     => 'http://placehold.it/900/290',
+			'thumb'   => 'http://placehold.it/200/100',
+			'href'    => 'http://njl.verge180.com/',
+		),
+	);
+
+	switch ($delta) {
+		case 'slider':
+			$slider_html = theme('slider_block_widget', array('items' => $slides));
+			return array('#markup' => $slider_html);
+			break;
+	}
+}
+
+// vim: set ft=php :
+?>
