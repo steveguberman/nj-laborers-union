@@ -2551,7 +2551,8 @@ function node_page_default() {
     ->orderBy('created', 'DESC')
     ->extend('PagerDefault')
     ->limit(variable_get('default_nodes_main', 10))
-    ->addTag('node_access');
+    ->addTag('node_access')
+    ->addTag('node_default');
 
   $nids = $select->execute()->fetchCol();
 
