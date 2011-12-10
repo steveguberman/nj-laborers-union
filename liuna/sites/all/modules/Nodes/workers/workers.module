@@ -21,6 +21,29 @@ xdebug_break();
 }
 
 
+function workers_node_insert(){
+	include_once(drupal_get_path('module','taxnav').'/build.taxnav.inc');
+	build();
+}
+
+function workers_node_load($nodes,$types){
+
+	
+	if( sizeof($nodes)== 1 &&  $types[0]=='union'){	
+		global $union_nid;
+		$union_nid = current($nodes)->nid;
+			dpm($union_nid,'Union nid set to ');
+	}
+
+	
+}
+
+function workers_query_node_default_alter($query){
+	if(drupal_is_front_page()){
+		dpm($query,'query');
+		$query->condition('type','articles','=');
+	}
+}
 
 
 

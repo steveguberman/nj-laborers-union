@@ -26,8 +26,7 @@ function articles_block_info(){
 
 	$items = array();
 		$items['articles_list'] = array();
-		$items['articles_list']['info'] = 'Article List';
-			return $items;
+		$items['articles_list']['info'] = 'Union Articles';
 
 }
 
@@ -35,7 +34,7 @@ function articles_theme(){
 	
 	$items = array();
 		$items['articles_list'] = array();
-		$items['articles_list']['variables'] 	= array('articles'=>NULL,'union_nid'=>NULL);
+		$items['articles_list']['variables'] 	= array('articles'=>NULL);
 		$items['articles_list']['file'] 	= 'articles.block.inc';
 		$items['articles_list']['template'] 	= 'articles-list';
 
@@ -49,7 +48,10 @@ function articles_block_view($delta=''){
 	switch ($delta){
 
 	case 'articles_list':
-	
+		global $union_nid;
+		if(!isset($union_nid)){
+			return;
+		}
 
 		$block['subject'] = 'Articles List Block';
 		$block['content'] =  articles_list_block_contents($delta);
@@ -62,11 +64,10 @@ function articles_block_view($delta=''){
 function articles_list_block_contents($delta){
 
 	global $union_nid;
-	$data = nodes_of_type('articles');
-	
-	$content = theme('articles_list',array('articles'=>$data,'union_nid'=>$union_nid));
+	$articles = _articles_by_union($union_nid);
+	$content = theme('articles_list',array('articles'=>$articles));
 
-	return array('#markup' => $content);
+	return $content;
 }
 
 
@@ -144,6 +145,25 @@ function _permissions_list(){
 			}			
 		}
 	return $user_permissions_list;
+}
+
+
+function _articles_by_union($union_nid){
+	
+	$articles 	= nodes_of_type('articles');
+	$output		= array();
+	
+	foreach($articles as $article){
+		dpm($article,'article values');	
+		foreach($article->unions_field[$article->language][0] as $publish_to ){
+			//dpm($publish_to,'pub 2');
+			//dpm($variables['union_nid'],'nid');
+			if($publish_to == $union_nid){
+			$output[] = $article;
+			}
+		}
+	}
+		return $output;
 }
 
 
