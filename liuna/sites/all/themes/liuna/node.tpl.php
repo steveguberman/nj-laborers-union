@@ -79,15 +79,6 @@
  */
 ?>
 
-<?php
-dpm($type,'type');
-if(drupal_is_front_page() && $type!='articles'){
-goto notFrontPageArticles;
-drupal_print_message('spoogle');
-}
-
-////////////////// FRONT PAGE ARTICLES
-?>
 
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print $user_picture; ?>
@@ -119,4 +110,3 @@ drupal_print_message('spoogle');
 
 </div>
 
-<?php notFrontPageArticles: ?>
