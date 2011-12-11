@@ -27,7 +27,7 @@ function articles_block_info(){
 	$items = array();
 		$items['articles_list'] = array();
 		$items['articles_list']['info'] = 'Union Articles';
-
+			return $items;
 }
 
 function articles_theme(){
