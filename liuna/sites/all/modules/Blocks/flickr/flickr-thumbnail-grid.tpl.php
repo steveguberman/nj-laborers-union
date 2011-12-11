@@ -13,7 +13,6 @@
  * @see template_preprocess_flickr_thumbnail_grid()
  */
 ?>
-
 <ul id="flickr-thumbnail-grid">
 	<?php foreach ($photos as $thumb): ?>
 		<?php if (!isset($thumb['width'])) continue; ?>

@@ -18,11 +18,9 @@ function flickr_init() {
  */
 function flickr_block_info() {
 	$blocks['flickr'] = array(
-		'info' => t('Display Flickr Feed Thumbnails'),
-		'status' => TRUE,
+		'info' => 'Flickr feed',
 		'region' => 'footer',
 		'weight' => 0,
-		'visibility' => 1,
 	);
 	return $blocks;
 }
@@ -101,7 +99,7 @@ function flickr_assemble_photo_array($items) {
 function flickr_block_view($delta = '') {
 	switch ($delta) {
 		case 'flickr':
-			$block['subject'] = t('Flickr Block');
+			$block['subject'] = NULL;
 			$block['content'] = flickr_block_contents($delta);
 			return $block;
 			break;
@@ -127,7 +125,7 @@ function flickr_block_contents($delta) {
 		}
 
 		$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection, 'api_key' => $api_key));
-		return array('#markup' => $content);
+		return  $content;
 
 		break;
 	}
