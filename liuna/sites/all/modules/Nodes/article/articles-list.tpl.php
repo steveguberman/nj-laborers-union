@@ -1,21 +1,5 @@
-<?php
 
-/*
-available variables
-- $articles
+<div id='articles'>
+<?php print render($articles); ?>
+</div>
 
-
-
-*/
-
-
-dpm($articles,'tpl variables');
-
-
-print '<HR>';
-print render($articles);
-print '<HR>';
-
-
-
-?>

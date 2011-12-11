@@ -11,6 +11,7 @@
  * @see slider-block-item.tpl.php
  */
 function template_preprocess_slider_block_item(&$variables) {
+	
 	$slide                = $variables['item'];
 	$variables['title']   = $slide['title'];
 	$variables['caption'] = $slide['caption'];
@@ -27,6 +28,7 @@ function template_preprocess_slider_block_item(&$variables) {
  * @see slider-block-widget.tpl.php
  */
 function template_preprocess_slider_block_widget(&$variables) {
+	
 	$html_items = array();
 	foreach ($variables['items'] as $item) {
 		$html_items[] = theme('slider_block_item', array('item' => $item));

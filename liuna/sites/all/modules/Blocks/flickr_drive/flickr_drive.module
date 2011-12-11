@@ -74,7 +74,7 @@ function flickr_drive_theme() {
 function flickr_drive_block_view($delta = '') {
 	switch ($delta) {
 		case 'flickr_drive':
-			$block['subject'] = t('Flickr Drive Box Block');
+			$block['subject'] = NULL;
 			$block['content'] = flickr_drive_block_contents($delta);
 			return $block;
 			break;
