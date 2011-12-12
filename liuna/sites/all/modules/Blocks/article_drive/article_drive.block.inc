@@ -3,7 +3,7 @@
  * Article Drive Box Template Preprocessors
  */
 
-function template_preprocess_article_drive_box_list(&$variables) {
+function template_preprocess_article_drive_list(&$variables) {
 	$excerpts = array();
 
 	foreach ($variables['items'] as $item) {
@@ -13,7 +13,7 @@ function template_preprocess_article_drive_box_list(&$variables) {
 	$variables['excerpts'] = $excerpts;
 }
 
-function template_preprocess_article_drive_box_list_item(&$variables) {
+function template_preprocess_article_drive_list_item(&$variables) {
 	$node = $variables['item'];
 	$article = node_load($node->nid);
 	$language = $article['language'];
