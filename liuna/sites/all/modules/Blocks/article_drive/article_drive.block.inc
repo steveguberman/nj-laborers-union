@@ -6,7 +6,7 @@
 function template_preprocess_article_drive_list(&$variables) {
 	$excerpts = array();
 
-	foreach ($variables['items'] as $item) {
+	foreach ($variables['items'] as $idx => $item) {
 		$excerpts[] = theme('article_drive_list_item', array('item' => $item));
 	}
 
