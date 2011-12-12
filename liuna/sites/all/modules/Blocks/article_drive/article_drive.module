@@ -7,22 +7,14 @@
  */
 
 /**
- * Implementation of hook_init()
- */
-function article_drive_init() {
-
-}
-
-/**
  * Implementation of hook_block_info()
  */
 function article_drive_block_info() {
 	$blocks['article_drive'] = array(
-		'info' => t('Drive Box Article List'),
-		'status' => TRUE,
-		'region' => 'sidebar_first',
-		'weight' => 0,
-		'visibility' => 1,
+		'info'       => t('Drive Box Article List'),
+		'region'     => 'sidebar_first',
+		'weight'     => 0,
+		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
 	);
 	return $blocks;
 }
