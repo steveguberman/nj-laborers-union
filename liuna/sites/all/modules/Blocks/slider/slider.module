@@ -66,6 +66,7 @@ function slider_init() {
 					},
 					click: function(evt) {
 						e.preventDefault();
+						return false;
 					}
 				});
 			thumbLink.append(img);
