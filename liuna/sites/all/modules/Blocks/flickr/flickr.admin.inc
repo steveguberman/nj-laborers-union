@@ -35,7 +35,7 @@ function flickr_admin_settings() {
 		'#default_value' => variable_get('flickr_profile_url', 'http://www.flickr.com/photos/njlaborers/'),
 	);
 
-	$photo_sources = array('Favorites' => 'favorites', 'Photo Stream' => 'stream');
+	$photo_sources = drupal_map_assoc(array('favorites', 'stream'));
 	$form['flickr_block_settings']['flickr_photo_source'] = array(
 		'#title'         => 'Photo Source',
 		'#description'   => 'Show photos from favorites or photo stream?',
@@ -71,6 +71,7 @@ function flickr_admin_settings_submit($form, $form_state) {
 	variable_set('flickr_num_photos', $form_state['values']['flickr_num_photos']);
 	variable_set('flickr_api_key', $form_state['values']['flickr_api_key']);
 	variable_set('flickr_profile_url', $form_state['values']['flickr_profile_url']);
+	variable_set('flickr_photo_source', $form_state['values']['flickr_photo_source']);
 }
 
 // vim: set ft=php :

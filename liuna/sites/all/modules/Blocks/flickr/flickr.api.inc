@@ -57,6 +57,32 @@ class Flickr {
 	}
 
 	/**
+	 * Get User Photo Stream
+	 *
+	 * Calls flickr.photos.search to get a user's recently posted photos
+	 */
+	public function get_user_photos($user_id, $per_page=100, $page_num=1) {
+		$url = $this->build_api_url(array(
+			'method'   => 'flickr.photos.search',
+			'api_key'  => $this->api_key,
+			'user_id'  => $user_id,
+			'per_page' => $per_page,
+			'page'     => $page_num,
+			'format'   => 'php_serial',
+		));
+
+		curl_setopt($this->curl, CURLOPT_URL, $url);
+
+		try {
+			$photos = $this->fire_request();
+			return $photos['photos'];
+		} catch (Exception $e) {
+			$this->log_error($e->getMessage());
+			return false;
+		}
+	}
+
+	/**
 	 * Get tagged photos
 	 *
 	 * Calls flickr.photos.search and finds photos with the given tag
