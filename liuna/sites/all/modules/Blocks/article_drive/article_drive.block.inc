@@ -16,13 +16,13 @@ function template_preprocess_article_drive_list(&$variables) {
 function template_preprocess_article_drive_list_item(&$variables) {
 	$node = $variables['item'];
 	$article = node_load($node->nid);
-	$language = $article['language'];
-	$summary = $article['body'][$language][0]['summary'];
+	$language = $article->language;
+	$summary = $article->body[$language][0]['summary'];
 
 	// Bind template variables:
 	$variables['article'] = $article;
-	$variables['title']   = $article['title'];
-	$variables['href']    = "/nodes/{$article['nid']}";
+	$variables['title']   = $article->title;
+	$variables['href']    = "/nodes/{$article->nid}";
 	$variables['excerpt'] = truncate_string($summary, 255, ' ');
 }
 
