@@ -109,24 +109,27 @@ function flickr_block_view($delta = '') {
 }
 
 // provides content for block_view function above
-function flickr_block_contents($delta) {
+function flickr_block_contents($delta, $reset=false) {
 	switch ($delta) {
 	case 'flickr':
-		$user_id       = variable_get('flickr_user_nsid', '62751423@N00');
-		$api_key       = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
-		$photo_count   = variable_get('flickr_num_photos', 16);
-		$flickr        = new Flickr($api_key);
-		$flickr_photos = $flickr->get_favorites($user_id);
-		$photos        = $flickr_photos['photo'];
+		if ($reset) {
+			$user_id       = variable_get('flickr_user_nsid', '62751423@N00');
+			$api_key       = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
+			$photo_count   = variable_get('flickr_num_photos', 16);
+			$flickr        = new Flickr($api_key);
+			$flickr_photos = $flickr->get_favorites($user_id);
+			$photos        = $flickr_photos['photo'];
 
-		if ($photo_count >= count($photos)) {
-			$photo_selection = $photos;
-		} else {
-			$randomized      = shuffle($photos);
-			$photo_selection = array_slice($randomized, 0, $photo_count);
+			if ($photo_count >= count($photos)) {
+				$photo_selection = $photos;
+			} else {
+				$randomized      = shuffle($photos);
+				$photo_selection = array_slice($randomized, 0, $photo_count);
+			}
+
+			$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection, 'api_key' => $api_key));
+			cache_set('flickr_thumbnail_grid', $content, 'cache_block');
 		}
-
-		$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection, 'api_key' => $api_key));
 		return array('#markup' => $content);
 
 		break;
