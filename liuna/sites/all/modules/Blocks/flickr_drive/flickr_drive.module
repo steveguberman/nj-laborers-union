@@ -19,7 +19,7 @@ function flickr_drive_init() {
 function flickr_drive_block_info() {
 	$blocks['flickr_drive'] = array(
 		'info'       => t('Drive Box Flickr Thumbnails'),
-		'cache'      => DRUPAL_CACHE_GLOBAL,
+//		'cache'      => DRUPAL_CACHE_GLOBAL,
 		'region'     => 'footer',
 		'weight'     => 0,
 		'visibility' => BLOCK_VISIBILITY_NOTLISTED,

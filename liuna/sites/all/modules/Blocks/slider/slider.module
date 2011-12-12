@@ -11,7 +11,7 @@
 function slider_block_info() {
 	$blocks['slider'] = array(
 		'info'       => t('Slider w/ customizable slides'),
-		'cache'      => DRUPAL_CACHE_GLOBAL,
+//		'cache'      => DRUPAL_CACHE_GLOBAL,
 		'region'     => 'footer',
 		'weight'     => 1,
 		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
