@@ -13,6 +13,52 @@ function union_node_info(){
 	);
 };
 
+
+function union_block_info(){
+	$items=array();
+		$items['union_info'] = array();
+		$items['union_info']['info'] = 'Union Info';
+
+			return $items;
+}
+
+function union_theme(){
+
+	$items = array();
+		$items['union_info'] = array();
+		$items['union_info']['variables']	= array('node'=>NULL,'info'=>NULL);
+		$items['union_info']['file']		= 'union.block.inc';
+		$items['union_info']['template']	= 'union-info';
+			return $items;
+}
+
+function union_block_view($delta){
+	$block = array();
+
+	switch ($delta){
+	case 'union_info':
+		global $union_nid;
+		if(!isset($union_nid)){
+			return;
+		}
+			$block['subject'] = NULL;
+			$block['content'] = union_info_block_contents($delta);
+		
+		break;
+	}
+
+	return $block;
+}
+
+
+
+function union_info_block_contents($delta){
+	global $union_nid;
+	$content = theme('union_info',array('node'=> node_load($union_nid)));
+	return $content;
+}
+
+
 /**
  * Implement hook_form() with the standard default form.
  */
