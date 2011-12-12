@@ -94,10 +94,6 @@ function article_drive_block_contents($delta) {
 							  ->addTag('articles_drive_box')
 							  ->execute();
 
-			dpm($articles);
-
-			// field: article_is_drive_field
-
 			$html = theme('article_drive_list', array('items' => $articles['node']));
 			//return array('#markup' => $html);
 			return $html;
