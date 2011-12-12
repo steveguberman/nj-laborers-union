@@ -101,8 +101,9 @@ function flickr_assemble_photo_array($items) {
 function flickr_block_view($delta = '') {
 	switch ($delta) {
 		case 'flickr':
+			$refresh_cache = cache_get('flickr_thumbnail_grid', 'cache_block') == false;
 			$block['subject'] = t('Flickr Block');
-			$block['content'] = flickr_block_contents($delta);
+			$block['content'] = flickr_block_contents($delta, $refresh_cache);
 			return $block;
 			break;
 	}
@@ -128,7 +129,9 @@ function flickr_block_contents($delta, $reset=false) {
 			}
 
 			$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection, 'api_key' => $api_key));
-			cache_set('flickr_thumbnail_grid', $content, 'cache_block');
+			cache_set('flickr_thumbnail_grid', $content, 'cache_block', CACHE_TEMPORARY);
+		} else {
+			$content = cache_get('flickr_thumbnail_grid', 'cache_block');
 		}
 		return array('#markup' => $content);
 
