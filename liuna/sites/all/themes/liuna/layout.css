@@ -61,8 +61,6 @@ body.two-sidebars #sidebar-first {
  */
 
 #flickr-thumbnail-grid  {
-	border: solid;
-	border-width: 1px;
 	width: 780px;
 	height: 400px;
 	list-style: none;
