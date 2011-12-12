@@ -35,6 +35,15 @@ function flickr_admin_settings() {
 		'#default_value' => variable_get('flickr_profile_url', 'http://www.flickr.com/photos/njlaborers/'),
 	);
 
+	$photo_sources = array('Favorites' => 'favorites', 'Photo Stream' => 'stream');
+	$form['flickr_block_settings']['flickr_photo_source'] = array(
+		'#title'         => 'Photo Source',
+		'#description'   => 'Show photos from favorites or photo stream?',
+		'#type'          => 'select',
+		'#default_value' => variable_get('flickr_photo_source', 'favorites'),
+		'#options'       => $photo_sources,
+	);
+
 	$form['flickr_block_settings']['flickr_num_photos'] = array(
 		'#title' => 'Number of Photos',
 		'#type' => 'textfield',
