@@ -18,11 +18,11 @@ function flickr_init() {
  */
 function flickr_block_info() {
 	$blocks['flickr'] = array(
-		'info' => t('Display Flickr Feed Thumbnails'),
-		'status' => TRUE,
-		'region' => 'footer',
-		'weight' => 0,
-		'visibility' => 1,
+		'info'       => t('Display Flickr Feed Thumbnails'),
+		'cache'      => DRUPAL_CACHE_GLOBAL,
+		'region'     => 'footer',
+		'weight'     => 0,
+		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
 	);
 	return $blocks;
 }
