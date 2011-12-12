@@ -67,11 +67,11 @@ body.two-sidebars #sidebar-first {
 	height:400px;
 	background-color:#000000;
 	list-style:none;
+	padding-left: 0;
 }
 
 #flickr-thumbnail-grid a {
-	border: solid;
-	border-width:1px;
+	border: none;
 	width: 75px;
 	height: 75px;
 	float: left;
