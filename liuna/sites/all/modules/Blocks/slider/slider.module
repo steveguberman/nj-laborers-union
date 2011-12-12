@@ -63,6 +63,9 @@ function slider_init() {
 					mouseover: function(evt) {
 						$('#liuna-slider').stop().anythingSlider($(this).data('slideIndex'));
 						return false;
+					},
+					click: function(evt) {
+						e.preventDefault();
 					}
 				});
 			thumbLink.append(img);
