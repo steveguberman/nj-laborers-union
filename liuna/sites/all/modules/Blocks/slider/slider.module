@@ -10,16 +10,11 @@
  */
 function slider_block_info() {
 	$blocks['slider'] = array(
-<<<<<<< HEAD
 		'info'       => t('Slider w/ customizable slides'),
 //		'cache'      => DRUPAL_CACHE_GLOBAL,
 		'region'     => 'footer',
 		'weight'     => 1,
 		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
-=======
-		'info' => t('Slider w/ customizable slides'),
-		'region' => 'footer',
->>>>>>> master
 	);
 	return $blocks;
 }
