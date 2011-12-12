@@ -74,16 +74,16 @@ function flickr_drive_theme() {
 function flickr_drive_block_view($delta = '') {
 	switch ($delta) {
 		case 'flickr_drive':
-			$cache_reset = cache_get('flickr_drive_thumbnail_list', 'cache_block') == false;
+			$refresh_cache = cache_get('flickr_drive_thumbnail_list', 'cache_block') == false;
 			$block['subject'] = t('Flickr Drive Box Block');
-			$block['content'] = flickr_drive_block_contents($delta, $cache_reset);
+			$block['content'] = flickr_drive_block_contents($delta, $refresh_cache);
 			return $block;
 			break;
 	}
 }
 
 // provides content for block_view function above
-function flickr_drive_block_contents($delta) {
+function flickr_drive_block_contents($delta, $reset) {
 	switch ($delta) {
 	case 'flickr_drive':
 		if ($reset) {
@@ -97,8 +97,8 @@ function flickr_drive_block_contents($delta) {
 			$html = theme('flickr_drive_thumbnail_list', array('items' => $tagged['photo'], 'api_key' => $api_key));
 			cache_set('flickr_drive_thumbnail_list', $html, 'cache_block', CACHE_TEMPORARY);
 		} else {
-			$data = cache_get('flickr_drive_thumbnail_list', 'cache_block');
-			$html = $data->data;
+			$cached = cache_get('flickr_drive_thumbnail_list', 'cache_block');
+			$html = $cached->data;
 		}
 
 		return array('#markup' => $html);
