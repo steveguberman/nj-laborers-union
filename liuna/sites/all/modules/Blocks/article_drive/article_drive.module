@@ -87,11 +87,15 @@ function article_drive_block_contents($delta) {
 			// Look for promoted articles
 			$conditions = array();
 			$query = new EntityFieldQuery;
-			$query->entityCondition('entity_type', 'node')
-				  ->propertyCondition('type', 'articles')
-				  ->fieldCondition('article_is_drive_field', 'value', 1, '=')
-				  ->propertyOrderBy('created', 'DESC')
-				  ->range(1, 5);
+			$articles = $query->entityCondition('entity_type', 'node')
+							  ->propertyCondition('type', 'articles')
+							  ->fieldCondition('article_is_drive_field', 'value', 1, '=')
+							  ->propertyOrderBy('created', 'DESC')
+							  ->range(1, 5)
+							  ->addTag('articles_drive_box')
+							  ->execute();
+
+			dpm($articles);
 
 			// field: article_is_drive_field
 
