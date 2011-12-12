@@ -15,7 +15,8 @@ function facebook_block_info() {
 		'info'       => t('Display Facebook Like Box'),
 		'region'     => 'sidebar_first',
 		'weight'     => 0,
-		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+		'visibility' => BLOCK_VISIBILITY_PHP,
+		'pages'      => 'drupal_is_front_page()'
 	);
 	return $blocks;
 }

@@ -27,7 +27,7 @@ function articles_block_info(){
 	$items = array();
 		$items['articles_list'] = array();
 		$items['articles_list']['info'] = 'Union Articles';
-
+			return $items;
 }
 
 function articles_theme(){
@@ -53,7 +53,7 @@ function articles_block_view($delta=''){
 			return;
 		}
 
-		$block['subject'] = 'Articles List Block';
+		$block['subject'] =  NULL;
 		$block['content'] =  articles_list_block_contents($delta);
 		break;
 	}		

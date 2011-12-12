@@ -15,45 +15,57 @@
  * instances due to a positioning bug.
  */
 
-#content,
-#sidebar-first,
-#sidebar-second {
-  float: left;
-  display: inline;
-  position: relative;
+
+*{
+margin:.01px;
 }
 
-#content {
-  width: 100%;
-}
-body.sidebar-first #content {
-  width: 80%;
-  left: 20%; /* LTR */
-}
-body.sidebar-second #content {
-  width: 80%;
-}
-body.two-sidebars #content {
-  width: 60%;
-  left: 20%;
+#login{
+float:right;
 }
 
-#sidebar-first {
-  width: 20%;
-  left: -80%; /* LTR */
+#logo{
+float:left;
 }
 
-body.two-sidebars #sidebar-first {
-  left: -60%; /* LTR */
+.region-header{
 }
 
-#sidebar-second {
-  float: right; /* LTR */
-  width: 20%;
+#block-user-login{
+float:right;
+}
+
+#block-superfish-1{
+clear:both;
+}
+
+
+
+body{
+width:1210px;
+margin:auto;
 }
 
 .section {
   margin: 10px;
+}
+
+#content{
+background-color:#ff0000;
+width:700px;
+float:left;
+}
+
+#sidebar-first{
+background-color:#00ff00;
+width:300px;
+float:left;
+}
+
+#sidebar-second {
+background-color:#0000ff;
+width:200px;
+float:right;
 }
 
 /**
@@ -91,6 +103,7 @@ body.two-sidebars #sidebar-first {
  * Slider Module Custom Styles
  */
 #block-slider-slider {
+	clear:both;
 	width: 900px;
 	margin: 10px auto;
 }

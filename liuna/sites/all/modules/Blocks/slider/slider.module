@@ -10,11 +10,16 @@
  */
 function slider_block_info() {
 	$blocks['slider'] = array(
+<<<<<<< HEAD
 		'info'       => t('Slider w/ customizable slides'),
 //		'cache'      => DRUPAL_CACHE_GLOBAL,
 		'region'     => 'footer',
 		'weight'     => 1,
 		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
+=======
+		'info' => t('Slider w/ customizable slides'),
+		'region' => 'footer',
+>>>>>>> master
 	);
 	return $blocks;
 }
@@ -149,7 +154,7 @@ function slider_theme() {
 function slider_block_view($delta = '') {
 	switch ($delta) {
 		case 'slider':
-			$block['subject'] = t('Slider');
+			$block['subject'] = NULL;
 			$block['content'] = slider_block_contents($delta);
 			return $block;
 			break;

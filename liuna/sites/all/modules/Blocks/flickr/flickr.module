@@ -140,6 +140,7 @@ function flickr_block_contents($delta, $reset=false) {
 			$cached = cache_get('flickr_thumbnail_grid', 'cache_block');
 			$content = $cached->data;
 		}
+
 		return array('#markup' => $content);
 
 		break;

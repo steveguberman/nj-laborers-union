@@ -4,6 +4,7 @@ function template_preprocess_flickr_thumbnail_grid(&$variables) {
 	$photos = array();
 	$flickr = new Flickr($variables['api_key']);
 
+
 	// For each photo, grab the "small" size version and replace its URL attribute with the Original size's URL
 	foreach ($variables['items'] as $photo) {
 		if (!isset($photo['id'])) continue;
