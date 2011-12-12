@@ -59,28 +59,29 @@ function articles_install()
     $instance = field_create_instance($instance);
 }
 */
-/*
 
-	$article_is_slider_field = array();
-		$article_is_slider_field['field_name']	= 'article_is_slider_field';
-		$article_is_slider_field['type']	= 'list_boolean';
-		$article_is_slider_field['cardinality']	=  1;
-		$article_is_slider_field['settings'] 	=  array();
-		$article_is_slider_field['settings']['allowed_values'] 	=  array();
-			$article_is_slider_field['settings']['allowed_values'][0] =  'Do not display in slider';
-			$article_is_slider_field['settings']['allowed_values'][1] =  'Display in slider';
-				field_create_field($article_is_slider_field);		
-			
-	$article_is_slider_field_instance = array();
-		$article_is_slider_field['field_name']	= 'article_is_slider_field';
-		$article_is_slider_field['entity_type'] = 'node';
-		$article_is_slider_field['bundle']	= 'article';
-		$article_is_slider_field['widget']	=  array();
-			$article_is_slider_field['widget']['type'] = 'options_onoff';
-				field_create_instance($article_is_slider_field_instance);
-*/	
+
+	$article_is_drive_field = array();
+		$article_is_drive_field['field_name']	= 'article_is_drive_field';
+		$article_is_drive_field['type'] 	= 'list_boolean';
+		$article_is_drive_field['cardinality']	=  1;
+		$article_is_drive_field['settings'] 	=  array();
+		$article_is_drive_field['settings']['allowed_values'] 	=  array();
+			$article_is_drive_field['settings']['allowed_values'][0] =  'Do not display in drive';
+			$article_is_drive_field['settings']['allowed_values'][1] =  'Display in drive';
+				field_create_field($article_is_drive_field);		
+	
+	$article_is_drive_instance = array();
+		$article_is_drive_instance['field_name']	= 'article_is_drive_field';
+		$article_is_drive_instance['entity_type']	= 'node';
+		$article_is_drive_instance['bundle']	= 'articles';
+		$article_is_drive_instance['widget']	=  array();
+			$article_is_drive_instance['widget']['type'] = 'options_onoff';
+				field_create_instance($article_is_drive_instance);
+
+
+
 }
-
 
 
 
@@ -98,7 +99,7 @@ function articles_uninstall()
 
 
 	field_delete_field('unions_field');
-	field_delete_field('article_is_slider_field');
+	field_delete_field('article_is_drive_field');
 
 	node_type_delete('articles');
 	field_purge_batch(1000);
