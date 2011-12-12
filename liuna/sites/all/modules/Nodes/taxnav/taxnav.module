@@ -1,5 +1,51 @@
 <?php
 
+
+
+
+
+function taxnav_block_info(){
+	$items = array();
+		$items['taxnav_footer'] = array();
+		$items['taxnav_footer']['info'] = 'Taxnav Footer';
+			return $items;
+}
+
+function taxnav_theme(){
+
+	$items = array();
+		$items['taxnav_footer'] = array();
+		$items['taxnav_footer']['variables'] 	=  array('links'=>NUlL);
+		$items['taxnav_footer']['file'] 	=  taxnav.block.inc;
+		$items['taxnav_footer']['template'] 	= 'taxnav-footer';
+			return $items;
+}
+
+function taxnav_block_view($delta){
+	
+	$block = array();
+
+	switch ($delta){
+	case 'taxnav_footer':
+		global $union_nid;
+		if(!isset($union_nid)){
+			$block['subject'] = NULL;
+			$block['content'] = taxnav_footer_block_contents($delta);
+		}
+
+	}
+
+	return $block;
+}
+
+function taxnav_footer_block_contents($delta){
+
+	$content = theme('taxnav_footer',array('links'=>''));
+	return $content;
+}
+
+
+
 function taxnav_menu() {
 
 $items=array();
