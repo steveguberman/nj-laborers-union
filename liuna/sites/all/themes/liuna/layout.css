@@ -72,15 +72,9 @@ body.two-sidebars #sidebar-first {
 #flickr-thumbnail-grid a {
 	border: solid;
 	border-width:1px;
-	width: 120px;
-	height: 120px;
+	width: 75px;
+	height: 75px;
 	float: left;
-}
-
-#flickr-thumbnail-grid a.landscape img{
-}
-
-#flickr-thumbnail-grid a.portrait img{
 }
 
 /**
