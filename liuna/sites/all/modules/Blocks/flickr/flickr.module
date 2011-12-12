@@ -117,8 +117,14 @@ function flickr_block_contents($delta, $reset=false) {
 			$user_id       = variable_get('flickr_user_nsid', '62751423@N00');
 			$api_key       = variable_get('flickr_api_key', '6dccccbedab9f442055f9d2a25ab6428');
 			$photo_count   = variable_get('flickr_num_photos', 16);
+			$photo_source  = variable_get('flickr_photo_source', 'favorites');
 			$flickr        = new Flickr($api_key);
-			$flickr_photos = $flickr->get_favorites($user_id);
+
+			if ($photo_source == 'favorites') {
+				$flickr_photos = $flickr->get_favorites($user_id);
+			} else {
+				$flickr_photos = $flickr->get_user_photos($user_id, $photo_count);
+			}
 			$photos        = $flickr_photos['photo'];
 
 			if ($photo_count >= count($photos)) {
@@ -131,7 +137,8 @@ function flickr_block_contents($delta, $reset=false) {
 			$content = theme('flickr_thumbnail_grid', array('items' => $photo_selection, 'api_key' => $api_key));
 			cache_set('flickr_thumbnail_grid', $content, 'cache_block', CACHE_TEMPORARY);
 		} else {
-			$content = cache_get('flickr_thumbnail_grid', 'cache_block');
+			$cached = cache_get('flickr_thumbnail_grid', 'cache_block');
+			$content = $cached->data;
 		}
 		return array('#markup' => $content);
 

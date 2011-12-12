@@ -72,6 +72,9 @@ function flickr_admin_settings_submit($form, $form_state) {
 	variable_set('flickr_api_key', $form_state['values']['flickr_api_key']);
 	variable_set('flickr_profile_url', $form_state['values']['flickr_profile_url']);
 	variable_set('flickr_photo_source', $form_state['values']['flickr_photo_source']);
+
+	// Clear cached block content
+	cache_clear_all('flickr_thumbnail_grid', 'cache_block');
 }
 
 // vim: set ft=php :
