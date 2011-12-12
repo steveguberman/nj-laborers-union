@@ -84,7 +84,17 @@ function article_drive_block_view($delta = '') {
 function article_drive_block_contents($delta) {
 	switch ($delta) {
 		case 'article_drive':
-			$articles = array();
+			// Look for promoted articles
+			$conditions = array();
+			$query = new EntityFieldQuery;
+			$query->entityCondition('entity_type', 'node')
+				  ->propertyCondition('type', 'articles')
+				  ->fieldCondition('article_is_drive_field', 'value', 1, '=')
+				  ->propertyOrderBy('created', 'DESC')
+				  ->range(1, 5);
+
+			// field: article_is_drive_field
+
 			$html = theme('article_drive_list', array('items' => $articles));
 			return array('#markup' => $html);
 			break;
