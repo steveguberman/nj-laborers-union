@@ -26,9 +26,18 @@ html{
 background-color:#ea962b;
 }
 
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #fff;
+}
+
+.clear {
+	clear: both;
+}
 
 #body{
-position:relative;
+	position: relative;
 }
 
 #header{
@@ -82,6 +91,20 @@ padding:0px;
 font-size:12px;
 }
 
+#block-user-login .form-item {
+	
+}
+
+#block-user-login .form-item label {
+	font-size: 10px;
+}
+
+#block-user-login .form-item input {
+	border: 1px solid #fff;
+	background: #c0bebf;
+	font-size: 12px;
+}
+
 #block-user-login .form-type-textfield{
 float:left;
 }
@@ -91,12 +114,21 @@ float:right;
 }
 
 #block-user-login .first{
-	float:left;
+	display: inline-block;
 }
 
 
 #block-user-login .last{
-	float:right;
+	display: inline-block;
+}
+
+#block-user-login .item-list li {
+	display: inline-block;
+	font-size: 10px;
+}
+
+#block-user-login .item-list li a {
+	color: #f59b13;
 }
 
 #edit-actions{
@@ -106,6 +138,10 @@ float:right;
 
 #block-superfish-1{
 clear:both;
+}
+
+#superfish-1 {
+	margin-top: 17px;
 }
 
 
@@ -128,23 +164,62 @@ margin-left:20px;
 float:left;
 }
 
+
+/**
+ * Drive Box Sidebar Region
+ */
 #sidebar-second {
-background-color:#0000ff;
-width:200px;
-float:right;
-margin-right:20px;
+	width:200px;
+	float:right;
+	margin-right:20px;
+	background: #2f302f;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-o-border-radius: 6px;
+}
+
+#sidebar-second h2 {
+	color: #ababab;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+ /* Flickr Drive Box */
+#flickr-drive-box {
+	list-style: none;
+	padding-left: 0;
+	margin-bottom: 15px;
+}
+
+#flickr-drive-box li {
+	text-align: center;
+}
+
+ /* Article Drive Box */
+#article-drive {
+	list-style: none;
+	padding-left: 0;
+}
+
+#article-drive a {
+	color: #f59b13;
+	/*font-weight: bold;*/
 }
 
 /**
  * Flickr Thumbnail Grid Styles
  */
 
+#footer .section {
+	margin-left: 0;
+	margin-right: 0;
+}
 
 #flickr-feed{
-	width:854px;
+	width:auto;
 	height:347px;
-	background-color:#333333;
-	margin:auto;
+	background-color:#2f302f;
 }
 
 #flickr-thumbnail-grid  {
@@ -153,6 +228,7 @@ margin-right:20px;
 	list-style: none;
 	padding: 0px;
 	padding-top:5px;
+	margin: auto;
 }
 
 #flickr-thumbnail-grid li {
@@ -167,13 +243,6 @@ margin-right:20px;
 	margin: 0 5px 10px 5px;
 }
 
-/**
- * Flickr Drive Box
- */
-#flickr-drive-box {
-	list-style: none;
-	padding-left: 0;
-}
 
 /**
  * Slider Module Custom Styles
