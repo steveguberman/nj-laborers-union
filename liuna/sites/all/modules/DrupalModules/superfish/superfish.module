@@ -783,7 +783,7 @@ function theme_superfish($variables) {
     if (!empty($mlid)) {
       // Load the parent menu item.
       $item = menu_link_load($mlid);
-      $cache['title'] = check_plain($item['title']);
+      $cache['title'] = $item['title'];
       $cache['parent_depth'] = $item['depth'];
       // Narrow down the full menu to the specific sub-tree we need.
       for ($p = 1; $p < 10; $p++) {
@@ -796,7 +796,7 @@ function theme_superfish($variables) {
     }
     else {
       $result = db_query("SELECT title FROM {menu_custom} WHERE menu_name = :a", array(':a' => $menu_name))->fetchField();
-      $cache['title'] = check_plain($result);
+      $cache['title'] = $result;
     }
     cache_set($cache_key, $cache, 'cache_menu');
     $cache = cache_get($cache_key, 'cache_menu')->data;
@@ -829,6 +829,8 @@ function theme_superfish($variables) {
         else {
           $wmul = array();
         }
+
+
         $output['content'] = isset($wmul[0]) ? $wmul[0] : '';
         $output['content'] .= '<ul id="superfish-' . $id . '"';
         $output['content'] .= ' class="sf-menu ' . $menu_name . ' sf-' . $sfsettings['type'] . ' sf-style-' . $sfsettings['style'];
@@ -944,7 +946,7 @@ function theme_superfish_build($variables) {
         if (drupal_substr($settings['wraphlt'], 0) == ',') {
           array_unshift($whlt, '');
         }
-        $menu_item['link']['title'] = $whlt[0] . check_plain($menu_item['link']['title']) . $whlt[1];
+        $menu_item['link']['title'] = $whlt[0] . $menu_item['link']['title'] . $whlt[1];
         $link_options['html'] = TRUE;
       }
 
@@ -1003,7 +1005,8 @@ function theme_superfish_build($variables) {
       $menu_item['link']['localized_options']['attributes']['class'] = $link_class;
  
       $link_options['attributes'] = $menu_item['link']['localized_options']['attributes'];
-      
+$link_options['html']=true;
+
       // Render the menu item.
       $output['content'] .= '<li id="menu-' . $mlid . '-' . $id . '"';
       $output['content'] .= ($item_class) ? ' class="' . trim($item_class) . '">' : '>';
