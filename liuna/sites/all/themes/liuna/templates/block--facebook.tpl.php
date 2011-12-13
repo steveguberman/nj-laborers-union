@@ -9,4 +9,4 @@
  */
 ?>
 
-<fb:like-box href="http://www.facebook.com/pages/LiUNA-Eastern-Region/224388557595313" width="292" show_faces="true" stream="true" header="true"></fb:like-box>
+<fb:like-box href="http://www.facebook.com/pages/LiUNA-Eastern-Region/224388557595313" colorscheme="dark" width="292" show_faces="true" stream="false" header="false"></fb:like-box>
