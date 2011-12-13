@@ -1,0 +1,86 @@
+<?php
+
+
+function slide_install(){
+
+
+	node_types_rebuild();
+	
+	//img 900x290	
+	$slide_large_image_field = array();
+		$slide_large_image_field['field_name']	= 'slide_large_image_field';
+		$slide_large_image_field['type']		= 'image';
+				field_create_field($slide_large_image_field);
+
+	$slide_large_image_field_instance = array();
+		$slide_large_image_field_instance['field_name']	= 'slide_large_image_field';   
+		$slide_large_image_field_instance['entity_type']	= 'node';   
+		$slide_large_image_field_instance['bundle']		= 'slide';  
+		$slide_large_image_field_instance['required']		=  1;   
+			$slide_large_image_field_instance['settings']  = array();   
+				$slide_large_image_field_instance['settings']['alt_field']		= 0;
+				#$slide_large_image_field_instance['settings']['file_extensions']	= array('jpg','jpeg','png');
+				$slide_large_image_field_instance['settings']['max_filesize']		= '1 MB';
+				$slide_large_image_field_instance['settings']['min_resolution']	= '200 x 100';
+				$slide_small_image_field_instance['settings']['max_resolution']	= '200 x 100';
+				$slide_large_image_field_instance['settings']['title_field']		=  0;
+			#$slide_large_image_field_instance['widget'] = array();
+				#$slide_large_image_field_instance['widget']['type'] 		= 'image_image';
+				#$slide_large_image_field_instance['widget']['settings']	= 'preview_image_style';
+					field_create_instance($slide_large_image_field_instance);
+	 
+
+	//img 200x100
+	$slide_small_image_field = array();
+		$slide_small_image_field['field_name']	= 'slide_small_image_field';
+		$slide_small_image_field['type']		= 'image';
+				field_create_field($slide_small_image_field);
+
+	$slide_small_image_field_instance = array();
+		$slide_small_image_field_instance['field_name']	= 'slide_small_image_field';
+		$slide_small_image_field_instance['entity_type']	= 'node';
+		$slide_small_image_field_instance['bundle']		= 'slide';
+		$slide_small_image_field_instance['required']		=  1;
+			$slide_small_image_field_instance['settings']  = array();
+				$slide_small_image_field_instance['settings']['alt_field']		= 0;
+				#$slide_small_image_field_instance['settings']['file_extensions']	= array('jpg','jpeg','png');
+				$slide_small_image_field_instance['settings']['max_filesize']		= '5 MB';
+				$slide_small_image_field_instance['settings']['min_resolution']	= '900 x 290';
+				$slide_small_image_field_instance['settings']['max_resolution']	= '900 x 290';
+				$slide_small_image_field_instance['settings']['title_field']		= 0;
+			#$slide_small_image_field_instance['widget'] = array();
+				#$slide_small_image_field_instance['widget']['type'] 		= 'image_image';
+				#$slide_small_image_field_instance['widget']['settings']	= 'preview_image_style';
+					field_create_instance($slide_small_image_field_instance);
+	 
+
+	
+
+	//link
+	$slide_link_field = array();
+		$slide_link_field['field_name']	= 'slide_link_field';
+		$slide_link_field['type']		= 'text';
+			field_create_field($slide_link_field);
+
+	$slide_link_instance = array();
+		$slide_link_instance['field_name']	= 'slide_link_field';
+		$slide_link_instance['entity_type']	= 'node';
+		$slide_link_instance['bundle']	= 'slide';
+			//$slide_link_instance['widget'] = array();
+				field_create_instance($slide_link_instance);
+ 
+
+}
+
+
+function slide_uninstall(){
+	field_delete_field('slide_large_image_field');
+	field_delete_field('slide_small_image_field');
+
+	field_delete_field('slide_link_field');
+	field_delete_field('slide_title_field');
+}
+
+
+// vim: set ft=php :
+?>
