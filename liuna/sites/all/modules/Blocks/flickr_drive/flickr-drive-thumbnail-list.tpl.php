@@ -13,6 +13,7 @@
  */
 ?>
 
+<h2>Featured People</h2>
 <?php #pretty_r($photos); ?>
 <?php if (0 < count($photos)): ?>
 	<ul id="flickr-drive-box">

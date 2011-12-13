@@ -12,7 +12,7 @@ function template_preprocess_flickr_drive_thumbnail_list(&$variables) {
 
 		$data = @$flickr->get_sizes($photo['id']);
 		$thumb = $data[2];
-		$thumb['url'] = $data[count($data) - 1]['url'];
+		$thumb['url'] = $data[3]['url'];
 		$thumb['class'] = ($thumb['width'] > $thumb['height']) ? "landscape" : "portrait";
 		$thumb['width'] = $thumb['width'] / 2;
 		$thumb['height'] = $thumb['height'] / 2;
