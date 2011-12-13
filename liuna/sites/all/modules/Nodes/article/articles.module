@@ -127,7 +127,7 @@ $union_list_mapped = array();
 	foreach($union_list as $nid => $union){
 		foreach(_permissions_list() as $permission){
 			if($permission == 'Publish to '.$union->title){
-			dpm($nid,'saved as uid');
+			//dpm($nid,'saved as uid');
 			$union_list_mapped[$nid] = $union->title;
 			}
 		}
@@ -154,7 +154,7 @@ function _articles_by_union($union_nid){
 	$output		= array();
 	
 	foreach($articles as $article){
-		dpm($article,'article values');	
+		//dpm($article,'article values');	
 		foreach($article->unions_field[$article->language][0] as $publish_to ){
 			//dpm($publish_to,'pub 2');
 			//dpm($variables['union_nid'],'nid');
