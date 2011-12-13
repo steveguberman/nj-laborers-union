@@ -36,6 +36,6 @@ $type = gettype($tree);
 <div id='footy-raptor-top'></div>
 <?php _linky($links,3); ?>
 
-<div id='footy-raptor-clear'>
+<div id='footy-raptor-clear' class='clear'>
 </div>
 

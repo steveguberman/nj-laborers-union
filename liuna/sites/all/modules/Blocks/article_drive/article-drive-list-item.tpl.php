@@ -12,7 +12,3 @@
  */
 ?>
 <strong><a href="<?php echo $href; ?>"><?php echo $title; ?></a></strong>
-<br />
-<p>
-	<?php echo $excerpt; ?>
-</p>
