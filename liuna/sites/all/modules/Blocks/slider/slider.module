@@ -10,8 +10,11 @@
  */
 function slider_block_info() {
 	$blocks['slider'] = array(
-		'info' => t('Slider w/ customizable slides'),
-		'region' => 'footer',
+		'info'       => t('Slider w/ customizable slides'),
+//		'cache'      => DRUPAL_CACHE_GLOBAL,
+		'region'     => 'footer',
+		'weight'     => 1,
+		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
 	);
 	return $blocks;
 }
@@ -59,6 +62,10 @@ function slider_init() {
 					},
 					mouseover: function(evt) {
 						$('#liuna-slider').stop().anythingSlider($(this).data('slideIndex'));
+						return false;
+					},
+					click: function(evt) {
+						e.preventDefault();
 						return false;
 					}
 				});

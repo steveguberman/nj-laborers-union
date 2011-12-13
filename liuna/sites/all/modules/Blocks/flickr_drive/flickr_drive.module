@@ -18,11 +18,11 @@ function flickr_drive_init() {
  */
 function flickr_drive_block_info() {
 	$blocks['flickr_drive'] = array(
-		'info' => t('Drive Box Flickr Thumbnails'),
-		'status' => TRUE,
-		'region' => 'footer',
-		'weight' => 0,
-		'visibility' => 1,
+		'info'       => t('Drive Box Flickr Thumbnails'),
+//		'cache'      => DRUPAL_CACHE_GLOBAL,
+		'region'     => 'footer',
+		'weight'     => 0,
+		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
 	);
 	return $blocks;
 }
@@ -74,25 +74,32 @@ function flickr_drive_theme() {
 function flickr_drive_block_view($delta = '') {
 	switch ($delta) {
 		case 'flickr_drive':
-			$block['subject'] = NULL;
-			$block['content'] = flickr_drive_block_contents($delta);
+			$refresh_cache = cache_get('flickr_drive_thumbnail_list', 'cache_block') == false;
+			$block['subject'] = t('Flickr Drive Box Block');
+			$block['content'] = flickr_drive_block_contents($delta, $refresh_cache);
 			return $block;
 			break;
 	}
 }
 
 // provides content for block_view function above
-function flickr_drive_block_contents($delta) {
+function flickr_drive_block_contents($delta, $reset) {
 	switch ($delta) {
 	case 'flickr_drive':
-		$api_key    = variable_get('flickr_drive_api_key', '6dccccbedab9f442055f9d2a25ab6428');
-		$user_id    = variable_get('flickr_drive_user_nsid', '62751423@N00');
-		$tag        = variable_get('flickr_drive_photo_tag', 'njldrive');
-		$num_photos = variable_get('flickr_drive_num_photos', 2);
-		$flickr     = new Flickr($api_key);
-		$tagged     = $flickr->get_tagged_photos($tag, $num_photos);
+		if ($reset) {
+			$api_key    = variable_get('flickr_drive_api_key', '6dccccbedab9f442055f9d2a25ab6428');
+			$user_id    = variable_get('flickr_drive_user_nsid', '62751423@N00');
+			$tag        = variable_get('flickr_drive_photo_tag', 'njldrive');
+			$num_photos = variable_get('flickr_drive_num_photos', 2);
+			$flickr     = new Flickr($api_key);
+			$tagged     = $flickr->get_tagged_photos($tag, $num_photos);
 
-		$html = theme('flickr_drive_thumbnail_list', array('items' => $tagged['photo'], 'api_key' => $api_key));
+			$html = theme('flickr_drive_thumbnail_list', array('items' => $tagged['photo'], 'api_key' => $api_key));
+			cache_set('flickr_drive_thumbnail_list', $html, 'cache_block', CACHE_TEMPORARY);
+		} else {
+			$cached = cache_get('flickr_drive_thumbnail_list', 'cache_block');
+			$html = $cached->data;
+		}
 
 		return array('#markup' => $html);
 		break;

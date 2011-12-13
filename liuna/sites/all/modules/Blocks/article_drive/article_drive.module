@@ -7,22 +7,14 @@
  */
 
 /**
- * Implementation of hook_init()
- */
-function article_drive_init() {
-
-}
-
-/**
  * Implementation of hook_block_info()
  */
 function article_drive_block_info() {
 	$blocks['article_drive'] = array(
-		'info' => t('Drive Box Article List'),
-		'status' => TRUE,
-		'region' => 'sidebar_first',
-		'weight' => 0,
-		'visibility' => 1,
+		'info'       => t('Drive Box Article List'),
+		'region'     => 'sidebar_first',
+		'weight'     => 0,
+		'visibility' => BLOCK_VISIBILITY_NOTLISTED,
 	);
 	return $blocks;
 }
@@ -92,9 +84,19 @@ function article_drive_block_view($delta = '') {
 function article_drive_block_contents($delta) {
 	switch ($delta) {
 		case 'article_drive':
-			$articles = array();
-			$html = theme('article_drive_list', array('items' => $articles));
-			return array('#markup' => $html);
+			// Look for promoted articles
+			$query = new EntityFieldQuery;
+			$articles = $query->entityCondition('entity_type', 'node')
+							  ->propertyCondition('type', 'articles')
+							  ->fieldCondition('article_is_drive_field', 'value', 1, '=')
+							  ->propertyOrderBy('created', 'DESC')
+							  ->range(0, 5)
+							  ->addTag('articles_drive_box')
+							  ->execute();
+
+			$html = theme('article_drive_list', array('items' => $articles['node']));
+			//return array('#markup' => $html);
+			return $html;
 			break;
 	}
 }

@@ -6,6 +6,5 @@
  */
 ?>
 <div id="flickr-feed">
-	<h1>Flickr Feed</h1>
 	<?php echo $variables['elements']['#markup']; ?>
 </div>

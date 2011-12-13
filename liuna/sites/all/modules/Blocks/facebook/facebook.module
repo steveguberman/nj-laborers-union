@@ -12,12 +12,11 @@
  */
 function facebook_block_info() {
 	$blocks['facebook'] = array(
-		'info' => t('Display Facebook Like Box'),
-		'status' => TRUE,
-		'region' => 'sidebar_first',
-		'weight' => 0,
+		'info'       => t('Display Facebook Like Box'),
+		'region'     => 'sidebar_first',
+		'weight'     => 0,
 		'visibility' => BLOCK_VISIBILITY_PHP,
-		'pages'	=> 'drupal_is_front_page()'
+		'pages'      => 'drupal_is_front_page()'
 	);
 	return $blocks;
 }
