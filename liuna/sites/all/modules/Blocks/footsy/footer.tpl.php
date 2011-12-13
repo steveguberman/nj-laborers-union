@@ -10,21 +10,32 @@ $depth_count++;
 $type = gettype($tree);
 
 
-		echo '<ul class="footer-links">';
 	foreach($tree as $name => $leaf){
-		echo '<li class="level-'.$depth_count.'">';
-		echo "<a href=".$leaf['path'].">$name</a>";
-		echo '</li>';
-			if( isset($leaf['children']) &&  ( $depth_count < $depth || $depth == -1) ) {
-				_linky($leaf['children'],$depth,$depth_count);
-			}
+
+		if($depth_count==1){
+		echo '<div class="footer-div">';
+		}
+		echo '<ul class="footer-ul">';
+			echo '<li class="level-'.$depth_count.'">';
+			echo "<a href=".$leaf['path'].">$name</a>";
+			echo '</li>';
+				if( isset($leaf['children']) &&  ( $depth_count < $depth || $depth == -1) ) {
+					_linky($leaf['children'],$depth,$depth_count);
+				}
+
+		echo '</ul>';
+		if($depth_count==1){
+		echo '</div>';
+		}
 	}
 		
-		echo '</ul>';
 }
 ?>
 
-<h1>footy</h1>
 
+<div id='footy-raptor-top'></div>
+<?php _linky($links,3); ?>
 
-<?php _linky($links); ?>
+<div id='footy-raptor-clear'>
+</div>
+
