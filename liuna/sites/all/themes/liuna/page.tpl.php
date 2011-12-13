@@ -80,13 +80,13 @@
       <?php endif; ?>
 
 
+</div>
 	<?php if($secondary_menu){ ?>
 	<div id='login'>
 	 <?php print theme('links__system_secondary_menu', array('links' => $secondary_menu, 'attributes' => array('id' => 'secondary-menu', 'class' => array('links', 'inline', 'clearfix')), 'heading' => t(''))); ?>
 	</div>
 	<?php } ?>
 
-</div>
     <?php print render($page['header']); ?>
 
     </div></div> <!-- /.section, /#header -->
