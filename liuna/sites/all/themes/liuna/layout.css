@@ -20,31 +20,94 @@
 margin:.01px;
 }
 
+
+html{
+
+background-color:#ea962b;
+}
+
+
+#body{
+position:relative;
+}
+
+#header{
+padding-top:30px;
+}
+
+#page{
+width:1000px;
+margin:auto;
+background-color:#404040;
+margin-top:0px;
+padding:0px;
+padding-bottom:30px;
+position:relative;
+}
+
+
+
 #login{
 float:right;
+display:inline;
 }
 
 #logo{
 float:left;
+width:598px;
+height:117px;
+background-color:#fff000;
 }
 
 .region-header{
 }
 
+
+
+#user-login-form{
+width:260px;
+height:;
+margin-right:20px;
+}
+
+
+#user-login-form ul{
+list-style:none;
+}
+
 #block-user-login{
 float:right;
+margin:0px;
+padding:0px;
+font-size:12px;
 }
+
+#block-user-login .form-type-textfield{
+float:left;
+}
+
+#block-user-login .form-type-password{
+float:right;
+}
+
+#block-user-login .first{
+	float:left;
+}
+
+
+#block-user-login .last{
+	float:right;
+}
+
+#edit-actions{
+	clear:both;
+}
+
 
 #block-superfish-1{
 clear:both;
 }
 
-
-
-body{
-width:1210px;
-margin:auto;
-}
 
 .section {
   margin: 10px;
@@ -52,13 +115,16 @@ margin:auto;
 
 #content{
 background-color:#ff0000;
-width:700px;
+width:400px;
+margin-left:30px;
+margin-top:10px;
 float:left;
 }
 
 #sidebar-first{
 background-color:#00ff00;
 width:300px;
+margin-left:20px;
 float:left;
 }
 
@@ -66,17 +132,27 @@ float:left;
 background-color:#0000ff;
 width:200px;
 float:right;
+margin-right:20px;
 }
 
 /**
  * Flickr Thumbnail Grid Styles
  */
 
+
+#flickr-feed{
+	width:854px;
+	height:347px;
+	background-color:#333333;
+	margin:auto;
+}
+
 #flickr-thumbnail-grid  {
-	width: 780px;
-	height: 400px;
+	width: 854px;
+	height: 370px;
 	list-style: none;
-	padding-left: 0;
+	padding: 0px;
+	padding-top:5px;
 }
 
 #flickr-thumbnail-grid li {
@@ -105,7 +181,7 @@ float:right;
 #block-slider-slider {
 	clear:both;
 	width: 900px;
-	margin: 10px auto;
+	margin-top: 10px ;
 }
 
 #liuna-slider a {
@@ -148,4 +224,46 @@ float:right;
 
 .clear {
 	clear: both;
+}
+
+
+.footer-div{
+float:left;
+}
+
+.footer-div ul{
+list-style:none;
+}
+
+.level-1{
+font-weight:bold;
+font-size:100%;
+}
+
+.level-2{
+font-size:80%;
+}
+
+.level-3{
+font-size:60%;
+}
+
+.footer-div A:link {
+color:#f8981f;
+}
+
+.footer-div A:visited {
+color:#fd981f;
+}
+
+.footer-div A:active {
+color:#f8981f;
+}
+
+#footy-raptor-top{
+margin-top:35px;
+}
+
+#footy-raptor-clear{
+clear:both;
 }
