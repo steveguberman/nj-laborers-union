@@ -1,0 +1,7 @@
+name = Footsy
+descriptions = "Module to produce recursive 1"
+package = "Linua Blocks"
+core = 7.x
+files[] = footsy.module
+files[] = footsy.install
+dependencies[] = menu

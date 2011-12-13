@@ -1,0 +1,47 @@
+<?php
+
+
+function footsy_block_info(){
+	$items = array();
+		$items['footer'] = array();
+		$items['footer']['info'] = 'footer';
+			return $items;
+}
+
+function footsy_theme(){
+
+	$items = array();
+		$items['footer'] = array();
+		$items['footer']['variables']	= array('menu_name'=>NULL,'links'=>NULL);
+		$items['footer']['file']	= 'footsy.block.inc';
+		$items['footer']['template']	= 'footer';
+			return $items;
+
+}
+
+function footsy_block_view($delta){
+
+	$block = array();
+	
+	switch ($delta){
+
+	case 'footer':
+		
+		$block['subject'] =  NULL;
+		$block['content'] =  footer_block_contents($delta);
+		break;
+	}		
+	return $block;
+
+}
+
+function footer_block_contents(){
+	$name = variable_get('taxnav_menu');
+	$content = theme('footer',array('menu_name'=>$name));
+	return $content;
+}
+
+
+
+// vim: ft=php:
+?>
