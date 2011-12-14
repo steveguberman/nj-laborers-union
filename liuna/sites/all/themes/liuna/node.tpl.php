@@ -79,9 +79,9 @@
  */
 ?>
 
+<div id="node-<?php print $node->nid; ?>" class="front-article <?php print $classes; ?> clearfix"<?php print $attributes; ?>>
+ 
 <HR>
-
-<div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print $user_picture; ?>
 
   <?php print render($title_prefix); ?>
