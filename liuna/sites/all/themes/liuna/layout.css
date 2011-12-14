@@ -36,6 +36,62 @@ body {
 	clear: both;
 }
 
+
+
+#header .clearfix{
+margin:0px;
+}
+
+
+/*		Front page articles		*/
+
+.front-article{
+margin-bottom:5px;
+}
+
+.front-article hr{
+height:1px;
+border:none;
+background-color:white;
+}
+
+.front-article A{
+text-decoration:none;
+}
+
+.front-article A:link {
+color:#ea962b;
+}
+
+
+	.front-article A:visited {
+	color:#ea962b;
+	}
+
+
+		.front-article A:hover {
+		color:#ea962b;
+		font-size:105%;
+		}
+/*||||||||||||||||||||||||||||||||||||||||||||||*/
+/*		Workers Menu 			*/
+
+#block-menu-workers-menu{
+margin-top:10px;
+}
+
+#block-menu-workers-menu A {
+text-decoration:none;
+color:#ffffff;
+}
+
+#block-menu-workers-menu li{
+list-style:none;
+}
+
+/*||||||||||||||||||||||||||||||||||||||||||||||*/
+
+
 #body{
 	position: relative;
 }
@@ -45,13 +101,14 @@ body {
 }
 
 
-#secondary-menu A:visited {
-	color:#ffffff;
-}
+	#secondary-menu A:visited {
+		color:#ffffff;
+	}
 
-#secondary-menu A:active {
-	color:#ffffff;
-}
+		#secondary-menu A:active {
+			color:#ffffff;
+		}
+
 
 #header{
 padding-top:30px;
@@ -83,6 +140,10 @@ height:117px;
 .region-header{
 }
 
+
+.section-link{
+font-weight:bold;
+}
 
 
 #user-login-form{
@@ -148,13 +209,50 @@ float:right;
 }
 
 
+
+/*		Stupid Fish		*/
+
 #block-superfish-1{
 clear:both;
+
 }
+
+
+#block-superfish-1 A {
+text-decoration:none !important;
+}
+
+	#block-superfish-1 A:link {
+
+	}
+
+
+	#block-superfish-1 A:visited {
+
+	}
+
+
+
+
+
 
 #superfish-1 {
 	margin-top: 17px;
+	margin-left:auto;
 }
+
+
+.sf-depth-1 {
+	background-color:transparent !important;
+	border:none !important;
+}
+
+
+
+
+
+
+/*|||||||||||||||||||||||||||||||||||||||*/
 
 
 .section {
@@ -306,6 +404,14 @@ float:left;
 }
 
 
+
+
+/*             FOOTER LINKS STYLE           */
+
+#footy-raptor-top{
+margin-top:35px;
+}
+
 .footer-div{
 float:left;
 }
@@ -314,42 +420,91 @@ float:left;
 list-style:none;
 }
 
-.level-1{
-font-weight:bold;
-font-size:100%;
-}
-
-.level-2{
-font-size:80%;
-}
-
-.level-3{
-font-size:60%;
-}
-
-.footer-div A:link {
-color:#f8981f;
-}
-
-.footer-div A:visited {
-color:#fd981f;
-}
-
-.footer-div A:active {
-color:#f8981f;
-}
-
-#footy-raptor-top{
-margin-top:35px;
-}
-
 #footy-raptor-clear{
 clear:both;
 }
 
-
-
-/* Facebook stuffs */
-.fbConnectWidgetFooter{
-background-color:#2f302f !important;
+#footer-logo{
+float:left;
+margin-left:20px;
+width:70px;
 }
+
+.level-1 {
+margin-bottom:7px;
+}
+
+.level-1 A:link {
+font-weight:bold;
+font-size:100%;
+color:#ea962b;
+text-decoration:none;
+}
+
+	.level-1 A:visited {
+	font-weight:bold;
+	font-size:100%;
+	color:#ea962b;
+	text-decoration:none;
+	}
+
+		.level-1 A:hover {
+		font-weight:bold;
+		font-size:100%;
+		color:#ea962b;
+		text-decoration:none;
+		}
+
+
+.level-2 A:link {
+font-weight:normal;
+font-size:80%;
+color:#ffffff;
+text-decoration:none;
+}
+
+	.level-2 A:visited {
+	font-weight:normal;
+	font-size:80%;
+	color:#ffffff;
+	text-decoration:none;
+	}
+
+		.level-2 A:hover {
+		font-weight:normal;
+		font-size:80%;
+		color:#ffffff;
+		text-decoration:none;
+		}
+
+.level-2 .section-link{
+font-weight:normal;
+}
+
+.level-3 .section-link{
+font-weight:normal;
+}
+
+.level-3 A:link {
+font-size:60%;
+font-weight:normal;
+color:#ffffff;
+text-decoration:none;
+}
+
+
+	.level-3 A:visited {
+	font-size:60%;
+	font-weight:normal;
+	color:#ffffff;
+	text-decoration:none;
+	}
+
+		.level-3 A:hover {
+		font-size:60%;
+		font-weight:normal;
+		color:#ffffff;
+		text-decoration:none;
+		}
+
+/*||||||||||||||||||||||||||||||||||||||||||||*/
