@@ -152,14 +152,16 @@ function _articles_by_union($union_nid){
 	
 	$articles 	= nodes_of_type('articles');
 	$output		= array();
-	
+
 	foreach($articles as $article){
 		//dpm($article,'article values');	
-		foreach($article->unions_field[$article->language][0] as $publish_to ){
-			//dpm($publish_to,'pub 2');
-			//dpm($variables['union_nid'],'nid');
-			if($publish_to == $union_nid){
-			$output[] = $article;
+		if( $article->unions_field ){
+			foreach($article->unions_field[$article->language][0] as $publish_to ){
+				//dpm($publish_to,'pub 2');
+				//dpm($variables['union_nid'],'nid');
+				if($publish_to == $union_nid){
+				$output[] = $article;
+				}
 			}
 		}
 	}
