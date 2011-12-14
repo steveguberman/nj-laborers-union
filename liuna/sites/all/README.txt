@@ -75,6 +75,8 @@ Here are some things that are needed but there will be a site without them
 --------------------------------------------------------------['PUBLICATIONS']
 - there is no publication section yet its not major to make one but dosn`t make the cut in having a working website
 
+--------------------------------------------------------------['EVENTS']
+- another custom node type that needs a display box 
 
 
 *************************************************   LIST THINGS YOU SEE THAT NEED TO BE FINISHED AND then things that should be finsihed
