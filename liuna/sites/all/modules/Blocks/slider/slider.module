@@ -163,6 +163,15 @@ function slider_block_view($delta = '') {
  */
 function slider_block_contents($delta) {
 	// hard-coded slider items for development
+	$query = new EntityFieldQuery;
+
+	// Grab the 4 most recent slides (TODO: change sorting to user-assigned weight)
+	$slides = $query->entityCondition('entity_type', 'node')
+					->propertyCondition('type', 'slide')
+					->propertyOrderBy('created', 'DESC')
+					->range(0, 3)
+					->execute();
+
 	$slides = array(
 		array(
 			'title'   => 'Outer Space',
