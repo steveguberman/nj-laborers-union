@@ -1,5 +1,4 @@
 <?php
-dpm($info);
 $address	= $info['address'];
 $type		= $info['type'];
 $contact	= $info['contact'];
