@@ -66,6 +66,12 @@
  * @see template_process()
  */
 
+$style_sheet = base_path().path_to_theme().'/nodes/layout.css';
+dpm($style_sheet);
+
+//drupal_static_reset();
+drupal_add_css($style_sheet, array('type'=>'file'));
+
 ?>
 <h1>NODE PAGE TEMPLATE</h1>
   <div id="page-wrapper"><div id="page">
