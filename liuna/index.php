@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 
 if(!function_exists('xdebug_break')){
 	function xdebug_break(){
-	trigger_error('REMOVE Debug functions from script!',E_WARNING);
 	}
 }
 
