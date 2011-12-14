@@ -22,7 +22,7 @@ function template_preprocess_article_drive_list_item(&$variables) {
 	// Bind template variables:
 	$variables['article'] = $article;
 	$variables['title']   = $article->title;
-	$variables['href']    = "/nodes/{$article->nid}";
+	$variables['href']    = "/node/{$article->nid}";
 	$variables['excerpt'] = truncate_string($summary, 255, ' ');
 }
 
