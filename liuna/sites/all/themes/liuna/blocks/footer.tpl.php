@@ -33,7 +33,7 @@ $type = gettype($tree);
 ?>
 
 
-<?php $small_logo=url(path_to_theme().'images/logo_small.png') ; ?>
+<?php $small_logo=url(path_to_theme().'/images/logo_small.png') ; ?>
 
 <div id='footy-raptor-top'></div>
 
