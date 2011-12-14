@@ -27,6 +27,7 @@ function slider_init() {
 	// Load AnythingSlider jQuery library, dependencies, and base CSS
 	$slider_easing = variable_get('slider_animation_easing', 'easeOutQuad');
 	$slider_speed  = variable_get('slider_animation_speed', 400);
+	$slider_delay  = variable_get('slider_transition_interval', 10);
 
 	if (module_exists('libraries')) {
 		$slider_lib = libraries_get_path('anythingslider');
@@ -78,7 +79,8 @@ function slider_init() {
 			height: 290,
 			resizeContents: false,
 			autoPlay: true,
-			easing: '$slider_easing',
+			delay: {$slider_delay},
+			easing: '{$slider_easing}',
 			onSlideComplete: function(slider) {
 				console.log('slide transition');
 			}
