@@ -73,7 +73,7 @@ $processing=array();
 			$item=array();
 				$item['link_path']	= drupal_get_normal_path("node/$taxnav_page->nid");
 				$item['options']	= array('html'=>true);
-				$item['link_title']	= '<strong>'.$leaf['name'].'</strong>';
+				$item['link_title']	= '<span class="section-link">'.$leaf['name'].'</span>';
 				$item['menu_name']	= variable_get('taxnav_menu');			
 				$item['plid']		= $plid;
 											// This has to break the laws of the programming universe
